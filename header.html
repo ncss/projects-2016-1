@@ -2,15 +2,34 @@
 <html>
 	<body>
 		<header>
-			<a href="/feed"><img src='/img/logo.png'></a>
+			<a href="/feed">Logo</a>
 			<a href="/createlist">Create New List</a>
-			<button type="menu" menu="dropdown-menu">
-			</button>
-			<menu type="context" id="dropdown-menu">
-				<menuitem label="Dashboard">
-				<menuitem label="Settings">
-				<menuitem label="Sign Out">
-			</menu>
+			<button type="menu" menu="dropdown-menu" id="profile-button">Profile</button>
+			<nav hidden id="nav">
+				<a href="/dashboard">Dashboard</a>
+				<a href="/settings">Settings</a>
+				<a href="/signout">Sign Out</a>
+			</nav>
+			<script>
+			window.addEventListener("load", function(){
+				var button = document.getElementById("profile-button");
+				var nav = document.getElementById("nav");
+				button.addEventListener("click", function(){
+					nav.hidden = false;
+				});
+				document.documentElement.addEventListener("click", function(event){
+					var current_target = event.target;
+					while (current_target) {
+						if (current_target.localName == "header") {
+							return;
+						}
+						current_target = current_target.parentNode;
+					}
+					nav.hidden = true;
+				});
+			});
+			
+			</script>
 		</header>
 	</body>
 </html>
