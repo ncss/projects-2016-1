@@ -1,0 +1,6 @@
+Dark blue - rgb(51, 55, 68);
+Light grey - rgb(212, 220, 228);
+Brighter orange - rgb(247, 102, 44);
+Lighter orange - rgb(247, 162, 90);
+
+if rgba is required a is always 1
