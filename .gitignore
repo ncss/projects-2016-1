@@ -1,6 +1,7 @@
 *.pyc
 __pycache__
 .*.sw[opq]
-
+sql/database.db
 /.idea/
 /vendor/
+venv
