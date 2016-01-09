@@ -20,7 +20,4 @@ sup people, it's jackson!
 
 memes
 
-<<<<<<< HEAD
-=======
 <s>/* dank */ memes</s>
->>>>>>> 83d8abd0adc3abf053607cd076541e47ebc51dbf
