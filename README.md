@@ -12,4 +12,4 @@ I committed and pushed this file just to say:
 sup people, it's jackson!
 
 
-<s>memes</s>
+<s>/* dank */ memes</s>
