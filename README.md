@@ -7,12 +7,9 @@ I committed and pushed this file just to say:
          ./              o \
         /./\  )______   \__ \
        ./  / /\ \   | \ \  \ \
-          / /  \ \  | |\ \  \7
+          / /  \ \  | |\ \  \7  behind you.
            "     "    "  "
-
-
-
-
+sup people, it's jackson!
 
 
 <s>memes</s>
