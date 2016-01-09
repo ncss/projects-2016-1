@@ -1,3 +1,4 @@
+from lib import ORM
 import hashlib
 
 class User:
