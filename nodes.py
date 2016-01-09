@@ -37,7 +37,7 @@ class IfNode(Node):
         self.predicate = predicate
 
     def eval(self, context):
-        predicate_result = eval(self.predicate)
+        predicate_result = eval(self.predicate, {}, context)
         if predicate_result:
             return self._children[0].eval(context)
         else:
