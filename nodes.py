@@ -42,4 +42,7 @@ class IfNode(Node):
         if predicate_result:
             return self._children[0].eval()
         else:
+            # Else evaluate branch
+            if len(self._children) == 2:
+                return self._children[1].eval()
             return ''
