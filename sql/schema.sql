@@ -1,9 +1,7 @@
 CREATE TABLE users (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   username    TEXT    NOT NULL UNIQUE,
-  password    TEXT    NOT NULL,
-  name    TEXT    NOT NULL,
-  email   TEXT    NOT NULL UNIQUE
+  password    TEXT    NOT NULL
 );
 
 CREATE TABLE lists (
@@ -14,7 +12,8 @@ CREATE TABLE lists (
 
 CREATE TABLE list_contents (
   content    TEXT     NOT NULL,
-  list    INT    NOT NULL
+  list    INT    NOT NULL,
+  item_order  INT    NOT NULL
 );
 
 CREATE TABLE likes (
