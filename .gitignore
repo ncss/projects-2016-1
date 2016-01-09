@@ -4,3 +4,4 @@ __pycache__
 sql/database.db
 /.idea/
 /vendor/
+venv
