@@ -15,4 +15,4 @@ class User:
     
   @staticmethod
   def authenticate(username,password):
-    cls.find(username)
+    cur = conn.cursor()
