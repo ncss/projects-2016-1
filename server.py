@@ -14,7 +14,7 @@ def login_handler(response):
 
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
-    response.clear_cookie('user_id', '-1')
+    response.clear_cookie('user_id')
     response.redirect('/')
     
 # Handlers
