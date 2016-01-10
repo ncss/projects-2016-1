@@ -19,10 +19,7 @@ def login_handler(response):
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/')
-    #Fix this plz
-    #else:
-        #response.write('<p> Username or password incorrect! Please try again! </p>')
-    
+       
     
 
 # messing around with login handler clearing cookie and redirecting to a page
