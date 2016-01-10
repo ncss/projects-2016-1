@@ -9,7 +9,7 @@ class Parser(object):
     def set_tokenzier(self, tokenzier):
         self._tokenizer = tokenzier
 
-    def _parse_literal(self, token):
+    def _parse_text(self, token):
         return TextNode(token)
 
     def _parse_tag_stmt(self, token):
@@ -41,9 +41,10 @@ class Parser(object):
 
         group = GroupNode()
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end if %} tag
                 op, args = self._remove_tag(token).split(maxsplit=1)
@@ -68,9 +69,10 @@ class Parser(object):
 
         group = GroupNode()
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end for %} tag
                 op, args = self._remove_tag(token).split(maxsplit=1)
@@ -98,9 +100,10 @@ class Parser(object):
     def parse(self):
         group = GroupNode()
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 node = self._parse_tag_stmt(token)
             elif token_type == 'tag_repr':
@@ -111,4 +114,4 @@ class Parser(object):
         return group
 
     def _remove_tag(self, token):
-        return token[2:] + token[:-2]
+        return token[2:-2]
