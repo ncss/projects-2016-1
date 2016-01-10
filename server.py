@@ -1,3 +1,7 @@
+import sys
+
+print(sys.version_info)
+
 from tornado.ncss import Server
 
 server = Server()

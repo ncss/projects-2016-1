@@ -1,7 +1,6 @@
-from lib import ORM
 import hashlib
 
-class User(ORM.ORM):
+class User:
   def __init__(self,username,password,email):
     self.username = username
     self.password = password
@@ -11,7 +10,7 @@ class User(ORM.ORM):
     return self.password == hashlib.sha512(password).hexdigest()
 	
   def new_list(self):
-    
+    pass
 
   @staticmethod
   def find(username):
