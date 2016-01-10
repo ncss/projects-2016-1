@@ -1,8 +1,9 @@
 .loginbox{
-	background-color:rgba(212, 220, 228,1);
+	background-color:rgb(240, 240, 240);
 	padding: 20px 20px 20px 20px;
 	font-family: Lato;
 	font-size: 14px;
+	border-radius: 6px;
 }
 .middle{
 	display: flex;
