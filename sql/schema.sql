@@ -1,3 +1,7 @@
+/*
+
+______________USE THIS SCHEMA LATER, FOR NOW WE WILL USE INIT.sql AS A SAMPLE DATABASE
+
 CREATE TABLE users (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   username    TEXT    NOT NULL UNIQUE,
@@ -24,3 +28,4 @@ CREATE TABLE likes (
   list    INT    NOT NULL
 );
 
+*/ 
