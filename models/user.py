@@ -11,10 +11,11 @@ class User:
   def connect(cls,db):
     cls.conn = db
 
-  def __init__(self,saved=False,**kwargs):
-    self.username = kwargs["username"]
-    self.password = kwargs["password"]
-    self._saved = saved
+  def __init__(self, username, password, id=None):
+    self.id = id
+    self.username =username
+    self.password = password
+    
 
 
   def check_password(self,password):
@@ -27,17 +28,19 @@ class User:
     pass
 
   def save(self):
-    cur = cls.conn.cursor()
-    if not self._saved:
-      cur.execute('INSERT INTO users (username,password,email) VALUES (?,?,?);', (self.username,self.password,self.email));
+    cur = self.__class__.conn.cursor()
+    if not self.id:
+      cur.execute('INSERT INTO users (username,password) VALUES (?,?);', (self.username,self.password))
+      self.id = cur.lastrowid
     else:
+      
       cur.execute('''
         UPDATE users
         SET username=?,
-            password=?,
-            email=?
-      ''',(self.username,self.password,self.email));
-    conn.commit()
+            password=?
+        WHERE id = ?
+      ''',(self.username,self.password, self.id));
+    self.__class__.conn.commit()
     cur.close()
 
   @classmethod
@@ -49,7 +52,7 @@ class User:
   @classmethod
   def find_username(cls,username):
     cur = cls.conn.cursor()
-    cur.execute('SELECT * FROM users WHERE username=?', (self.username))
+    cur.execute('SELECT * FROM users WHERE username=?', (username,))
     result = cur.fetchone()
     cur.close()
     return cls.from_row(result)
@@ -64,3 +67,10 @@ class User:
     cur.close()
     return cls.from_row(result)
 
+if __name__ == '__main__':
+  import sqlite3
+  cn = sqlite3.connect('database.db')
+  User.connect(cn)
+  cn.row_factory = sqlite3.Row
+  user = User.find_username('cool_hax3')
+  
