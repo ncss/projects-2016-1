@@ -1,5 +1,6 @@
 import server.util as util
 from db import User
+from templater import templater
 
 @util.requires_login
 def index_handler(response):
@@ -11,12 +12,18 @@ def index_handler(response):
         #response.write(render_template("index.html", username = None)                                  
 
 def login_handler(response):
+    response.write(templater.render("templates/login_page.html"))
     username = response.get_field("username", "")
     password = response.get_field("password", "")
-    User.authenticate(username, password)
-    response.set_secure_cookie('user_id', '-1')
-    response.write("<h1>Login Page</h1>")
-    response.redirect('/')
+    user = User.authenticate(username, password)
+    if user:
+        response.set_secure_cookie('user_id', '-1')
+        response.redirect('/')
+    #Fix this plz
+    #else:
+        #response.write('<p> Username or password incorrect! Please try again! </p>')
+    
+    
 
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
