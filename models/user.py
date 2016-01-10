@@ -6,7 +6,7 @@ def convert_row(row):
 
 
 class User:
-  # Definitely needed to connect to database
+
   @staticmethod
   def connect(db):
     global conn
@@ -20,12 +20,15 @@ class User:
 
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
+
+  def hash_password(self,password):
+    self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 	
   def get_lists(self):
-    pass
+
 
   def save(self):
-    cur = con.cursor()
+    cur = conn.cursor()
     if not self._saved:
       cur.execute('INSERT INTO users (username,password,email)VALUES=(?,?,?);', (self.username,self.password,self.email));
     else:
@@ -37,17 +40,20 @@ class User:
       ''',(self.username,self.password,self.email));
     conn.commit()
     cur.close()
-
-  @staticmethod
-  def findUsername(username):
-    cur = conn.cursor()
-    cur.execute('SELECT * FROM users WHERE username=?', (self.username))
-    return User(cur.fetchone())
-    cur.close()
   
   @staticmethod
-  def new_user(self, *args):
-    pass
+  def from_row(row):
+    if result is None: return None
+    result = convert_row(result)
+    return User(saved=True,**result)
+
+  @staticmethod
+  def find_username(username):
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM users WHERE username=?', (self.username))
+    result = cur.fetchone()
+    cur.close()
+	return User.from_row(result)
 
   @staticmethod
   def authenticate(username,password):
@@ -57,8 +63,5 @@ class User:
 
     result = cur.fetchone()
     cur.close() 
-    if result is None: return False
-    result = convert_row(result)
-    return User(saved=True,**result)
-
+    return User.from_row(result)
 
