@@ -25,7 +25,7 @@ class User:
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 	
   def get_lists(self):
-
+    pass
 
   def save(self):
     cur = conn.cursor()
@@ -53,7 +53,7 @@ class User:
     cur.execute('SELECT * FROM users WHERE username=?', (self.username))
     result = cur.fetchone()
     cur.close()
-	return User.from_row(result)
+    return User.from_row(result)
 
   @staticmethod
   def authenticate(username,password):
