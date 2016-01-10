@@ -35,7 +35,10 @@ def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) CREATE DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+    response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+
+def create_post_handler(response):
+    print(response.get_field("title"))
 
 # NEED MIST ID BEFORE THIS WILL WORK
 #def view_handler(reponse):
