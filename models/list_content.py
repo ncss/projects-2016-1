@@ -27,7 +27,7 @@ class ListContent:
     row = cur.fetchone()
     if row is None:
       raise UserNotFound('{} does not exist'.format(content))
-    return ListContent(row[0], row[1], row[2])
+    return cls(row[0], row[1], row[2])
 
   @classmethod
   def findByListId(cls, list_id):
@@ -50,7 +50,7 @@ class ListContent:
 
     list = []
     for row in rows:
-      item = ListContent(row[1],row[2],row[3])
+      item = cls(row[1],row[2],row[3])
       list.append(item)
 
     return list
