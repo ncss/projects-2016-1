@@ -1,4 +1,5 @@
 import hashlib
+from list import List
 
 def convert_row(row):
   keys = row.keys()
@@ -12,6 +13,7 @@ class User:
     cls.conn = db
 
   def __init__(self,saved=False,**kwargs):
+    self.id = kwargs["id"]
     self.username = kwargs["username"]
     self.password = kwargs["password"]
     self._saved = saved
@@ -24,7 +26,7 @@ class User:
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
   def get_lists(self):
-    pass
+    return List.find_by_userid(cls, self.id)
 
   def save(self):
     cur = cls.conn.cursor()
@@ -49,7 +51,7 @@ class User:
   @classmethod
   def find_username(cls,username):
     cur = cls.conn.cursor()
-    cur.execute('SELECT * FROM users WHERE username=?', (self.username))
+    cur.execute('SELECT * FROM users WHERE username=?', (username))
     result = cur.fetchone()
     cur.close()
     return cls.from_row(result)

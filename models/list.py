@@ -29,7 +29,7 @@ class List:
     cur.execute('SELECT * FROM list where author=?', (uid,))
     results = cur.fetchall()
     cur.close()
-    if not results return None
+    if not results: return None
     return [cls.from_row(i) for i in results]
 
   @classmethod
