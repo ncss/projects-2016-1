@@ -1,6 +1,7 @@
 from tornado.ncss import Server
 
 import server.handlers as handlers
+import templater
 
 '''
 TO DO LIST:
@@ -14,7 +15,7 @@ TO DO LIST:
     - settings_handler
 '''
 
-server = Server()
+server = Server(port=8887)
 
 
 # Handlers
