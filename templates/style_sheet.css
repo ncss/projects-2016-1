@@ -45,3 +45,21 @@ form {
 	form input[type="checkbox"], form input[type="radio"]{
 		margin-left: 1rem;
 	}
+	
+	
+/*
+Login page
+*/
+.login .loginbox{
+	background-color:rgb(240, 240, 240);
+	padding: 20px 20px 20px 20px;
+	font-family: Lato;
+	font-size: 14px;
+	border-radius: 6px;
+}
+.login .middle{
+	display: flex;
+	justify-content:center;
+	align-items: center;
+	height: 100%;
+}
