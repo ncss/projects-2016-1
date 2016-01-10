@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Settings</h1>
+    <form action="getform.php" method="get" id="details">
+    	<legend>Personal Details</legend>
+        <p>
+        	<label>First Name</label>
+            <input autocomplete="given-name" name="first-name" value="James">
+        </p>
+        <p>
+        	<label>Second Name</label>
+            <input autocomplete="family-name" name="second-name" value="Curran">
+        </p>
+    </form>
+    <form action="getform.php" method="get" id="details">
+    	<legend>Communication</legend>
+        <p>
+        	<label>Email</label>
+            <input autocomplete="email" name="email" value="james.curran@sit.sydney.edu.au">
+        </p>
+    </form>
+    <form action="getform.php" method="get" id="details">
+    	<legend>Password</legend>
+        <p>
+        	<label>Current Password</label>
+            <input autocomplete="current-password" name="current-password">
+        </p>
+        <p>
+        	<label>New Password</label>
+            <input autocomplete="new-password" name="new-password">
+        </p>
+        <p>
+        	<label>Confirm Password </label>
+            <input autocomplete="off" name="confirm-password">
+        </p>
+    </form>
+    <button name="delete-account">Delete Account</button>
+    <button name="save-changes">Save Changes</button>
+  </body>
+
+</html>

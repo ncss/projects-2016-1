@@ -1,0 +1,12 @@
+.loginbox{
+	background-color:rgba(212, 220, 228,1);
+	padding: 20px 20px 20px 20px;
+	font-family: Lato;
+	font-size: 14px;
+}
+.middle{
+	display: flex;
+	justify-content:center;
+	align-items: center;
+	height: 100%;
+}

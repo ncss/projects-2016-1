@@ -1,26 +1,41 @@
 from nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
+from tokenizer import Tokenizer
 
 class Parser(object):
     def __init__(self, context, tokenzier=None):
         self._context = context
         self._tokenizer = tokenzier
-        self._head = None
 
     def set_tokenzier(self, tokenzier):
         self._tokenizer = tokenzier
 
-    def _parse_literal(self, token):
+    def _parse_text(self, token):
         return TextNode(token)
 
     def _parse_tag_stmt(self, token):
         op, args = self._remove_tag(token).split(maxsplit=1)
 
+        node = None
+
         if op == 'for':
             node = self._parse_for(token)
         elif op == 'if':
             node = self._parse_if(token)
+        elif op == 'include':
+            node = self._parse_include(token)
 
         return node
+
+    def _parse_include(self, token):
+        op, filename = self._remove_tag(token).split(maxsplit=1)
+
+        filename = filename.strip()
+
+        with open(filename) as f:
+            t = Tokenizer(f.read())
+            p = Parser(self._context, t)
+
+        return p.parse()
 
     def _parse_if(self, token):
         op, args = self._remove_tag(token).split(maxsplit=1)
@@ -28,11 +43,12 @@ class Parser(object):
 
         if_node = IfNode(predicate)
 
-        group = GroupNode()
+        group = GroupNode(self._context)
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end if %} tag
                 op, args = self._remove_tag(token).split(maxsplit=1)
@@ -50,19 +66,20 @@ class Parser(object):
         return if_node
 
     def _parse_for(self, token):
-        op, args = self._remove_tag(token).split(maxsplit=1)
-        item, collection = args
+        _, item, _, collection = self._remove_tag(token).split(maxsplit=3)
 
         for_node = ForNode(item, collection)
 
-        group = GroupNode()
+        group = GroupNode(self._context)
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end for %} tag
                 op, args = self._remove_tag(token).split(maxsplit=1)
+                args = args.split()
                 if op == 'end' and args[0] == 'for':
                     break
                 else:
@@ -85,11 +102,12 @@ class Parser(object):
         return PythonNode(token)
 
     def parse(self):
-        group = GroupNode()
+        group = GroupNode(self._context)
 
-        for token, token_type in self._tokenizer:
-            if token_type == 'literal':
-                node = self._parse_literal(token)
+        for token_type, token in self._tokenizer:
+            node = None
+            if token_type == 'text':
+                node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 node = self._parse_tag_stmt(token)
             elif token_type == 'tag_repr':
@@ -100,4 +118,4 @@ class Parser(object):
         return group
 
     def _remove_tag(self, token):
-        return token[2:] + token[:-2]
+        return token[2:-2]

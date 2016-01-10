@@ -1,18 +1,33 @@
 import hashlib
 
 class User:
-  def __init__(self,username,password,name,email):
+  def __init__(self,username,password,email):
     self.username = username
     self.password = password
     self.email = email
-  
+    self._saved = saved
+
   def check_password(self,password):
-    return self.password == hashlib.sha512(password).hexdigest()  
+    return self.password == hashlib.sha512(password).hexdigest()
+	
+  def new_list(self):
+    pass
 
   @staticmethod
   def find(username):
     cur = conn.cursor()
-    
+
+  @staticmethod
+  def new_user(self, *args):
+    pass
+
   @staticmethod
   def authenticate(username,password):
+    hashed_pw = hashlib.sha512(password).hexdigest()
     cur = conn.cursor()
+    cur.execute('SELECT * FROM users WHERE username=? AND password=?',(username,hashed_pw))
+
+    result = cur.fetchone()
+    if result is None: return False
+    return User(**result)
+
