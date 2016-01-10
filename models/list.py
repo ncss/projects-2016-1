@@ -22,7 +22,8 @@ class List:
     cur.execute('SELECT * FROM list where author=?', (uid,))
     results = cur.fetchall()
     cur.close()
-    return results
+    if not results return None
+    return [cls.from_row(i) for i in results]
 
   @classmethod
   def from_row(cls,row):

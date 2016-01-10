@@ -1,6 +1,5 @@
-import parser
-import tokenizer
-
+from . import parser
+from . import tokenizer
 
 def render(filename: str, **kwargs) -> str:
     with open(filename) as f:
