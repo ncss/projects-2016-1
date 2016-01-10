@@ -15,6 +15,8 @@ class Parser(object):
     def _parse_tag_stmt(self, token):
         op, args = self._remove_tag(token).split(maxsplit=1)
 
+        node = None
+
         if op == 'for':
             node = self._parse_for(token)
         elif op == 'if':
@@ -39,7 +41,7 @@ class Parser(object):
 
         if_node = IfNode(predicate)
 
-        group = GroupNode()
+        group = GroupNode(self._context)
 
         for token_type, token in self._tokenizer:
             node = None
@@ -62,12 +64,11 @@ class Parser(object):
         return if_node
 
     def _parse_for(self, token):
-        op, args = self._remove_tag(token).split(maxsplit=1)
-        item, collection = args
+        _, item, _, collection = self._remove_tag(token).split(maxsplit=3)
 
         for_node = ForNode(item, collection)
 
-        group = GroupNode()
+        group = GroupNode(self._context)
 
         for token_type, token in self._tokenizer:
             node = None
@@ -76,6 +77,7 @@ class Parser(object):
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end for %} tag
                 op, args = self._remove_tag(token).split(maxsplit=1)
+                args = args.split()
                 if op == 'end' and args[0] == 'for':
                     break
                 else:
@@ -98,7 +100,7 @@ class Parser(object):
         return PythonNode(token)
 
     def parse(self):
-        group = GroupNode()
+        group = GroupNode(self._context)
 
         for token_type, token in self._tokenizer:
             node = None

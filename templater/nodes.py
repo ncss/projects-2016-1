@@ -30,7 +30,7 @@ class PythonNode(Node):
         self.expr = expr
 
     def eval(self, context):
-        return eval(self.expr, {}, context)
+        return str(eval(self.expr, {}, context))
 
 class IfNode(Node):
     def __init__(self, predicate=''):
@@ -50,13 +50,18 @@ class ForNode(Node):
     def __init__(self, item, collection):
         self._item = item
         self._collection = collection
+        self._child = None
 
     def eval(self, context):
         result = ''
 
         for next_val in eval(self._collection, {}, context):
-            self._children[self._item] = next_val
-            next_html = self._children[0].eval(context)
+            child_context = context
+            child_context[self._item] = next_val
+            next_html = self._child.eval(child_context)
             result += next_html
 
         return result
+
+    def add_child(self, node):
+        self._child = node
