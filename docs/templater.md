@@ -1,7 +1,14 @@
 Templater
 =========
 
-# How to use
+## Example python usage
+```
+import templater
+user = User("Tim") if user_logged_in else None
+templater.render("templates/dashboard.html", user=user, your_lists_count=42)
+```
+
+## Example template file
 ```
 <html>
     <head>
@@ -22,25 +29,28 @@ Templater
 </html>
 ```
 
-# Tags
+## Tags
 
-## Echo / Print
+### Echo / Print
 ```
 {{ var_name }}
 ```
 
-## If / Elif / Else
+### Include
+```
+{% include templates/header.html %}
+```
+
+### If / Else
 ```
 {% if expression %}
-    ...
-{% elif expression %}
     ...
 {% else %}
     ...
 {% end if %}
 ```
 
-## For loop
+### For loop
 ```
 {% for value in list %}
     ...
