@@ -1,16 +1,19 @@
-class ListContent:
-  # Definitely needed to connect to database
-  @staticmethod
-  def connect(db):
-    global conn
-    conn = db
+import sqlite3
 
+
+
+class ListContent:
   def __init__(self, content, list_num, item_order):
     self.content = content
     self.list_num = list_num
     self.item_order = item_order
     
-  
+  @staticmethod
+  def create(content, list_num, item_order):
+    cur = conn.execute('''INSERT INTO users VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
+    return ListContent(content, list_num, item_order)
+
+    
   @staticmethod  
   def find(content):
     cur = conn.execute('''SELECT * FROM list_contents WHERE content=?''', (content,))
