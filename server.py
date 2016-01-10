@@ -13,7 +13,13 @@ TO DO LIST:
     - index_handler
 '''
 
-
+def is_logged_in(response):
+    if user_id != None:
+        return 
+    # response if set user_id
+    # return func
+    # otherwise
+    # return error_handler
 server = Server()
 
 def index_handler(response):
@@ -51,6 +57,7 @@ def create_handler(response):
 # NEED MIST ID BEFORE THIS WILL WORK
 #def edit_handler(response):
     #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
