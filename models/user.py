@@ -5,6 +5,7 @@ class User:
     self.username = username
     self.password = password
     self.email = email
+    self._saved = saved
 
   def check_password(self,password):
     return self.password == hashlib.sha512(password).hexdigest()
@@ -28,5 +29,5 @@ class User:
 
     result = cur.fetchone()
     if result is None: return False
-    return User(username=result["username"],password=result["password"],email=result["email"])
+    return User(**result)
 
