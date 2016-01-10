@@ -1,48 +1,68 @@
 Templater
 =========
 
-# How to use
+## Example python usage
+```python
+import templater
+user = User("Tim Dawborn", "tim@ncss.edu.au")
+templater.render("templates/listview.html", user=user,
+                 movie_list=["Aladdin", "Finding Nemo"])
 ```
-<html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        {% if user %}
-            Hi {{ user.name }}!
-        {% else %}
-            <a href="{{ login_path }}">Click here to login</a>
-        {% end if %}
-        <ul>
-            {% for item in m_list %}
-                <li>{{ item }}</li>
-            {% end for %}
-        </ul>
-    </body>
+
+## Example template file
+
+**index.html**:
+
+```html
+{% include templates/header.html %}
+{% if user %}
+    Hi {{ user.name }}!
+{% else %}
+    <a href="/login">Click here to login</a>
+{% end if %}
+<ul>
+    {% for item in movie_list %}
+        <li>{{ item }}</li>
+    {% end for %}
+</ul>
+</body>
 </html>
 ```
 
-# Tags
+**header.html**:
 
-## Echo / Print
+```html
+<html>
+    <head>
+        <title>{{ user.name }}'s Movie List</title>
+    </head>
+    <body>
+```
+
+## Tags
+
+### Echo / Print
 ```
 {{ var_name }}
 ```
 
-## If / Elif / Else
+### Include
+```
+{% include templates/header.html %}
+```
+
+### If / Else
 ```
 {% if expression %}
-    ...
-{% elif expression %}
     ...
 {% else %}
     ...
 {% end if %}
 ```
 
-## For loop
+### For loop
 ```
-{% for value in list %}
+{% for value in movie_list %}
     ...
 {% end for %}
 ```
