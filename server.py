@@ -1,5 +1,7 @@
 from tornado.ncss import Server
 
+import server.util as util
+
 '''
 TO DO LIST:
 - add list_id to the URL for registering view and edit
@@ -10,18 +12,12 @@ TO DO LIST:
     - view_handler
     - edit_handler
     - settings_handler
-    - index_handler
 '''
 
-def is_logged_in(response):
-    if user_id != None:
-        return 
-    # response if set user_id
-    # return func
-    # otherwise
-    # return error_handler
+
 server = Server()
 
+@util.requires_login
 def index_handler(response):
     response.write("<h1>Hello, World! </h1> <p>user_id = {}</p>".format(response.get_secure_cookie('user_id')))
     #if cookie[user_id] != None:
@@ -58,7 +54,6 @@ def create_handler(response):
 #def edit_handler(response):
     #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
-
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
                      
@@ -72,6 +67,6 @@ server.register(r'/dashboard', dashboard_handler)
 server.register(r'/create', create_handler)
 #server.register(r'/{}/view'.format(), view_handler)
 #server.register(r'/{}/edit'.format(), edit_handler)
-server.register(r'/dashboard/settings', settings_handler)
+server.register(r'/settings', settings_handler)
 
 server.run()
