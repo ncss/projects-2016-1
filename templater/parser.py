@@ -1,5 +1,5 @@
-from nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
-from tokenizer import Tokenizer
+from .nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
+from .tokenizer import Tokenizer
 
 class Parser(object):
     def __init__(self, tokenizer):
@@ -39,6 +39,8 @@ class Parser(object):
         op, args = self._remove_tag(token).split(maxsplit=1)
         predicate = args
 
+        false_branch = False
+
         if_node = IfNode(predicate)
 
         group = GroupNode()
@@ -49,8 +51,11 @@ class Parser(object):
                 node = self._parse_text(token)
             elif token_type == 'tag_stmt':
                 # Check if we are looking at an {% end if %} tag
-                op, args = self._remove_tag(token).split(maxsplit=1)
-                args = args.strip()
+                op, *args = self._remove_tag(token).split(maxsplit=1)
+                if op == 'else':
+                    false_branch = True
+                    break
+                args = args[0].strip()
                 if op == 'end' and args == 'if':
                     break
                 else:
@@ -61,6 +66,28 @@ class Parser(object):
             group.add_child(node)
 
         if_node.set_true_child(group)
+
+        if false_branch:
+            group = GroupNode()
+
+            for token_type, token in self._tokenizer:
+                node = None
+                if token_type == 'text':
+                    node = self._parse_text(token)
+                elif token_type == 'tag_stmt':
+                    # Check if we are looking at an {% end if %} tag
+                    op, args = self._remove_tag(token).split(maxsplit=1)
+                    args = args.strip()
+                    if op == 'end' and args == 'if':
+                        break
+                    else:
+                        node = self._parse_tag_stmt(token)
+                elif token_type == 'tag_repr':
+                    node = self._parse_tag_repr(token)
+
+                group.add_child(node)
+
+            if_node.set_false_child(group)
 
         return if_node
 
