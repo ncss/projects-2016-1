@@ -36,8 +36,12 @@ INSERT INTO lists VALUES (2, 'top ten movies3', 'john smith3');
 INSERT INTO lists VALUES (3, 'top ten movies4', 'john smith4');
 INSERT INTO lists VALUES (4, 'top ten movies5', 'john smith5');
 
-/*
-INSERT INTO list_contents VALUES (
 
+INSERT INTO list_contents VALUES (0, 'Hackers: this movie is really cool', 0, 1);
+INSERT INTO list_contents VALUES (1, 'Star Wars: this movie is really cool', 0, 3);
+INSERT INTO list_contents VALUES (2, 'Specter: this movie is really cool', 0, 2);
+INSERT INTO list_contents VALUES (3, 'The Arrow: this show is awesome', 1, 2);
+INSERT INTO list_contents VALUES (4, 'Pokemon Indigo league: this show is awesome', 2, 1);
+/*
 INSERT INTO likes VALUES (
 */ 
