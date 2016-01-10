@@ -6,8 +6,12 @@ class ListContent:
     
   
   @staticmethod  
-  def find(description):
-    pass
+  def find(content):
+    cur = conn.execute('''SELECT * FROM list_contents WHERE content=?''', (content,))
+    row = cur.fetchone()
+    if row is None:
+      raise UserNotFound('{} does not exist'.format(content))
+    return ListContent(row[0], row[1], row[2])
 
 
 if __name__ == '__main__':
