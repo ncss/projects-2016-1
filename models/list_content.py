@@ -16,7 +16,7 @@ class ListContent:
 
   @classmethod
   def create(cls, content, list_num, item_order):
-    cur = conn.execute('''INSERT INTO users VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
+    cur = conn.execute('''INSERT INTO list_contents VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
     return cls(content, list_num, item_order)
 
     

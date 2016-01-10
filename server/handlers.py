@@ -1,4 +1,5 @@
 import server.util as util
+from db import User
 
 @util.requires_login
 def index_handler(response):
@@ -10,6 +11,9 @@ def index_handler(response):
         #response.write(render_template("index.html", username = None)                                  
 
 def login_handler(response):
+    username = response.get_field("username", "")
+    password = response.get_field("password", "")
+    User.authenticate(username, password)
     response.set_secure_cookie('user_id', '-1')
     response.write("<h1>Login Page</h1>")
     response.redirect('/')
