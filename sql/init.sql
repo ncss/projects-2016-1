@@ -20,6 +20,7 @@ CREATE TABLE list_contents (
 );
 
 CREATE TABLE likes (
+  id    INTEGER PRIMARY KEY AUTOINCREMENT,
   person    INT    NOT NULL,
   list    INT    NOT NULL
 );
