@@ -1,13 +1,5 @@
-
 import sqlite3
 
-class List:
-  # Definitely needed to connect to database
-  @staticmethod
-  def connect(db):
-    global conn
-    conn = sqlite3.connect(db)
-  
 
 def convert_row(row):
   keys = row.keys()
