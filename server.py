@@ -10,6 +10,7 @@ TO DO LIST:
     - view_handler
     - edit_handler
     - settings_handler
+    - index_handler
 '''
 
 
