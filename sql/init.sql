@@ -43,6 +43,7 @@ INSERT INTO list_contents VALUES (1, 'Star Wars: this movie is really cool', 0, 
 INSERT INTO list_contents VALUES (2, 'Specter: this movie is really cool', 0, 2);
 INSERT INTO list_contents VALUES (3, 'The Arrow: this show is awesome', 1, 2);
 INSERT INTO list_contents VALUES (4, 'Pokemon Indigo league: this show is awesome', 2, 1);
+
 /*
 INSERT INTO likes VALUES (
 */ 
