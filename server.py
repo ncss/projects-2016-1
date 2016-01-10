@@ -28,5 +28,6 @@ server.register(r'/create', handlers.create_handler)
 #server.register(r'/{}/view'.format(), handlers.view_handler)
 #server.register(r'/{}/edit'.format(), handlers.edit_handler)
 server.register(r'/settings', handlers.settings_handler)
+server.register(r'/mist', handlers.mini_list_handler)
 
 server.run()
