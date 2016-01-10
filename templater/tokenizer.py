@@ -15,6 +15,12 @@ class Tokenizer:
         return self
 
     def __next__(self):
+        temp = self.next()
+        if temp is None:
+            raise StopIteration
+        return temp
+
+    def next(self):
         """
         >>> x = Tokenizer("{% test %} hello {{ test }}")
         >>> next(x)
