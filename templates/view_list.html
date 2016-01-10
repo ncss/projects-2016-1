@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <body>
-    <h1>Mist Title</h1>
-	<p>Mist Description</p>
+{% include header.html %}
+    <h1>{{ list.name }}</h1>
+	<p>{{ list.description }}</p>
     <ol>
-      <li>
-	  Mist Item
-	  <!--images and/or item description may be added as mvp+1 -->
-	  </li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <!--other items go here-->
+	<!--images and/or item description may be added as mvp+1 -->
+	{% for list_item in list.content %}
+	  <li>{{ list_item }}</li>
+	{% end for %}
 	</ol>
-  </body>
-</html>
+{% include footer.html %}
