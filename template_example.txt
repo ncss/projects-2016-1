@@ -1,0 +1,18 @@
+1. Include other files
+{% include templates/header.html %}
+
+2. If statements
+{% if user_is_logged in %}
+<p>Hello, {{ user }}!</p>
+{% else %}
+<form action="/login">
+<button type="submit">Log in</button>
+</form>
+{% end if %}
+
+3. For loops
+<ul>
+{% for list_item in mist %}
+<li> {{item}} </li>
+{% end for %}
+</ul>
