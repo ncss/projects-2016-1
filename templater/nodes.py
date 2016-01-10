@@ -1,14 +1,11 @@
 class Node(object):
-    def __init__(self, context):
-        self._children = []
-
-    def eval(self):
+    def eval(self, context):
         raise NotImplementedError()
 
-    def add_child(self, node):
-        self._children.append(node)
-
 class GroupNode(Node):
+    def __init__(self):
+        self._children = []
+
     def eval(self, context):
         result = ''
 
@@ -17,6 +14,9 @@ class GroupNode(Node):
             result += child_html
 
         return result
+
+    def add_child(self, node):
+        self._children.append(node)
 
 class TextNode(Node):
     def __init__(self, content=''):
@@ -35,16 +35,23 @@ class PythonNode(Node):
 class IfNode(Node):
     def __init__(self, predicate=''):
         self.predicate = predicate
+        self._true_child = None
+        self._false_child = None
 
     def eval(self, context):
         predicate_result = eval(self.predicate, {}, context)
         if predicate_result:
-            return self._children[0].eval(context)
+            return self._true_child.eval(context)
+        elif self._false_child is not None:
+            return self._false_child.eval(context)
         else:
-            # Else evaluate branch
-            if len(self._children) == 2:
-                return self._children[1].eval(context)
             return ''
+
+    def set_true_child(self, node):
+        self._true_child = node
+
+    def set_false_child(self, node):
+        self._false_child = node
 
 class ForNode(Node):
     def __init__(self, item, collection):
