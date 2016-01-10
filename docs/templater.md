@@ -11,7 +11,7 @@ Templater
         {% if user %}
             Hi {{ user.name }}!
         {% else %}
-            <a href="{{ path("login") }}">Click here to login</a>
+            <a href="{{ login_path }}">Click here to login</a>
         {% end if %}
         <ul>
             {% for item in m_list %}
