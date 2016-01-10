@@ -29,6 +29,8 @@ class Parser(object):
     def _parse_include(self, token):
         op, filename = self._remove_tag(token).split(maxsplit=1)
 
+        filename = filename.strip()
+
         with open(filename) as f:
             t = Tokenizer(f.read())
             p = Parser(self._context, t)
