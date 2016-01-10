@@ -4,6 +4,7 @@
 		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="normalize.css">
 		<link rel="stylesheet" type="text/css" href="style_sheet.css">
+		<title>{{ page_title }} - {{ site_title }}</title>
 	</head>
 	<body>
 		<header>
@@ -15,24 +16,5 @@
 				<a href="/settings">Settings</a>
 				<a href="/signout">Sign Out</a>
 			</nav>
-			<script>
-			window.addEventListener("load", function(){
-				var button = document.getElementById("profile-button");
-				var nav = document.getElementById("nav");
-				button.addEventListener("click", function(){
-					nav.hidden = false;
-				});
-				document.documentElement.addEventListener("click", function(event){
-					var current_target = event.target;
-					while (current_target) {
-						if (current_target.localName == "header") {
-							return;
-						}
-						current_target = current_target.parentNode;
-					}
-					nav.hidden = true;
-				});
-			});
-			
-			</script>
+		<h1>{{ page_title }</h1>
 		</header>

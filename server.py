@@ -15,7 +15,7 @@ TO DO LIST:
     - settings_handler
 '''
 
-server = Server(port=8887)
+server = Server()
 
 
 # Handlers
