@@ -2,16 +2,17 @@ from lib import ORM
 import hashlib
 
 class User(ORM.ORM):
-  def __init__(self,username,password,email):
+  def __init__(**kwargs,saved=False):
     self.username = username
     self.password = password
     self.email = email
+    self._saved = saved
 
   def check_password(self,password):
     return self.password == hashlib.sha512(password).hexdigest()
 	
   def new_list(self):
-    
+    pass
 
   @staticmethod
   def find(username):
@@ -29,5 +30,5 @@ class User(ORM.ORM):
 
     result = cur.fetchone()
     if result is None: return False
-    return User(username=result["username"],password=result["password"],email=result["email"])
+    return User(**result,saved=True)
 
