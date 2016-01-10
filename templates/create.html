@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<head>
-	<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="normalize.css">
-	<link rel="stylesheet" type="text/css" href="style_sheet.css">
-</head>	
-<html>
-  <body>
+{{ include templates/header.html }}
     <form action="getform.php" method="get" id="list">
    	  <p><input type="text" name="title" placeholder="Title"></p>
       <p><textarea name="description" placeholder="Write a description..."></textarea></p>
@@ -20,6 +13,4 @@
       <p><label>9</label><input type="text" name="listitem9" placeholder="List Item 9"></p>
       <p><label>10</label><input type="text" name="listitem10" placeholder="List Item 10"></p>
     </form>
-  </body>
-
-</html>
+{{ include templates/footer.html }}
