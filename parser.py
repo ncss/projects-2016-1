@@ -1,10 +1,10 @@
 from nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
+from tokenizer import Tokenizer
 
 class Parser(object):
     def __init__(self, context, tokenzier=None):
         self._context = context
         self._tokenizer = tokenzier
-        self._head = None
 
     def set_tokenzier(self, tokenzier):
         self._tokenizer = tokenzier
@@ -19,8 +19,19 @@ class Parser(object):
             node = self._parse_for(token)
         elif op == 'if':
             node = self._parse_if(token)
+        elif op == 'include':
+            node = self._parse_include(token)
 
         return node
+
+    def _parse_include(self, token):
+        op, filename = self._remove_tag(token).split(maxsplit=1)
+
+        with open(filename) as f:
+            t = Tokenizer(f.read())
+            p = Parser(self._context, t)
+
+        return p.parse()
 
     def _parse_if(self, token):
         op, args = self._remove_tag(token).split(maxsplit=1)

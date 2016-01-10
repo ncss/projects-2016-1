@@ -24,6 +24,9 @@ class Tokenizer:
         >>> x = Tokenizer.tokenize("{% test %} hello {{ test }}")
         >>> print(list(x))
         [('tag-stmt', '{% test %}'), ('text', ' hello '), ('tag-repr', '{{ test }}')]
+        >>> x = Tokenizer.tokenize(" {{ test }} pp {{ test }} ")
+        >>> print(list(x))
+        [('text', ' '), ('tag-repr', '{{ test }}'), ('text', ' pp '), ('tag-repr', '{{ test }}'), ('text', ' ')]
         
         Args:
             text:
@@ -31,16 +34,20 @@ class Tokenizer:
         tokens = []
         in_stmt_token = False
         in_repr_token = False
+        in_literal_token = False
         literal_token = []
         symbol_start = -1
-        for i in range(len(text)):
+        i = 0
+        while i < len(text):
+        #for i in range(len(text)):
+            #Check current letter and one letter ahead
             symbol = text[i:i+2]
             if symbol == "{%" or symbol == "{{":
                 if in_stmt_token or in_repr_token:
                     raise TemplateSyntaxException("Cannot create a tag inside a tag: '{}'".format(text[symbol_start:i+2]))
-                if len(literal_token) > 0:
-                    tokens.append(("text", "".join(literal_token[1:])))
-                    literal_token = []
+                if in_literal_token:
+                    tokens.append((("text", text[symbol_start:i])))
+                    in_literal_token = False
                 symbol_start = i
                 if symbol == "{%":
                     in_stmt_token = True
@@ -61,14 +68,19 @@ class Tokenizer:
                     else:
                         tokens.append(("tag-repr", text[symbol_start:i+2]))
                         in_repr_token = False
-            elif not (in_stmt_token or in_repr_token):
-                literal_token.append(text[i])
+                i += 1
+            elif not (in_stmt_token or in_repr_token) and not in_literal_token:
+                symbol_start = i
+                in_literal_token = True
+            i += 1
 
-        if len(literal_token) > 1:
-            tokens.append(("text", "".join(literal_token[1:])))
+        if in_literal_token:
+            tokens.append((("text", text[symbol_start:i])))
 
         return tokens
-    
+#x = Tokenizer(" {{ test }} pp {{ test }} ")
+#x = Tokenizer(open("test_tokenizer.txt").read())
+print(x.tokens)
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
