@@ -5,3 +5,4 @@ database.db
 /.idea/
 /vendor/
 venv
+.db
