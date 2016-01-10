@@ -1,8 +1,10 @@
-import sqlite3
-
-
-
 class ListContent:
+  # Definitely needed to connect to database
+  @staticmethod
+  def connect(db):
+    global conn
+    conn = db
+
   def __init__(self, content, list_num, item_order):
     self.content = content
     self.list_num = list_num

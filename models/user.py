@@ -1,21 +1,21 @@
-
-import sqlite3
-conn = sqlite3.connect("database.db")
-conn.row_factory = sqlite3.Row
-
 import hashlib
 
 def convert_row(row):
   keys = row.keys()
-
   return {key:row[idx] for idx,key in enumerate(keys)}
 
 
 class User:
+  # Definitely needed to connect to database
+  @staticmethod
+  def connect(db):
+    global conn
+    conn = db
+
   def __init__(self,saved=False,**kwargs):
     self.username = kwargs["username"]
     self.password = kwargs["password"]
-    self.saved = saved
+    self._saved = saved
     
 
   def check_password(self,password):
@@ -37,7 +37,7 @@ class User:
       ''',(self.username,self.password,self.email));
     conn.commit()
     cur.close()
-  
+
   @staticmethod
   def findUsername(username):
     cur = conn.cursor()

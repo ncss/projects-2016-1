@@ -1,4 +1,10 @@
 class List:
+  # Definitely needed to connect to database
+  @staticmethod
+  def connect(db):
+    global conn
+    conn = db
+  
   def __init__(self, list, item_order):
     self.list = list
     self.item_order = item_order
