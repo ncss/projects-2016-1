@@ -31,7 +31,8 @@ class User:
   def save(self):
     cur = cls.conn.cursor()
     if not self._saved:
-      cur.execute('INSERT INTO users (username,password,email) VALUES (?,?,?);', (self.username,self.password,self.email));
+      cur.execute('INSERT INTO users (username,password,email) VALUES (?,?,?);', (self.username,self.password,self.email))
+      self._saved = True
     else:
       cur.execute('''
         UPDATE users
