@@ -5,7 +5,7 @@ class List:
 
   def find(self, id):
     cur = conn.cursor()
-    cur.execute('select * FROM list WHERE id=?', (id,))
+    cur.execute('select * FROM lists WHERE id=?', (id,))
 
   '''def  (self, ):
     cur = conn.cursor()
