@@ -1,28 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="normalize.css">
-    <link rel="stylesheet" type="text/css" href="style_sheet.css">
-  </head>	
-  <body>
-    <h1>Mist Title</h1>
-	<p>Mist Description</p>
+{% include header.html %}
+    <h1>{{ list.name }}</h1>
+	<p>{{ list.description }}</p>
     <ol>
-      <li>
-	  Mist Item
-	  <!--images and/or item description may be added as mvp+1 -->
-	  </li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <li>Mist Item</li>
-	  <!--other items go here-->
+	<!--images and/or item description may be added as mvp+1 -->
+	{% for list_item in list.content %}
+	  <li>{{ list_item }}</li>
+	{% end for %}
 	</ol>
-  </body>
-</html>
+{% include footer.html %}

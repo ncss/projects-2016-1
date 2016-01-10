@@ -1,24 +1,36 @@
+
+import sqlite3
+
+
 class ListContent:
   @classmethod
   def connect(cls,db):
     cls.conn = db
   
+
   def __init__(self, content, list_num, item_order):
     self.content = content
     self.list_num = list_num
     self.item_order = item_order
     
-  
+
+  @classmethod
+  def create(cls, content, list_num, item_order):
+    cur = conn.execute('''INSERT INTO list_contents VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
+    return cls(content, list_num, item_order)
+
+    
+
   @classmethod  
-  def find(content):
+  def find(cls, content):
     cur = cls.conn.execute('''SELECT * FROM list_contents WHERE content=?''', (content,))
     row = cur.fetchone()
     if row is None:
       raise UserNotFound('{} does not exist'.format(content))
-    return ListContent(row[0], row[1], row[2])
+    return cls(row[0], row[1], row[2])
 
   @classmethod
-  def findByListId(cls,list_id):
+  def findByListId(cls, list_id):
     cur = cls.conn.execute('''SELECT * FROM list_contents WHERE list=?''', (list_id,))
     rows = cur.fetchall()
       
@@ -38,7 +50,7 @@ class ListContent:
 
     list = []
     for row in rows:
-      item = ListContent(row[1],row[2],row[3])
+      item = cls(row[1],row[2],row[3])
       list.append(item)
 
     return list

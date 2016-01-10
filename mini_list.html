@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<body>
+{% include "templates/header.html" %}
 		<h2>Title</h2>
 		<a href="/like">Like</a>
-		<ul>
-			<li>Mist Element 1</li>
-			<li>Mist Element 2</li>
-			<li>Mist Element 3</li>
-			<li>Mist Element 4</li>
-			<li>Mist Element 5</li>
+		<ul> <!-- SHOULD THIS BE AN OL - ARE USERS PRIORITISING?-->
+			{% for list_item in mist %}
+			<li>{{item}}</li>
+			{% end for %}
 		</ul>
-	</body>
-</html>
+{% include "templates/footer.html" % }
+
