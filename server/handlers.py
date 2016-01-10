@@ -1,12 +1,14 @@
 import server.util as util
 from db import User
+
 from models.list_content import ListContent
 
 from templater import templater
 
 @util.requires_login
 def index_handler(response):
-    response.write("<h1>Hello, World! </h1> <p>user_id = {}</p>".format(response.get_secure_cookie('user_id')))
+    response.write(templater.render("templates/index.html"))
+    
     #if cookie[user_id] != None:
         #username = database.get_username(cookie["user_id"])
         #response.write(render_template("index.html", username = username))
@@ -14,13 +16,14 @@ def index_handler(response):
         #response.write(render_template("index.html", username = None)                                  
 
 def login_handler(response):
+    response.write(templater.render("templates/login_page.html"))
     username = response.get_field("username", "")
     password = response.get_field("password", "")
-    User.authenticate(username, password)
-    response.set_secure_cookie('user_id', '-1')
-    response.write("<h1>Login Page</h1>")
-    response.redirect('/')
-
+    user = User.authenticate(username, password)
+    if user:
+        response.set_secure_cookie('user_id', '-1')
+        response.redirect('/dashboard')
+       
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
@@ -34,7 +37,10 @@ def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) CREATE DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+    response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+
+def create_post_handler(response):
+    print(response.get_field("title"))
 
 def mini_list_handler(response):
     import sqlite3

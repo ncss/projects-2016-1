@@ -15,7 +15,7 @@ TO DO LIST:
     - settings_handler
 '''
 
-server = Server(port=8887)
+server = Server()
 
 
 # Handlers
@@ -25,6 +25,7 @@ server.register(r'/logout', handlers.logout_handler)
 server.register(r'/feed', handlers.feed_handler)
 server.register(r'/dashboard', handlers.dashboard_handler)
 server.register(r'/create', handlers.create_handler)
+server.register(r'/create/post', handlers.create_post_handler)
 #server.register(r'/{}/view'.format(), handlers.view_handler)
 #server.register(r'/{}/edit'.format(), handlers.edit_handler)
 server.register(r'/settings', handlers.settings_handler)
