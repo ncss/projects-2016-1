@@ -1,5 +1,5 @@
-from nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
-from tokenizer import Tokenizer
+from .nodes import GroupNode, TextNode, PythonNode, ForNode, IfNode
+from .tokenizer import Tokenizer
 
 class Parser(object):
     def __init__(self, tokenizer):

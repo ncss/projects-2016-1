@@ -1,0 +1,12 @@
+{% include header.html %}
+<section id='profile'>
+<h1>{{ person.name }}</h1>
+<ul id='friends-list'>
+{% for f in person.friends %}
+<li class='friend'>
+{{ f.name.title() }} {{ f.age }} {% if f.gender == 'M' %}Male{% else %}Female{% end if %}
+</li>
+{% end for %}
+</ul>
+</section>
+{% include footer.html %}
