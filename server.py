@@ -1,7 +1,3 @@
-import sys
-
-print(sys.version_info)
-
 from tornado.ncss import Server
 
 '''
@@ -38,23 +34,25 @@ def logout_handler(response):
     response.redirect('/')
 
 def feed_handler(response):
-    ...
+    response.write("<h1> ( ͡° ͜ʖ ͡°) FEED ( ͡° ͜ʖ ͡°) </h1>")
 
 # dashboard integrates profile
 def dashboard_handler(response):
-    ...
+    response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    ...
+    response.write("<h1> ( ͡° ͜ʖ ͡°) CREATE DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
-def view_handler(reponse):
-    ...
-
-def edit_handler(response):
-    ...
+# NEED MIST ID BEFORE THIS WILL WORK
+#def view_handler(reponse):
+    #response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+    
+# NEED MIST ID BEFORE THIS WILL WORK
+#def edit_handler(response):
+    #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
 def settings_handler(response):
-    ...
+    response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
                      
 
 # Handlers
@@ -66,6 +64,6 @@ server.register(r'/dashboard', dashboard_handler)
 server.register(r'/create', create_handler)
 #server.register(r'/{}/view'.format(), view_handler)
 #server.register(r'/{}/edit'.format(), edit_handler)
-server.register(r'/dashboard/settings', dashboard_handler)
+server.register(r'/settings', settings_handler)
 
 server.run()
