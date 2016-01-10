@@ -64,6 +64,6 @@ server.register(r'/dashboard', dashboard_handler)
 server.register(r'/create', create_handler)
 #server.register(r'/{}/view'.format(), view_handler)
 #server.register(r'/{}/edit'.format(), edit_handler)
-server.register(r'/settings', settings_handler)
+server.register(r'/dashboard/settings', settings_handler)
 
 server.run()
