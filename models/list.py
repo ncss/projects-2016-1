@@ -18,8 +18,12 @@ class List:
 
   @classmethod
   def find(cls, id):
+    """Gets a list by ID
+    """
     cur = cls.conn.cursor()
     cur.execute('SELECT * FROM lists WHERE id=?', (id,))
+    result = cur.fetchone()
+    return cls.from_row(result)
 
   @classmethod
   def find_by_userid(cls, uid):
