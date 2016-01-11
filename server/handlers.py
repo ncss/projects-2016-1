@@ -30,14 +30,14 @@ def logout_handler(response):
     response.redirect('/')
 
 def feed_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) FEED ( ͡° ͜ʖ ͡°) </h1>")
+    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "Mists"))
 
 # dashboard integrates profile
 def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "Mists"))
 
 def create_post_handler(response):
     print(response.get_field("title"))
