@@ -115,32 +115,38 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
+# Make lists public to everyone
 def view_handler(response, list_id):
     list = List.find(list_id)
-    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id = get_current_user_id(response), image_fetcher=IMDB.fetch_image))
+    try:
+        user_id = get_current_user_id(response)
+    except Exception as e:
+        user_id = None
+
+    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 def edit_handler(response, list_id):
     list = List.find(list_id)
     response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
 def edit_post_handler(response, list_id):
-	list = List.find(list_id)
+	a_list = List.find(list_id)
 	
-	for item in list.list_contents():
+	for item in a_list.list_contents():
 		item.remove()
 	
-	list.name = response.get_field("title", "")
+	a_list.name = response.get_field("title", "")
 	list_items = []
 	index = 1
 	while response.get_field("list_item_{}".format(index), "") != "":
 		list_items.append(response.get_field("list_item_{}".format(index)))
 		index += 1
 
-	list.save()
+	a_list.save()
 	for i, item in enumerate(list_items):
-		list_content = ListContent.create(list.id, i, item)
+		list_content = ListContent.create(a_list.id, i, item)
 
-	print("Editing post: {}, {}".format(list.name, list_items))
+	print("Editing post: {}, {}".format(a_list.name, list_items))
 
 	response.redirect('/dashboard')
 	
@@ -162,6 +168,7 @@ def view_list_handler(response, list_id):
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
+@util.requires_login
 def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
@@ -169,23 +176,23 @@ def post_like_handler(response):
     l = Likes(user_id, list_id)
     l.create(user_id, list_id)
 
-    likes = 100
+    likes = Likes.list_likes(list_id)
 
-    response.write(json.dumps({'likes':likes}))
     response.set_header('Content-Type', 'application/json')
-	
+    response.write(json.dumps({'likes':likes}))
+
 @util.requires_login
 def post_unlike_handler(response):
-	user_id = response.get_secure_cookie('user_id')
-	list_id = response.get_field('list_id')
+    user_id = response.get_field('user_id')
+    list_id = response.get_field('list_id')
 
-	l = Likes(user_id, list_id)
-	l.remove(user_id, list_id)
+    l = Likes(user_id, list_id)
+    l.remove(user_id, list_id)
 
-	likes = Likes.list_likes(list_id)
+    likes = Likes.list_likes(list_id)
 
-	response.set_header('Content-Type', 'application/json')
-	response.write(json.dumps({'likes':likes}))
+    response.set_header('Content-Type', 'application/json')
+    response.write(json.dumps({'likes':likes}))
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
@@ -196,10 +203,9 @@ def get_current_user_id(response):
 def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
 
-
-
 def page_not_found_handler(response, path):
     #insert a html page for 404
+    response.set_status(404, 'Page not found')
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
 
