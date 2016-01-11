@@ -67,7 +67,7 @@ def feed_handler(response):
     popular = sorted(mists, key = lambda list: list.get_likes())
     popular.reverse()
 	
-    user_id = get_current_user_id(response)
+    user_id = util.get_current_user_id(response)
     response.write(templater.render("templates/feed.html", mists=mists, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
