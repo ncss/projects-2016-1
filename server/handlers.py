@@ -62,4 +62,16 @@ def mini_list_handler(response):
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
-                     
+
+def post_like_handler(response):
+    print('this was a post req')
+
+    print(response.get_field('user'))
+    print(response.get_field('list'))
+
+
+    response.write('this was a post req')
+
+def get_like_handler(response):
+    print('this was a get req')
+    response.write(templater.render('templates/like.html'))
