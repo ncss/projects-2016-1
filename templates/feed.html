@@ -6,18 +6,15 @@
 	<h1 class="center">Popular Mists</h1>
 	
 	{% for mist in mists %}
-	<section>
-	  <article>
+	<article>
 		<h2>{{mist.name}}</h2>
 			<ol> 
 			{% for item in mist.list_contents() %}
 				<li> {{ item.content }} </li>
 			{% end for %}
 			</ol>
-		<button>Edit</button>
 		<!-- Image for each mist may be added in mvp+1-->
-	  </article>  
-	</section>
+	</article>
 	{% end for %}
 	
 </section>
@@ -26,18 +23,15 @@
 	<h1 class="center">New Mists</h1>
 	
 	{% for mist in mists %}
-	<section>
-	  <article>
+	<article>
 		<h2>{{mist.name}}</h2>
 			<ol> 
 			{% for item in mist.list_contents() %}
 				<li> {{ item.content }} </li>
 			{% end for %}
 			</ol>
-		<button>Edit</button>
 		<!-- Image for each mist may be added in mvp+1-->
-	  </article>  
-	</section>
+	</article>
 	{% end for %}
 	
 </section>
@@ -47,18 +41,15 @@
 	<h1 class="center">Recommended Mists</h1>
 	
 	{% for mist in mists %}
-	<section>
-	  <article>
+	<article>
 		<h2>{{mist.name}}</h2>
 			<ol> 
 			{% for item in mist.list_contents() %}
 				<li> {{ item.content }} </li>
 			{% end for %}
 			</ol>
-		<button>Edit</button>
 		<!-- Image for each mist may be added in mvp+1-->
-	  </article>  
-	</section>
+	</article>
 	{% end for %}
 	
 </section>

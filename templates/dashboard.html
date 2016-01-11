@@ -4,8 +4,7 @@
 		<div class = "box">
 		<!-- <section>User Statistics</section> -->
 		{% for mist in mists %}
-		<section>
-		  <article>
+		<article>
 			<h2>{{mist.name}}</h2>
 				<ol> 
 				{% for item in mist.list_contents() %}
@@ -14,8 +13,7 @@
 				</ol>
 			<a href="/list/{{mist.id}}/edit">Edit</a>
 			<!-- Image for each mist may be added in mvp+1-->
-		  </article>  
-		</section>
+		</article>
 		{% end for %}
 		</div>
 	</div>
