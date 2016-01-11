@@ -7,13 +7,11 @@ class ListContent(DatabaseObject):
     self.content = content
     self.list_id = list_id
     self.item_order = item_order
-
   def __str__(self):
     return  '(' + self.content + ') Content, (' + str(self.list_id) + ') List, (' + str(self.item_order) + ') List position'
 
   def remove(self):
     self.__class__.delete(self.list_id, self.item_order)
-
   def to_dict(self):
     return {'list':list, 'item_order':item_order, 'content':content}
 

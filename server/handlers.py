@@ -80,7 +80,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))#, image_fetcher=IMDB.fetch_image))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=lambda x: x))
 
 
 @util.requires_login
@@ -158,7 +158,7 @@ def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
 def post_like_handler(response):
-    user_id = response.get_field('user_id')
+    user_id = response.get_secure_cookie('user_id')
     list_id = response.get_field('list_id')
 
     l = Likes(user_id, list_id)
