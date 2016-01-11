@@ -66,8 +66,11 @@ def logout_handler(response):
 @util.requires_login
 def feed_handler(response):
     mists = List.find_all()
+    popular = sorted(mists, key = lambda list: list.get_likes())
+    popular.reverse()
+	
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists", user_id=user_id))
+    response.write(templater.render("templates/feed.html", mists=mists, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
 @util.requires_login
