@@ -1,6 +1,9 @@
 {% include templates/header.html %}
 <form action="/list/{{mist.id}}/edit" method="post">
 	<h3>Edit {{mist.name}}</h3>
+    {% if fail == "list_title_empty" %}
+	    <p class="alert">List title may not be empty!</p>
+	{% end if %}
 	<p>
 		<label for="mist_title">Title</label><br>
 		<input type="text" name="title" placeholder="Title" id="mist_title" value="{{mist.name}}">	

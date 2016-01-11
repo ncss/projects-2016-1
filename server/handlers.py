@@ -10,10 +10,9 @@ from models.imdb import IMDB
 
 from templater import templater
 
-
 def index_handler(response):
     print(response.get_secure_cookie("user_id"))
-    if is_logged_in(response):
+    if util.is_logged_in(response):
         response.redirect('/dashboard')
     else:
         response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
@@ -30,7 +29,6 @@ def post_login_handler(response):
     else:
         print("Not logged in")
         response.redirect("/login?fail=1")
-
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
@@ -57,13 +55,8 @@ def post_signup_handler(response):
         response.redirect("/signup?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
-
-        #TODO hit the database, create a new user, and set the cookie with the new user's id
         response.redirect("/")
-        # give those things to the data base
 
-
-# messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
@@ -71,28 +64,43 @@ def logout_handler(response):
 @util.requires_login
 def feed_handler(response):
     mists = List.find_all()
-    user_id = get_current_user_id(response)
-    response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists", user_id=user_id))
+	
+    popular = sorted(mists, key = lambda list: list.get_likes())
+    popular.reverse()
+	
+    recent = sorted(mists, key = lambda list: list.id)
+    recent.reverse()
+	
+    user_id = util.get_current_user_id(response)
+    response.write(templater.render("templates/feed.html", mists=recent, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
 @util.requires_login
 def dashboard_handler(response):
-    uid = get_current_user_id(response)
+    uid = util.get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
-    user_id = get_current_user_id(response)
+    user_id = util.get_current_user_id(response)
     response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
-
 
 @util.requires_login
 def create_handler(response):
-    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
+    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists", fail=response.get_field('fail', '')))
+
+def privacy_handler(response):
+    response.write(templater.render("templates/privacy.html", page_title = "Privacy", site_title = "M'lists"))
+
+def terms_handler(response):
+    response.write(templater.render("templates/terms.html", page_title = "Terms", site_title = "M'lists"))
 
 @util.requires_login
 def create_post_handler(response):
     title = response.get_field("title", "")
+    if title.strip() == "":
+        response.redirect("/create?fail=list_title_empty")
+        return
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
-    a_list = List(title, get_current_user_id(response))
+    a_list = List(title, util.get_current_user_id(response))
     a_list.save()
     for i, item in enumerate(list_items):
         list_content = ListContent.create(a_list.id, i, item)
@@ -100,7 +108,7 @@ def create_post_handler(response):
     print("Creating post: {}, {}".format(title, list_items))
 
     response.redirect('/dashboard')
-	
+
 def mini_list_handler(response):
     import sqlite3
     conn = sqlite3.connect("database.db")
@@ -111,43 +119,64 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
-@util.requires_login
+# Make lists public to everyone
 def view_list_handler(response, list_id):
-    mist = List.find(list_id)
+    list = List.find(list_id)
+    try:
+        user_id = util.get_current_user_id(response)
+    except Exception as e:
+        user_id = None
+
+    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
+
+def edit_handler(response, list_id):
+    list = List.find(list_id)
+    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists", fail=response.get_field('fail', '')))
+
+def edit_post_handler(response, list_id):
+    # Put this early otherwise all the items are removed!
+    if response.get_field("title", "") == "":
+        response.redirect("/list/{}/edit?fail=list_title_empty".format(list_id))
+        return
+
+    a_list = List.find(list_id)
+
+    a_list.name = response.get_field("title", "")
+    list_items = []
+    index = 1
+    while response.get_field("list_item_{}".format(index), "") != "":
+        list_items.append(response.get_field("list_item_{}".format(index)))
+        index += 1
+
+    a_list.save()
+    for i, item in enumerate(list_items):
+        list_content = ListContent.create(a_list.id, i, item)
+
+    print("Editing post: {}, {}".format(a_list.name, list_items))
+
+    response.redirect('/dashboard')
+
+def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id,))
+
+    c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id))
     likes = c.fetchone()
-    response.write(templater.render("templates/view_list.html", mist = mist, page_title = mist.name, user_id = get_current_user_id(response), likes=likes, site_title = "M'lists", image_fetcher=IMDB.fetch_image))
 
-@util.requires_login
-def edit_handler(response, list_id):
-	mist = List.find(list_id)
-	response.write(templater.render("templates/edit.html", mist = mist, page_title = "Edit", site_title = "M'lists"))
-	
-@util.requires_login
-def edit_post_handler(response, list_id):
-	mist = List.find(list_id)
-	for item in mist.list_contents():
-		item.remove()
-	
-	list_items = response.get_arguments("list_item")
-	list_items = filter(None, list_items)
-	
-	mist.name = response.get_field("title", "")
-	mist.save()
-	for i, item in enumerate(list_items):
-		list_content = ListContent.create(mist.id, i, item)
-	print("Editing post: {}, {}".format(mist.name, list_items))
-	response.redirect('/dashboard')
+    list = {
+            "title": "Top 10 Adventure Movies",
+            "description": "A list about adventure movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
 
-@util.requires_login
+    response.write(templater.render('templates/view_list.html', likes=likes, list=list))
+
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
 @util.requires_login
 def post_like_handler(response):
-    user_id = response.get_secure_cookie('user_id')
+    user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
     l = Likes(user_id, list_id)
@@ -160,7 +189,7 @@ def post_like_handler(response):
 
 @util.requires_login
 def post_unlike_handler(response):
-    user_id = response.get_secure_cookie('user_id')
+    user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
     l = Likes(user_id, list_id)
@@ -171,24 +200,17 @@ def post_unlike_handler(response):
     response.set_header('Content-Type', 'application/json')
     response.write(json.dumps({'likes':likes}))
 
-def get_current_user_id(response):
-    uid = response.get_secure_cookie("user_id")
-    if uid is None:
-        raise Exception("No user is currently logged in")
-    return uid
-
-def is_logged_in(response):
-    return response.get_secure_cookie("user_id") is not None
-
 def page_not_found_handler(response, path):
     #insert a html page for 404
+    response.set_status(404, 'Page not found')
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
-
 
 def meme_handler(response):
     response.redirect('http://blaker.space')
 
-
-
-
-
+def is_user_logged_in_test_handler(response):
+    try:
+        user_id = get_current_user_id(response)
+    except Exception as e:
+        user_id = None
+    response.write(repr(user_id))

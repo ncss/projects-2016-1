@@ -1,6 +1,9 @@
 {% include templates/header.html %}
 <form action="/create" method="post" class="overflow-hidden">
 	<h3>Create a list</h3>
+    {% if fail == "list_title_empty" %}
+	    <p class="alert">List title may not be empty!</p>
+	{% end if %}
 	<p>
 		<label for="mist_title">Title</label><br>
 		<input type="text" name="title" placeholder="Title" id="mist_title">	
