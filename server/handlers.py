@@ -20,7 +20,6 @@ def post_login_handler(response):
         response.redirect('/dashboard')
     else:
         response.redirect("/")
-    response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
@@ -52,26 +51,17 @@ def logout_handler(response):
 
 @util.requires_login
 def feed_handler(response):
-    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "Mists"))
+    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "M'lists"))
 
 # dashboard integrates profile
 @util.requires_login
 def dashboard_handler(response):
-    new_mists = [
-        {
-            "title": "Top 10 Action Movies",
-            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
-        },
-        {
-            "title": "Top 10 Adventure Movies",
-            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
-        }
-    ]
-    response.write(templater.render("templates/dashboard.html",mists=new_mists, page_title = "Dashboard", site_title = "Mists"))
+        response.write(templater.render("templates/dashboard.html", page_title = "Dashboard", site_title = "M'lists"))
+
 
 @util.requires_login
 def create_handler(response):
-    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "Mists"))
+    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
 
 @util.requires_login
 def create_post_handler(response):
