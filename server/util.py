@@ -1,8 +1,6 @@
 from templater import templater
 
-from  models import User
-
-
+from models import User
 
 def requires_login(fn):
     def result(response):
