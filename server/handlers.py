@@ -112,9 +112,15 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
+# Make lists public to everyone
 def view_handler(response, list_id):
     list = List.find(list_id)
-    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id = get_current_user_id(response), image_fetcher=IMDB.fetch_image))
+    try:
+        user_id = get_current_user_id(response)
+    except Exception as e:
+        user_id = None
+
+    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 def edit_handler(response, list_id):
     list = List.find(list_id)
