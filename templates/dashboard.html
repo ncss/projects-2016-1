@@ -3,13 +3,14 @@
     <div class="dashboard">
 		<div class = "box">
 		<!-- <section>User Statistics</section> -->
+
 		{% if not mists %}
 			<form>
 				<h4> Looks like you don't have any mists! <a href="/create">Create Mist</a></h4>
 			</form>
 		{% else %}
 			{% for mist in mists %}
-			<section>
+
 			  <article>
 				<h2>{{mist.name}}</h2>
 					<ol> 
@@ -20,9 +21,10 @@
 				<a class = "link_button" href="/edit">Edit</a>
 				<!-- Image for each mist may be added in mvp+1-->
 			  </article>  
-			</section>
+
 			{% end for %}
 		{% end if %}
+
 	</div>
   </body>
 </html>

@@ -56,42 +56,42 @@ form {
 	border-radius: 6px;
 	overflow: auto;
 }
-	form h3{
-		color: rgb(51, 55, 68);
-	}
-	
-	form label{
-		font-weight: 700;
-	}
+form h3{
+	color: rgb(51, 55, 68);
+}
 
-	form input[type="checkbox"], form input[type="radio"]{
-		margin-left: 1rem;
-	}
-	
-	form input[type="submit"] {
-		background-color: rgb(44, 139, 247);
-		color: white;
-		font-weight: 700;
-		padding: 8px 30px 8px 30px;
-		float: right;
-	}
-	
-	form input[type="text"], form textarea, form input[type="password"], form input[type="email"]	{
-		width: 100%;
-		box-sizing: border-box;
-	}
-	
-	form input, form textarea {
-		border: 1px solid white;
-		border-radius: 4px;
-		padding: 6px 8px 6px 8px;
-	}
-	
-		form input:focus, form textarea:focus {
-			border-color: rgb(247, 102, 44);
-			outline: none;
-		}
-		
+form label{
+	font-weight: 700;
+}
+
+form input[type="checkbox"], form input[type="radio"]{
+	margin-left: 1rem;
+}
+
+form input[type="submit"] {
+	background-color: rgb(44, 139, 247);
+	color: white;
+	font-weight: 700;
+	padding: 8px 30px 8px 30px;
+	float: right;
+}
+
+form input[type="text"], form textarea, form input[type="password"], form input[type="email"]	{
+	width: 100%;
+	box-sizing: border-box;
+}
+
+form input, form textarea {
+	border: 1px solid white;
+	border-radius: 4px;
+	padding: 6px 8px 6px 8px;
+}
+
+form input:focus, form textarea:focus {
+	border-color: rgb(247, 102, 44);
+	outline: none;
+}
+
 /*
 Helpers
 */
@@ -127,20 +127,31 @@ Login page
 	height: 100%;
 }
 
+.alert {
+  background-color: #ED9F9F;
+  color: #E84848;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  border: #F34848 1px solid;
+}
+
 /*
  * Feed
  */
 .feed section {
 	border: 1px solid black;
+	padding: 1px 2rem 2rem 2rem;
 	min-width: 280px;
 	margin: 8px;
 }
 
 .feed article {
-	margin:16px;
-	box-shadow: 0 2px 5px black;
-	padding-bottom: 2px;
-	cursor: pointer;
+	background-color: rgb(240, 240, 240);
+	padding: 1px 2rem 2rem 2rem;
+	margin: 2rem 0rem 2rem 0rem;
+	border-radius: 6px;
+	overflow: auto
 }
 
 .feed .center {
@@ -167,10 +178,12 @@ Dashboard!
 	margin: 8px;
 }
 
-.dashboard article{
-	margin:16px;
-	box-shadow: 0 2px 5px black;
-	overflow: auto;
+.dashboard article {
+	background-color: rgb(240, 240, 240);
+	padding: 1px 2rem 2rem 2rem;
+	margin: 2rem 0rem 2rem 0rem;
+	border-radius: 6px;
+	overflow: auto
 }
 .dashboard h1{
 text-align: center;
@@ -194,12 +207,19 @@ text-align: center;
 	float: right;
 	margin-right: 10px;
 	margin-bottom: 10px;
+	background-color: rgb(44, 139, 247);
+	color: white;
+	font-weight: 700;
+	padding: 8px 30px 8px 30px;
+	float: right;
+	border: 0;
 }
 .dashboard h2{
 	padding-left: 5px;
 	margin: 0px;
 	margin-bottom: 15px;
 }
+
 .dashboard h4{
 	margin-left: auto;
 	margin-right: auto;
@@ -214,4 +234,4 @@ text-align: center;
 
 
 	
- 
+

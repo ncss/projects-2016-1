@@ -5,4 +5,6 @@ database.db
 /.idea/
 /vendor/
 venv
-.db
+*.db
+*.db-journal
+

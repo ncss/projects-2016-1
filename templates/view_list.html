@@ -1,10 +1,10 @@
 {% include header.html %}
     <h1>{{ list.name }}</h1>
-	<p>{{ list.description }}</p>
+    <p>{{ list.description }}</p>
     <ol>
-	<!--images and/or item description may be added as mvp+1 -->
-	{% for list_item in list.content %}
-	  <li>{{ list_item }}</li>
-	{% end for %}
-	</ol>
+    {% for list_item in list.content %}
+        <li>{{ list_item }}</li>
+    {% end for %}
+    </ol>
+    {% include like.html %}
 {% include footer.html %}

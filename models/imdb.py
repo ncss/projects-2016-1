@@ -13,6 +13,9 @@ class IMDB:
     self.actors = actors
     self.image = image
 
+  def get_trailer(self):
+    return "http://www.imdb.com/title/{}/trailers".format(self.imdb_id)
+  
   @classmethod
   def connect(cls, conn):
     cls.conn = conn
@@ -44,4 +47,8 @@ class IMDB:
   
   @classmethod
   def fetch_image(cls,name):
+    return cls.fetch_api_name(name).image
+
+  @classmethod
+  def fetch_thumbnail(cls,name):
     return cls.fetch_api_name(name).image

@@ -4,6 +4,9 @@
 	<p>
 		Don't have an account? <a href="/signup">Sign up</a>
 	</p>
+	{% if fail %}
+	<p class="alert">Incorrect Username or Password. Please try again.</p>
+	{% end if %}
 	<p>
 		<label for="login_username">Username</label><br>
 		<input type="text" name="username" id="login_username">
