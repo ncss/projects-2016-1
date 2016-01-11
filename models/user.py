@@ -1,5 +1,5 @@
 import hashlib
-from list import List
+from .list import List
 
 def convert_row(row):
   keys = row.keys()

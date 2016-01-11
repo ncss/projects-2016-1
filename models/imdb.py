@@ -13,15 +13,6 @@ class IMDB:
     self.actors = actors
     self.image = image
 
-  def save(self):
-    cur = self.__class__.conn.cursor()
-    if self.id:
-      # UPDATE
-      pass
-    else:
-      # INSERT
-      pass
-
   @classmethod
   def connect(cls, conn):
     cls.conn = conn
@@ -39,8 +30,9 @@ class IMDB:
   @classmethod
   def _to_obj(cls, r):
     # Check if the api errors
-    r.raise_for_status()
     res = r.json()
+    if res["Response"] == "False":
+      raise requests.exceptions.HTTPError("Movie or film not found")
     return cls(
       imdb_id=res["imdbID"],
       title=res["Title"],
