@@ -1,0 +1,10 @@
+{% include templates/header.html %}
+		<h2>Title</h2>
+		<a href="/like">Like</a>
+		<ul> <!-- SHOULD THIS BE AN OL - ARE USERS PRIORITISING?-->
+			{% for list_item in mist %}
+			<li>{{list_item.content}}</li>
+			{% end for %}
+		</ul>
+{% include templates/footer.html % }
+

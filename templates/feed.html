@@ -1,40 +1,6 @@
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
-		<title>Mist Feed</title>
-		<style>
-			section{
-				color:red;
-				border: 1px solid black;
-				min-width: 280px;
-				margin: 8px;
-				
-			}
-			article{
-				margin:16px;
-				box-shadow: 0 2px 5px black;
-			}
-			h1{
-			text-align: center;
-			}
-			
-			.box{
-				display:flex;
-				justify-content: space-around;
-				flex-wrap: wrap;
-				
-		
-			
-			}
-			.box section{
-			flex-grow: 1;
-			}
-			
-		</style>
-	</head>
-<body>
+{% include templates/header.html %}
 
-<div class = "box">
+<div class="box feed">
 <section>
 
 	<h1> Popular Mists </h1>
@@ -64,7 +30,7 @@
 	
 	<article>
 		<h2>Top 10 Action Movies</h2>
-		<ol>
+		<ol> 
 		<li> James Bond</li>
 		<li> Mission Impossible</li>
 		</ol>		
