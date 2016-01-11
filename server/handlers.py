@@ -131,10 +131,12 @@ def view_handler(response, list_id):
 
     response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
+@util.requires_login
 def edit_handler(response, list_id):
     list = List.find(list_id)
     response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists", fail=response.get_field('fail', '')))
 
+@util.requires_login
 def edit_post_handler(response, list_id):
     # Put this early otherwise all the items are removed!
     if response.get_field("title", "") == "":
@@ -142,15 +144,15 @@ def edit_post_handler(response, list_id):
         return
 
     a_list = List.find(list_id)
-
     a_list.name = response.get_field("title", "")
-    list_items = []
-    index = 1
-    while response.get_field("list_item_{}".format(index), "") != "":
-        list_items.append(response.get_field("list_item_{}".format(index)))
-        index += 1
-
     a_list.save()
+	
+	# delete the old list items before adding the new ones
+    for old_item in ListContent.find_by_list_id(list_id):
+        ListContent.delete(list_id, old_item.item_order)
+
+    list_items = response.get_arguments("list_item")
+    list_items = filter(None, list_items)
     for i, item in enumerate(list_items):
         list_content = ListContent.create(a_list.id, i, item)
 
