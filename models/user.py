@@ -1,4 +1,5 @@
 import hashlib
+from list import List
 
 def convert_row(row):
   keys = row.keys()
@@ -15,8 +16,6 @@ class User:
     self.id = id
     self.username =username
     self.password = password
-    
-
 
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
@@ -25,7 +24,7 @@ class User:
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
   def get_lists(self):
-    pass
+    return List.find_by_userid(cls, self.id)
 
   def save(self):
     cur = self.__class__.conn.cursor()
@@ -33,7 +32,7 @@ class User:
       cur.execute('INSERT INTO users (username,password) VALUES (?,?);', (self.username,self.password))
       self.id = cur.lastrowid
     else:
-      
+
       cur.execute('''
         UPDATE users
         SET username=?,
@@ -72,5 +71,10 @@ if __name__ == '__main__':
   cn = sqlite3.connect('database.db')
   User.connect(cn)
   cn.row_factory = sqlite3.Row
+<<<<<<< HEAD
+  user = User.find_username('cool_hax3')
+
+=======
   user = User.find_username('cool_hax4')
   
+>>>>>>> 647e6e68fa2aa924dc4a69229ff1dd7ed6c3f060
