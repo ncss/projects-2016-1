@@ -28,6 +28,6 @@ server.register(r'/create', handlers.create_handler)
 server.register(r'/create/post', handlers.create_post_handler)
 #server.register(r'/{}/view'.format(), handlers.view_handler)
 #server.register(r'/{}/edit'.format(), handlers.edit_handler)
-server.register(r'/settings', handlers.settings_handler)
+server.register(r'/dashboard/settings', handlers.settings_handler)
 
 server.run()
