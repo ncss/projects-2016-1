@@ -10,7 +10,6 @@ class User(DatabaseObject):
     self.password = password
     
 
-
   def to_dict(self):
     return {'username': self.username, 'password': self.password}
 

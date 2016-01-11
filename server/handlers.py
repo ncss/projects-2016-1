@@ -1,5 +1,5 @@
 import server.util as util
-#from db import User
+from db import User
 from templater import templater
 
 @util.requires_login
@@ -70,6 +70,28 @@ def create_handler(response):
 #def edit_handler(response):
     #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
+def mini_list_handler(response):
+    import sqlite3
+    conn = sqlite3.connect("database.db")
+    import os
+    print("Debugging: ", os.getcwd())
+##    conn.executescript(open('sql\init.sql').read())
+    ListContent.connect(conn)
+    mist = ListContent.findByListId(0)
+    response.write(templater.render("mini_list.html", mist = mist))
+
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
-                     
+
+def post_like_handler(response):
+    print('this was a post req')
+
+    print(response.get_field('user'))
+    print(response.get_field('list'))
+
+
+    response.write('this was a post req')
+
+def get_like_handler(response):
+    print('this was a get req')
+    response.write(templater.render('templates/like.html'))
