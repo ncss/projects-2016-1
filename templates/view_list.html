@@ -1,8 +1,8 @@
 {% include header.html %}
-    <h1>{{ list.name }}</h1>
-    <p>{{ list.description }}</p>
+    <h1>{{ mist.name }}</h1>
+    <p>{{ mist.description }}</p>
     <ol>
-    {% for list_item in list.content %}
+    {% for list_item in mist.content %}
         <li>{{ list_item }}</li>
     {% end for %}
     </ol>

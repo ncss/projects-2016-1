@@ -92,8 +92,8 @@ def create_post_handler(response):
     title = response.get_field("title", "")
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
-    list = List(title, get_current_user_id(response))
-    list.save()
+    a_list = List(title, get_current_user_id(response))
+    a_list.save()
     for i, item in enumerate(list_items):
         list_content = ListContent.create(list.id, i, item)
 
@@ -111,52 +111,51 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
+
 def view_handler(response, list_id):
     response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
+@util.requires_login
 def edit_handler(response, list_id):
-    list = List.find(list_id)
-    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    mist = List.find(list_id)
+    response.write(templater.render("templates/edit.html", mist = mist, page_title = "Edit", site_title = "M'lists"))
 
+@util.requires_login
 def edit_post_handler(response, list_id):
-	list = List.find(list_id)
-	
-	for item in list.list_contents():
+	mist = List.find(list_id)
+	for item in mist.list_contents():
 		item.remove()
-	
-	list.name = response.get_field("title", "")
+	mist.name = response.get_field("title", "")
 	list_items = []
 	index = 1
 	while response.get_field("list_item_{}".format(index), "") != "":
 		list_items.append(response.get_field("list_item_{}".format(index)))
 		index += 1
-
-	list.save()
+	mist.save()
 	for i, item in enumerate(list_items):
-		list_content = ListContent.create(list.id, i, item)
-
-	print("Editing post: {}, {}".format(list.name, list_items))
-
+		list_content = ListContent.create(mist.id, i, item)
+	print("Editing post: {}, {}".format(mist.name, list_items))
 	response.redirect('/dashboard')
-	
+
+@util.requires_login
 def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-
     c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id))
     likes = c.fetchone()
 
-    list = {
+    mist = {
             "title": "Top 10 Adventure Movies",
             "description": "A list about adventure movies",
             "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
         }
+    response.write(templater.render('templates/view_list.html', likes=likes, mist=mist))
 
-    response.write(templater.render('templates/view_list.html', likes=likes, list=list))
-
+@util.requires_login
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
+@util.requires_login
 def post_like_handler(response):
     user_id = response.get_secure_cookie('user_id')
     list_id = response.get_field('list_id')
@@ -169,6 +168,7 @@ def post_like_handler(response):
     response.set_header('Content-Type', 'application/json')
     response.write(json.dumps({'likes':likes}))
 
+@util.requires_login
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
     if uid is None:
@@ -178,13 +178,9 @@ def get_current_user_id(response):
 def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
 
-
-
 def page_not_found_handler(response, path):
     #insert a html page for 404
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
-
-
 
 
 def meme_handler(response):
