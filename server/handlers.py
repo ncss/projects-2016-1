@@ -79,8 +79,10 @@ def feed_handler(response):
 def dashboard_handler(response):
     uid = util.get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
+    recent = sorted(user_mists, key = lambda list: list.id)
+    recent.reverse()
     user_id = util.get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
+    response.write(templater.render("templates/dashboard.html", mists=recent, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 @util.requires_login
 def create_handler(response):
