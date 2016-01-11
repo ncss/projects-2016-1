@@ -7,10 +7,6 @@
 		<p>Already have an account? <a href="/login">Login</a>
 
 			</p>
-	{% if signup_failed %}
-	<p class="alert">Incorrect Username or Password. Please try again.</p>
-	{% end if %}
-
 		  {% if response.get_field("fail", "") == "user_exists" %}
 			<p class="alert">Duplicate username. Please try again.</p>
 		  {% end if %}

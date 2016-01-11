@@ -16,7 +16,7 @@ def index_handler(response):
     if is_logged_in(response):
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response, signup_failed=False))
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
 
 def post_login_handler(response):
     username = response.get_field("username", "")
