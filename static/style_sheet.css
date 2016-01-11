@@ -113,6 +113,7 @@ Helpers
 /*
 Login page
 */
+/* Is loginbox and middle even used?? */
 .login .loginbox{
 	background-color:rgb(240, 240, 240);
 	padding: 20px 20px 20px 20px;
@@ -126,21 +127,31 @@ Login page
 	align-items: center;
 	height: 100%;
 }
+.login .alert {
+  background-color: #ED9F9F;
+  color: #E84848;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  border: #F34848 1px solid;
+}
 
 /*
  * Feed
  */
 .feed section {
 	border: 1px solid black;
+	padding: 1px 2rem 2rem 2rem;
 	min-width: 280px;
 	margin: 8px;
 }
 
 .feed article {
-	margin:16px;
-	box-shadow: 0 2px 5px black;
-	padding-bottom: 2px;
-	cursor: pointer;
+	background-color: rgb(240, 240, 240);
+	padding: 1px 2rem 2rem 2rem;
+	margin: 2rem 0rem 2rem 0rem;
+	border-radius: 6px;
+	overflow: auto
 }
 
 .feed .center {
@@ -167,10 +178,12 @@ Dashboard!
 	margin: 8px;
 }
 
-.dashboard article{
-	margin:16px;
-	box-shadow: 0 2px 5px black;
-	overflow: auto;
+.dashboard article {
+	background-color: rgb(240, 240, 240);
+	padding: 1px 2rem 2rem 2rem;
+	margin: 2rem 0rem 2rem 0rem;
+	border-radius: 6px;
+	overflow: auto
 }
 .dashboard h1{
 text-align: center;
@@ -206,3 +219,19 @@ text-align: center;
 	margin: 0px;
 	margin-bottom: 15px;
 }
+
+.dashboard h4{
+	margin-left: auto;
+	margin-right: auto;
+	margin: 0px;
+	padding-top: 20px;
+	font-size: 20px;
+}
+.dashboard a.link_button {
+	float: right;
+	color: red;
+	}
+
+
+	
+

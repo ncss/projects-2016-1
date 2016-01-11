@@ -25,15 +25,17 @@ def post_login_handler(response):
 
     else:
         print("Not logged in")
-        response.redirect("/login")
+        response.redirect("/login?fail=1")
 
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
-
+        login_failed = response.get_field('fail', '') == '1'
+        response.write(templater.render("templates/login_page.html", login_failed=login_failed,
+                                        page_title="Login", site_title="M'lists"))
+        
 def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
@@ -75,12 +77,8 @@ def create_handler(response):
 @util.requires_login
 def create_post_handler(response):
     title = response.get_field("title", "")
-    list_items = []
-    index = 1
-    while response.get_field("list_item_{}".format(index), "") != "":
-        list_items.append(response.get_field("list_item_{}".format(index)))
-        index += 1
-
+    list_items = response.get_arguments("list_item")
+    list_items = filter(None, list_items)
     list = List(title, get_current_user_id(response))
     list.save()
     for i, item in enumerate(list_items):
@@ -100,6 +98,13 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
+def view_handler(response, list_id):
+    response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+    
+def edit_handler(response, list_id):
+	list = List.find(list_id)
+	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+
 def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
@@ -114,10 +119,6 @@ def view_list_handler(response, list_id):
         }
 
     response.write(templater.render('templates/view_list.html', likes=likes, list=list))
-
-# NEED MIST ID BEFORE THIS WILL WORK
-#def edit_handler(response):
-    #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
@@ -139,3 +140,20 @@ def get_current_user_id(response):
 
 def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
+
+
+	
+def page_not_found_handler(response, path):
+    #insert a html page for 404
+    response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
+
+	
+	
+
+def meme_handler(response):
+    response.redirect('http://blaker.space')
+
+
+
+
+
