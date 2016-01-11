@@ -96,6 +96,32 @@ form input:focus, form textarea:focus {
 Helpers
 */
 
+.appear {
+	opacity: 0;
+	transform: translate(0, -32px) rotate(-720deg);
+}
+
+.explode::before, .explode::after {
+	content: '';
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	margin-left: -40px;
+	margin-right: -40px;
+	background: url(explode.gif) center no-repeat;
+	background-size: contain;
+}
+.explode::before { left: 25%; }
+.explode::after { right: 25%; }	
+
+.spacing-below {
+	margin-bottom: 12px;
+}
+
+.animate {
+	transition: all 0.5s;
+}
+
 .container {
 	overflow: auto;
 }
@@ -107,7 +133,10 @@ Helpers
 .right-align {
 	float: right;
 }
-		
+
+.overflow-hidden {
+	overflow: hidden;
+}	
 		
 	
 /*
@@ -174,7 +203,6 @@ Dashboard!
 
 .dashboard section{
 	border: 1px solid black;
-	min-width: 280px;
 	margin: 8px;
 }
 
@@ -183,7 +211,8 @@ Dashboard!
 	padding: 1px 2rem 2rem 2rem;
 	margin: 2rem 0rem 2rem 0rem;
 	border-radius: 6px;
-	overflow: auto
+	overflow: auto;
+	min-width: 280px;
 }
 .dashboard h1{
 text-align: center;

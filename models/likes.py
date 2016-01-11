@@ -1,9 +1,11 @@
-class Likes:
+from .db import DatabaseObject
+
+class Likes(DatabaseObject):
 
 # Both init and create defs mirrored on list_content methods - need checking
-    def __init__(self, like_user, like_listnum):
-        self.like_user = like_user
-        self.like_listnum = like_listnum
+    def __init__(self, user_id, list_id):
+        self.like_user = user_id
+        self.list_id = list_id
 
     @classmethod
     def connect(cls, db):
@@ -11,17 +13,27 @@ class Likes:
 
     @classmethod
     def create(cls, user_id, list_id):
+        cur = DatabaseObject.conn.cursor()
         cur = cls.conn.execute('INSERT INTO likes VALUES (NULL, ?, ?)', (user_id, list_id))
+        cur.close()
 
     @classmethod
     def list_likes(cls, list_id):
+        cur = DatabaseObject.conn.cursor()
         cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', list_id)
-        return cur.fetchone()
+        res = cur.fetchone()
+        cur.close()
+        return res
 
     @classmethod
     def has_user_liked_list(cls, user_id, list_id):
+        cur = DatabaseObject.conn.cursor()
         cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?, user_id=?', list_id, user_id)
-        if cur.fetchone() == 1:
+
+        res = cur.fetchone()
+        cur.close()
+
+        if res == 1:
             return True
         else:
             return False

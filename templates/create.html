@@ -1,5 +1,5 @@
 {% include templates/header.html %}
-<form action="/create" method="post">
+<form action="/create" method="post" class="overflow-hidden">
 	<h3>Create a list</h3>
 	<p>
 		<label for="mist_title">Title</label><br>
@@ -8,7 +8,7 @@
 	
 	<p>
 		<label>Items</label><br>
-		<input type="text" name="list_item" placeholder="List item" id="list_item">
+		<input class="animate explode spacing-below" type="text" name="list_item" placeholder="List item" id="list_item">
 	</p>
 	
 	<script>
@@ -16,11 +16,25 @@
 		var list_item = document.getElementById("list_item");
 		var handler = function(event){
 			if (this.value && event.keyCode === 13) {
+				// Add an awesome explosion.
+				var explodeEl = document.createElement('div');
+				explodeEl.className = 'animate explode appear';
+				list_item.parentNode.appendChild(explodeEl);
+				window.setTimeout(function() {
+					explodeEl.classList.remove("appear");
+				});
+				window.setTimeout(function() {
+					explodeEl.parentNode.removeChild(explodeEl);
+				}, 1500);
+
+				// Add the normal input.
 				var next_item = list_item.cloneNode();
 				next_item.value = "";
+				next_item.classList.add("appear");
 				list_item.parentNode.appendChild(next_item);
 				next_item.addEventListener("keydown", handler);
 				next_item.focus();
+				next_item.classList.remove("appear");
 			}
 			if (event.keyCode === 13) {
 				event.preventDefault()

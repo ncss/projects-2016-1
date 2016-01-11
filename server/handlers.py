@@ -1,3 +1,4 @@
+import sqlite3
 import server.util as util
 from db import User
 from models.list import List
@@ -13,7 +14,7 @@ def index_handler(response):
     if is_logged_in(response):
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists"))
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
 
 def post_login_handler(response):
     username = response.get_field("username", "")
@@ -41,21 +42,24 @@ def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
-    if username == "" or password == "": response.redirect("/signup")
-    print("email: ", email, "username: ", username, "password: ", password)
+
+    if username == "" or password == "":
+        response.redirect("/signup")
+        return
+
     user = User(username, password)
+
     try:
-      user.save()
-      response.set_secure_cookie("user_id", str(user.id))
+        user.save()
     except sqlite3.IntegrityError:
-      # user already exists
-      signup_failed = response.get_field('fail', '') == '1'
-      response.write(templater.render("template/index.html",  signup_failed=signup_failed,
-                                      page_title="Signup", site_title="Welcome to M'lists - M'lists")
-    #TODO hit the database, create a new user, and set the cookie with the new user's id
-    else: 
+        # TODO: Use cookies instead for errors instead of GET arguments
+        response.redirect("/index?fail=user_exists")
+    else:
+        response.set_secure_cookie("user_id", str(user.id))
+
+        #TODO hit the database, create a new user, and set the cookie with the new user's id
         response.redirect("/")
-    # give those things to the data base
+        # give those things to the data base
 
 
 # messing around with login handler clearing cookie and redirecting to a page
@@ -73,7 +77,8 @@ def feed_handler(response):
 def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists"))
+    user_id = get_current_user_id(response)
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))
 
 
 @util.requires_login
@@ -93,7 +98,7 @@ def create_post_handler(response):
     print("Creating post: {}, {}".format(title, list_items))
 
     response.redirect('/dashboard')
-
+	
 def mini_list_handler(response):
     import sqlite3
     conn = sqlite3.connect("database.db")
@@ -111,6 +116,27 @@ def edit_handler(response, list_id):
 	list = List.find(list_id)
 	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
+def edit_post_handler(response, list_id):
+	list = List.find(list_id)
+	
+	for item in list.list_contents():
+		item.remove()
+	
+	list.name = response.get_field("title", "")
+	list_items = []
+	index = 1
+	while response.get_field("list_item_{}".format(index), "") != "":
+		list_items.append(response.get_field("list_item_{}".format(index)))
+		index += 1
+
+	list.save()
+	for i, item in enumerate(list_items):
+		list_content = ListContent.create(list.id, i, item)
+
+	print("Editing post: {}, {}".format(list.name, list_items))
+
+	response.redirect('/dashboard')
+	
 def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
@@ -133,7 +159,8 @@ def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
-    likes = Likes.create(user_id, list_id)
+    likes = Likes(user_id, list_id)
+    likes.create(user_id, list_id)
 
     response.write('')
 
