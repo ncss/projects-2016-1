@@ -1,10 +1,13 @@
 import sqlite3
 import server.util as util
+import json
 from db import User
 from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
 import tornado
+import sqlite3
+from models.imdb import IMDB
 
 from templater import templater
 
@@ -14,7 +17,7 @@ def index_handler(response):
     if is_logged_in(response):
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response, signup_failed=False))
 
 def post_login_handler(response):
     username = response.get_field("username", "")
@@ -37,17 +40,22 @@ def get_login_handler(response):
         login_failed = response.get_field('fail', '') == '1'
         response.write(templater.render("templates/login_page.html", login_failed=login_failed,
                                         page_title="Login", site_title="M'lists"))
-        
+
 def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
-    if username == "" or password == "": response.redirect("/signup")
-    print("email: ", email, "username: ", username, "password: ", password)
+
+    if username == "" or password == "":
+        response.redirect("/signup")
+        return
+
     user = User(username, password)
+
     try:
         user.save()
     except sqlite3.IntegrityError:
+        # TODO: Use cookies instead for errors instead of GET arguments
         response.redirect("/index?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
@@ -64,8 +72,9 @@ def logout_handler(response):
 
 @util.requires_login
 def feed_handler(response):
-	mists = List.find_all()
-	response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists"))
+    mists = List.find_all()
+    user_id = get_current_user_id(response)
+    response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
 @util.requires_login
@@ -73,7 +82,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 
 @util.requires_login
@@ -106,10 +115,10 @@ def mini_list_handler(response):
 
 def view_handler(response, list_id):
     response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
-    
+
 def edit_handler(response, list_id):
-	list = List.find(list_id)
-	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    list = List.find(list_id)
+    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
 def edit_post_handler(response, list_id):
 	list = List.find(list_id)
@@ -154,10 +163,13 @@ def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
-    likes = Likes(user_id, list_id)
-    likes.create(user_id, list_id)
+    l = Likes(user_id, list_id)
+    l.create(user_id, list_id)
 
-    response.write('')
+    likes = 100
+
+    response.write(json.dumps({'likes':likes}))
+    response.set_header('Content-Type', 'application/json')
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
@@ -169,13 +181,13 @@ def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
 
 
-	
+
 def page_not_found_handler(response, path):
     #insert a html page for 404
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
-	
-	
+
+
 
 def meme_handler(response):
     response.redirect('http://blaker.space')

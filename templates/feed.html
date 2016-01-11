@@ -3,55 +3,56 @@
 <div class="box feed">
 <section>
 
-	<h1 class="center">Popular Mists</h1>
-	
-	{% for mist in mists %}
-	<article>
-		<h2>{{mist.name}}</h2>
-			<ol> 
-			{% for item in mist.list_contents() %}
-				<li> {{ item.content }} </li>
-			{% end for %}
-			</ol>
-		<!-- Image for each mist may be added in mvp+1-->
-	</article>
-	{% end for %}
-	
+    <h1 class="center">Popular Mists</h1>
+    
+    {% for mist in mists %}
+    <article>
+        <h2>{{mist.name}}</h2>
+            <ol> 
+            {% for item in mist.list_contents() %}
+                <li> {{ item.content }} </li>
+            {% end for %}
+            </ol>
+        <!-- Image for each mist may be added in mvp+1-->
+    </article>
+    {% include templates/like.html %}
+    {% end for %}
 </section>
 
 <section>
-	<h1 class="center">New Mists</h1>
-	
-	{% for mist in mists %}
-	<article>
-		<h2>{{mist.name}}</h2>
-			<ol> 
-			{% for item in mist.list_contents() %}
-				<li> {{ item.content }} </li>
-			{% end for %}
-			</ol>
-		<!-- Image for each mist may be added in mvp+1-->
-	</article>
-	{% end for %}
-	
+    <h1 class="center">New Mists</h1>
+    
+    {% for mist in mists %}
+    <article>
+        <h2>{{mist.name}}</h2>
+            <ol> 
+            {% for item in mist.list_contents() %}
+                <li> {{ item.content }} </li>
+            {% end for %}
+            </ol>
+        <!-- Image for each mist may be added in mvp+1-->
+    </article>
+    {% include templates/like.html %}
+    {% end for %}
 </section>
 
 <section>
 
-	<h1 class="center">Recommended Mists</h1>
-	
-	{% for mist in mists %}
-	<article>
-		<h2>{{mist.name}}</h2>
-			<ol> 
-			{% for item in mist.list_contents() %}
-				<li> {{ item.content }} </li>
-			{% end for %}
-			</ol>
-		<!-- Image for each mist may be added in mvp+1-->
-	</article>
-	{% end for %}
-	
+    <h1 class="center">Recommended Mists</h1>
+    
+    {% for mist in mists %}
+    <article>
+        <h2>{{mist.name}}</h2>
+            <ol> 
+            {% for item in mist.list_contents() %}
+                <li> {{ item.content }} </li>
+            {% end for %}
+            </ol>
+        <!-- Image for each mist may be added in mvp+1-->
+    </article>
+    {% include templates/like.html %}
+    {% end for %}
+    
 </section>
 
 </div>
