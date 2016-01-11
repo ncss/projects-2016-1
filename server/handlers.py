@@ -28,7 +28,7 @@ def get_login_handler(response):
         response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def signup_handler(response):
-    response.write(templater.render("templates/signup_page.html", page_title="Sign Up", site_title = "M'lists")
+    response.write(templater.render("templates/signup_page.html", page_title="Sign Up", site_title = "M'lists"))
 
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
@@ -69,16 +69,6 @@ def mini_list_handler(response):
 # NEED MIST ID BEFORE THIS WILL WORK
 #def edit_handler(response):
     #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
-
-def mini_list_handler(response):
-    import sqlite3
-    conn = sqlite3.connect("database.db")
-    import os
-    print("Debugging: ", os.getcwd())
-##    conn.executescript(open('sql\init.sql').read())
-    ListContent.connect(conn)
-    mist = ListContent.findByListId(0)
-    response.write(templater.render("mini_list.html", mist = mist))
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
