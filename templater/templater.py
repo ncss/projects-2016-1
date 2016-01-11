@@ -2,7 +2,7 @@ from . import parser
 from . import tokenizer
 
 def render(filename: str, **kwargs) -> str:
-    with open(filename) as f:
+    with open(filename, encoding='utf-8') as f:
         file_content = f.read()
         template_parser = parser.Parser(tokenizer.Tokenizer(file_content))
 
