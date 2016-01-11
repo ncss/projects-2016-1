@@ -35,9 +35,12 @@ def dashboard_handler(response):
 
 def create_handler(response):
     response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+    #if get_secure_cookie:
+        # send data to server
+    #else:
+        #response.write(templater.render("templates/login_page.html"))
+    
 
-def create_post_handler(response):
-    print(response.get_field("title"))
 
 # NEED MIST ID BEFORE THIS WILL WORK
 #def view_handler(reponse):
