@@ -60,10 +60,10 @@ class ListContent:
   @classmethod
   def helper(cls, row):
     # to convert rows into named items
-	list_num = row[0]
-	item_order = row[1]
-	content = row[2]
-	return cls(list_num, item_order, content)
+    list_num = row[0]
+    item_order = row[1]
+    content = row[2]
+    return cls(list_num, item_order, content)
   
   
 if __name__ == '__main__':
