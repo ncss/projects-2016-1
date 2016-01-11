@@ -1,6 +1,7 @@
 from tornado.ncss import Server
 
 import server.handlers as handlers
+import server.mist_handlers as mist_handlers
 import templater
 import db
 
@@ -26,8 +27,7 @@ server.register(r'/logout', handlers.logout_handler)
 server.register(r'/signup', handlers.signup_handler)
 server.register(r'/feed', handlers.feed_handler)
 server.register(r'/dashboard', handlers.dashboard_handler)
-server.register(r'/create', handlers.create_handler)
-server.register(r'/create/post', handlers.create_post_handler)
+server.register(r'/create', handlers.create_handler, post = handlers.create_post_handler)
 #server.register(r'/{}/view'.format(), handlers.view_handler)
 #server.register(r'/{}/edit'.format(), handlers.edit_handler)
 server.register(r'/settings', handlers.settings_handler)
