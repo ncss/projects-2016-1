@@ -46,7 +46,7 @@ class User:
   def from_row(cls,row):
     if row is None: return None
     row = convert_row(row)
-    return cls(saved=True,**row)
+    return cls(**row)
 
   @classmethod
   def find_username(cls,username):
@@ -71,5 +71,10 @@ if __name__ == '__main__':
   cn = sqlite3.connect('database.db')
   User.connect(cn)
   cn.row_factory = sqlite3.Row
+<<<<<<< HEAD
   user = User.find_username('cool_hax3')
 
+=======
+  user = User.find_username('cool_hax4')
+  
+>>>>>>> 647e6e68fa2aa924dc4a69229ff1dd7ed6c3f060

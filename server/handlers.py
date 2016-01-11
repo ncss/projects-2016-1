@@ -1,10 +1,14 @@
 import server.util as util
 from db import User
+
+from models.list_content import ListContent
+
 from templater import templater
 
 @util.requires_login
 def index_handler(response):
-    response.write("<h1>Hello, World! </h1> <p>user_id = {}</p>".format(response.get_secure_cookie('user_id')))
+    response.write(templater.render("templates/index.html"))
+    
     #if cookie[user_id] != None:
         #username = database.get_username(cookie["user_id"])
         #response.write(render_template("index.html", username = username))
@@ -18,10 +22,8 @@ def login_handler(response):
     user = User.authenticate(username, password)
     if user:
         response.set_secure_cookie('user_id', '-1')
-        response.redirect('/')
+        response.redirect('/dashboard')
        
-    
-
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
@@ -39,6 +41,16 @@ def create_handler(response):
 
 def create_post_handler(response):
     print(response.get_field("title"))
+
+def mini_list_handler(response):
+    import sqlite3
+    conn = sqlite3.connect("database.db")
+    import os
+    print("Debugging: ", os.getcwd())
+##    conn.executescript(open('sql\init.sql').read())
+    ListContent.connect(conn)
+    mist = ListContent.findByListId(0)
+    response.write(templater.render("mini_list.html", mist = mist))
 
 # NEED MIST ID BEFORE THIS WILL WORK
 #def view_handler(reponse):
