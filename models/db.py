@@ -43,3 +43,9 @@ class DatabaseObject:
       '''.format(self.table_name(), ','.join(li)), values);
     self.__class__.conn.commit()
     cur.close()
+
+  def delete(self):
+    cur = self.__class__.conn.cursor()
+    cur.execute('DELETE FROM {} WHERE id = ?;'.format(self.table_name()), (self.id,))
+    self.__class__.conn.commit()
+    cur.close()

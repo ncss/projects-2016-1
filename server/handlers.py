@@ -156,8 +156,8 @@ def edit_post_handler(response, list_id):
 
     a_list.name = response.get_field("title", "")
     a_list.save()
-	
-	# delete the old list items before adding the new ones
+
+    # delete the old list items before adding the new ones
     for old_item in ListContent.find_by_list_id(list_id):
         ListContent.delete(list_id, old_item.item_order)
 
@@ -169,6 +169,21 @@ def edit_post_handler(response, list_id):
     print("Editing post: {}, {}".format(a_list.name, list_items))
 
     response.redirect('/dashboard')
+
+@util.requires_login
+def delete_handler(response, list_id):
+    a_list = List.find(list_id)
+
+    user_id = util.get_current_user_id(response)
+    if not a_list.author == user_id:
+        raise Exception
+
+    # delete the old list items before adding the new ones
+    for old_item in ListContent.find_by_list_id(list_id):
+        ListContent.delete(list_id, old_item.item_order)
+    
+    a_list.delete()
+    response.redirect('/')  # TODO: where should the user be sent after a delete?
 
 @util.requires_login
 def post_like_handler(response):
