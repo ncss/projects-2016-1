@@ -1,5 +1,5 @@
 import server.util as util
-#from db import User
+from db import User
 from templater import templater
 
 @util.requires_login
