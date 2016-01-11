@@ -48,3 +48,7 @@ class IMDB:
   @classmethod
   def fetch_image(cls,name):
     return cls.fetch_api_name(name).image
+
+  @classmethod
+  def fetch_thumbnail(cls,name):
+    return cls.fetch_api_name(name).image
