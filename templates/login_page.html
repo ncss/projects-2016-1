@@ -1,19 +1,11 @@
-<html>
-	<head>
-		<link rel="stylesheet" href="style_sheet.css" type="text/css">
-		<link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="normalize.css">
-		<link rel="stylesheet" type="text/css" href="style_sheet.css">
-	</head>
-	<body class="login">
+{% include templates/header.html %}
+
 	<div class="middle">
 	<div class="loginbox">
-	<header>
-		<h2>Login:</h2>
-	</header>
+	
 			<section>
 				
-					<form>
+					<form action="/login" method="post">
 					<p><label for="username">Username:</label>&thinsp;
 					<input type="text" name="username" id="username" style="
 						float:  right;
@@ -28,13 +20,12 @@
 					">
 					</p>
 					<p>
-						<input type="submit" name="Login" value="Login">
-						<a href="https://www.google.com.au/">Signup?</a>
+						<input type="submit">
+						<a href="/signup">Sign up?</a>
 					</p>
 					</form>
 				
 		</section>
 	</div>
 	</div><!-- .middle -->
-	</body>
-</html>
+{% include templates/footer.html %}

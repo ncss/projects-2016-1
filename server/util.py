@@ -1,5 +1,5 @@
 from templater import templater
-from db import User
+#from db import User
 
 
 def requires_login(fn):
@@ -7,7 +7,7 @@ def requires_login(fn):
         if response.get_secure_cookie('user_id') is not None:
             return fn(response)
         else:
-            response.write(templater.render("templates/login_page.html"))
+            response.write(templater.render("templates/login_page.html", page_title="Login", site_title="M'lists"))
             username = response.get_field("username", "")
             password = response.get_field("password", "")
             user = User.authenticate(username, password)
