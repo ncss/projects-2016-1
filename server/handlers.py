@@ -96,13 +96,12 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
-# NEED MIST ID BEFORE THIS WILL WORK
-#def view_handler(reponse):
-    #response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+def view_handler(response, list_id):
+    response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
     
-# NEED MIST ID BEFORE THIS WILL WORK
-#def edit_handler(response):
-    #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+def edit_handler(response, list_id):
+	list = List.find(list_id)
+	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
