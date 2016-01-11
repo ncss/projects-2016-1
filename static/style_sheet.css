@@ -125,17 +125,12 @@ Login page
 	cursor: pointer;
 }
 
-.feed h1 {
+.feed .center {
 	text-align: center;
-	padding-left:3px;
-}
-
-.feed h2 {
-	padding-left:5px;
 }
 
 .feed.box {
-	display:flex;
+	display: flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
 }
