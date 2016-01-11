@@ -1,8 +1,5 @@
 import server.util as util
 from db import User
-
-from models.list_content import ListContent
-
 from templater import templater
 
 @util.requires_login
@@ -21,7 +18,6 @@ def post_login_handler(response):
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
-    response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id'):
@@ -36,27 +32,35 @@ def logout_handler(response):
     response.redirect('/')
 
 def feed_handler(response):
-    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "Mists"))
-
+    new_mists = [
+        {
+            "title": "Top 10 Action Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        },
+        {
+            "title": "Top 10 Adventure Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+    ]
+    response.write(templater.render("templates/feed.html", new_mists=new_mists, page_title = "Feed", site_title = "Mists"))
+    
 # dashboard integrates profile
 def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "Mists"))
+    response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+    #if get_secure_cookie:
+        # send data to server
+    #else:
+        #response.write(templater.render("templates/login_page.html"))
+    
 
-def create_post_handler(response):
-    print(response.get_field("title"))
-
-def mini_list_handler(response):
-    import sqlite3
-    conn = sqlite3.connect("database.db")
-    import os
-    print("Debugging: ", os.getcwd())
-##    conn.executescript(open('sql\init.sql').read())
-    ListContent.connect(conn)
-    mist = ListContent.findByListId(0)
-    response.write(templater.render("mini_list.html", mist = mist))
+#def edit_handler(response):
+    # get list id
+    # look up list
+    # print list items in form sections
+    # submit new list to DB
 
 # NEED MIST ID BEFORE THIS WILL WORK
 #def view_handler(reponse):
