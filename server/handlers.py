@@ -96,7 +96,7 @@ def create_post_handler(response):
     a_list = List(title, get_current_user_id(response))
     a_list.save()
     for i, item in enumerate(list_items):
-        list_content = ListContent.create(list.id, i, item)
+        list_content = ListContent.create(a_list.id, i, item)
 
     print("Creating post: {}, {}".format(title, list_items))
 
@@ -127,23 +127,23 @@ def edit_handler(response, list_id):
     response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
 def edit_post_handler(response, list_id):
-	list = List.find(list_id)
+	a_list = List.find(list_id)
 	
-	for item in list.list_contents():
+	for item in a_list.list_contents():
 		item.remove()
 	
-	list.name = response.get_field("title", "")
+	a_list.name = response.get_field("title", "")
 	list_items = []
 	index = 1
 	while response.get_field("list_item_{}".format(index), "") != "":
 		list_items.append(response.get_field("list_item_{}".format(index)))
 		index += 1
 
-	list.save()
+	a_list.save()
 	for i, item in enumerate(list_items):
-		list_content = ListContent.create(list.id, i, item)
+		list_content = ListContent.create(a_list.id, i, item)
 
-	print("Editing post: {}, {}".format(list.name, list_items))
+	print("Editing post: {}, {}".format(a_list.name, list_items))
 
 	response.redirect('/dashboard')
 	
