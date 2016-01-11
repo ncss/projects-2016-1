@@ -116,3 +116,7 @@ def get_current_user_id(response):
 	
 def is_logged_in(response):
 	return response.get_secure_cookie("user_id") is not None
+
+def page_not_found_handler(response, path):
+    #insert a html page for 404
+	response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
