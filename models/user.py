@@ -1,20 +1,18 @@
 import hashlib
 
-def convert_row(row):
-  keys = row.keys()
-  return {key:row[idx] for idx,key in enumerate(keys)}
+import db
+
+class User(db.DatabaseObject):
 
 
-class User:
-
-  @classmethod
-  def connect(cls,db):
-    cls.conn = db
 
   def __init__(self, username, password, id=None):
     self.id = id
     self.username =username
     self.password = password
+
+  def to_dict(self):
+    return {'username': self.username, 'password': self.password}
     
 
 
@@ -27,27 +25,6 @@ class User:
   def get_lists(self):
     pass
 
-  def save(self):
-    cur = self.__class__.conn.cursor()
-    if not self.id:
-      cur.execute('INSERT INTO users (username,password) VALUES (?,?);', (self.username,self.password))
-      self.id = cur.lastrowid
-    else:
-      
-      cur.execute('''
-        UPDATE users
-        SET username=?,
-            password=?
-        WHERE id = ?
-      ''',(self.username,self.password, self.id));
-    self.__class__.conn.commit()
-    cur.close()
-
-  @classmethod
-  def from_row(cls,row):
-    if row is None: return None
-    row = convert_row(row)
-    return cls(**row)
 
   @classmethod
   def find_username(cls,username):
