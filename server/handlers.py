@@ -6,6 +6,7 @@ from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
 import sqlite3
+from models.imdb import IMDB
 
 from templater import templater
 
@@ -53,8 +54,7 @@ def post_signup_handler(response):
     try:
         user.save()
     except sqlite3.IntegrityError:
-        # TODO: Use cookies instead for errors instead of GET arguments
-        response.redirect("/index?fail=user_exists")
+        response.redirect("/signup?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
 
@@ -80,7 +80,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 
 @util.requires_login
