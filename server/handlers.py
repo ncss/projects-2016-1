@@ -5,7 +5,6 @@ from db import User
 from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
-import tornado
 import sqlite3
 from models.imdb import IMDB
 
@@ -82,7 +81,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=lambda x: x))
 
 
 @util.requires_login
@@ -94,10 +93,10 @@ def create_post_handler(response):
     title = response.get_field("title", "")
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
-    list = List(tornado.escape.xhtml_escape(title), get_current_user_id(response))
+    list = List(title, get_current_user_id(response))
     list.save()
     for i, item in enumerate(list_items):
-        list_content = ListContent.create(list.id, i, tornado.escape.xhtml_escape(item))
+        list_content = ListContent.create(list.id, i, item)
 
     print("Creating post: {}, {}".format(title, list_items))
 
