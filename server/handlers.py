@@ -37,6 +37,7 @@ def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
+    if username == "" or password == "": response.redirect("/signup")
     print("email: ", email, "username: ", username, "password: ", password)
     user = User(username, password)
     user.save()
