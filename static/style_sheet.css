@@ -98,8 +98,21 @@ Helpers
 
 .appear {
 	opacity: 0;
-	transform: translate(0, -32px);
+	transform: translate(0, -32px) rotate(-720deg);
 }
+
+.explode::before, .explode::after {
+	content: '';
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	margin-left: -40px;
+	margin-right: -40px;
+	background: url(explode.gif) center no-repeat;
+	background-size: contain;
+}
+.explode::before { left: 25%; }
+.explode::after { right: 25%; }	
 
 .spacing-below {
 	margin-bottom: 12px;
@@ -120,7 +133,10 @@ Helpers
 .right-align {
 	float: right;
 }
-		
+
+.overflow-hidden {
+	overflow: hidden;
+}	
 		
 	
 /*
