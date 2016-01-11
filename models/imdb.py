@@ -33,7 +33,9 @@ class IMDB:
   @classmethod
   def _to_obj(cls, r):
     # Check if the api errors
+    print(r.text)
     res = r.json()
+
     if res["Response"] == "False":
       return None
     return cls(
