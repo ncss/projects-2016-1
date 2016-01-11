@@ -96,6 +96,15 @@ form input:focus, form textarea:focus {
 Helpers
 */
 
+.appear {
+	opacity: 0;
+	transform: translate(0, -32px);
+}
+
+.animate {
+	transition: all 0.5s;
+}
+
 .container {
 	overflow: auto;
 }
