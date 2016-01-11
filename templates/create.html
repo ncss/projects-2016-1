@@ -2,27 +2,20 @@
 
 <article class="padded">
 	<section>
-		<form action="/create/post">
+		<form action="/create" method="post">
 			<h3>Create A List</h3>
 			<p>
 				<label for="mist_title">Title</label><br>
 				<input type="text" name="title" placeholder="Title" id="mist_title">	
 			</p>
 			
-			
-			<p>
-				<label for="mist_description">Description</label><br>
-				<textarea id="mist_description" name="description" placeholder="Write a description..."></textarea>
-			</p>
-			  
-			
 			<p>
 				<label>Items</label><br>
-				<input type="text" name="listitem1" placeholder="List Item 1">
+				<input type="text" name="list_item_1" placeholder="List Item 1">
 			</p>
 			
 			{% for i in range(2, 11) %}
-			<p><input type="text" name="listitem{{i}}" placeholder="List Item {{i}}"></p>
+			<p><input type="text" name="list_item_{{i}}" placeholder="List Item {{i}}"></p>
 			
 			{% end for %}
 		

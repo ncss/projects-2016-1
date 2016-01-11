@@ -1,6 +1,6 @@
 from .db import DatabaseObject
 
-class List(DatabaseObject):
+class Mist(DatabaseObject):
 
   def __init__(self, name, author, id = None):
     self.name = name
@@ -8,8 +8,7 @@ class List(DatabaseObject):
     self.id = id
 
   def to_dict(self):
-      return {'name':self.name, 'author':self.author}
-
+      return {'name': self.name, 'author': self.author}
 
   def table_name(self):
     return 'lists'

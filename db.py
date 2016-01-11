@@ -1,5 +1,8 @@
 import sqlite3
 from models import User
+from models import Mist
+from models import ListContent
+
 from models import db
 
 conn = sqlite3.connect("database.db")

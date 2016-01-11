@@ -1,7 +1,5 @@
 import server.util as util
-from db import User
-
-from models.list_content import ListContent
+from db import User, Mist, ListContent
 
 from templater import templater
 
@@ -59,13 +57,28 @@ def dashboard_handler(response):
         response.write(templater.render("templates/dashboard.html", page_title = "Dashboard", site_title = "M'lists"))
 
 
-@util.requires_login
+#@util.requires_login
 def create_handler(response):
     response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
 
-@util.requires_login
+#@util.requires_login
 def create_post_handler(response):
-    print(response.get_field("title"))
+	title = response.get_field("title", "")
+	list_items = []
+	index = 1
+	while response.get_field("list_item_{}".format(index), "") != "":
+		list_items.append(response.get_field("list_item_{}".format(index)))
+		index += 1
+    
+	list = Mist(title, response.get_secure_cookie("user_id"))
+	list.save()
+	for i, item in enumerate(list_items):
+		list_content = ListContent(list.id, i, item)
+		list_content.save()
+		
+	print("Creating post: {}, {}".format(title, list_items))
+	
+	response.redirect('/dashboard')
 
 def mini_list_handler(response):
     import sqlite3
