@@ -1,6 +1,7 @@
 from .db import DatabaseObject
+from .list_content import ListContent
 
-class Mist(DatabaseObject):
+class List(DatabaseObject):
 
   def __init__(self, name, author, id = None):
     self.name = name
@@ -12,6 +13,9 @@ class Mist(DatabaseObject):
 
   def table_name(self):
     return 'lists'
+	
+  def list_contents(self):
+    return ListContent.find_by_list_id(self.id)
 
   @classmethod
   def find(cls, id):
@@ -28,7 +32,7 @@ class Mist(DatabaseObject):
     cur.execute('SELECT * FROM lists where author=?', (uid,))
     results = cur.fetchall()
     cur.close()
-    if not results: return None
+    if not results: return []
     return [cls.from_row(i) for i in results]
 
 

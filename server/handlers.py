@@ -1,9 +1,13 @@
 import server.util as util
-from db import User, Mist, ListContent
+from db import User
+from models.list import List
+from models.list_content import ListContent
 
 from templater import templater
 
+
 def index_handler(response):
+    print(response.get_secure_cookie("user_id"))
     if response.get_secure_cookie("user_id") is not None:
         response.redirect('/dashboard')
     else:
@@ -14,28 +18,29 @@ def post_login_handler(response):
     password = response.get_field("password", "")
     user = User.authenticate(username, password)
     if user:
-        response.set_secure_cookie('user_id', '-1')
+        response.set_secure_cookie('user_id', str(user.id))
+        print("Authenticated user %s" % user.id)
         response.redirect('/dashboard')
+        
     else:
+        print("Not logged in")
         response.redirect("/")
+        
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
         response.redirect('/dashboard')
     else:
         response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
-
-def get_signup_handler(response):
-    if response.get_secure_cookie('user_id') is not None:
-        response.redirect('/dashboard')
-    else:
-        response.write(templater.render("templates/signup_page.html", page_title="Sign Up", site_title = "M'lists"))
-
+        
 def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
     print("email: ", email, "username: ", username, "password: ", password)
+    user = User(username, password)
+    user.save()
+    response.set_secure_cookie("user_id", str(user.id))
 
     #TODO hit the database, create a new user, and set the cookie with the new user's id
     response.redirect("/")
@@ -54,14 +59,16 @@ def feed_handler(response):
 # dashboard integrates profile
 @util.requires_login
 def dashboard_handler(response):
-        response.write(templater.render("templates/dashboard.html", page_title = "Dashboard", site_title = "M'lists"))
+    uid = get_current_user_id(response)
+    user_mists = List.find_by_userid(uid)
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists"))
 
 
-#@util.requires_login
+@util.requires_login
 def create_handler(response):
     response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
 
-#@util.requires_login
+@util.requires_login
 def create_post_handler(response):
 	title = response.get_field("title", "")
 	list_items = []
@@ -70,11 +77,10 @@ def create_post_handler(response):
 		list_items.append(response.get_field("list_item_{}".format(index)))
 		index += 1
     
-	list = Mist(title, response.get_secure_cookie("user_id"))
+	list = List(title, get_current_user_id(response))
 	list.save()
 	for i, item in enumerate(list_items):
-		list_content = ListContent(list.id, i, item)
-		list_content.save()
+		list_content = ListContent.create(list.id, i, item)
 		
 	print("Creating post: {}, {}".format(title, list_items))
 	
@@ -101,3 +107,9 @@ def mini_list_handler(response):
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
                      
+
+def get_current_user_id(response):
+    uid = response.get_secure_cookie("user_id")
+    if uid is None:
+        raise Exception("No user is currently logged in")
+    return uid

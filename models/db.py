@@ -29,7 +29,7 @@ class DatabaseObject:
       li = []
       for i in range(len(keys)):
         li.append('?')
-      cur.execute('INSERT INTO {} ({}) VALUES ({});'.format(table, ",".join(keys),','.join(li)), values)
+      cur.execute('INSERT INTO {} ({}) VALUES ({});'.format(self.table_name(), ",".join(keys),','.join(li)), values)
       self.id = cur.lastrowid
     else:
       li = []

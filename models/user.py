@@ -1,6 +1,6 @@
 import hashlib
 
-from .mist import Mist
+from .list import List
 from .db import DatabaseObject
 
 class User(DatabaseObject):
