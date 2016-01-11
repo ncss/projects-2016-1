@@ -1,9 +1,13 @@
-{% include templates/header_logged_out.html %}
+{% include templates/header_404.html %}
 
 	<section>
 	    <h2>M'lists</h2>
 		<p>The new and fancy web7.0 HTML-Agnostic Production-ready way to share lists.</p>
 		<p>Click <a href='/'>here</a> to go to M'list's home page</p>
+		<p>Click <a href='' onclick="goBack()">here</a> to go back to the previous page</p>
 	</section>
 
+<script>function goBack() {window.history.back();}</script>	
+	
 	{% include templates/footer.html %}
+	
