@@ -1,24 +1,25 @@
 {% include templates/header.html %}
-	
+
     <div class="dashboard">
-		<div class = "box">
-		<!-- <section>User Statistics</section> -->
-		{% for mist in mists %}
-		<section>
-		  <article>
-			<h2>{{mist.name}}</h2>
-				<ol> 
-				{% for item in mist.list_contents() %}
-					<li> {{ item.content }} </li>
-				{% end for %}
-				</ol>
-			<button>Edit</button>
-			<!-- Image for each mist may be added in mvp+1-->
-		  </article>  
-		</section>
-		{% end for %}
-		</div>
-	</div>
+        <div class = "box">
+        <!-- <section>User Statistics</section> -->
+        {% for mist in mists %}
+        <section>
+          <article>
+            <h2>{{mist.name}}</h2>
+                <ol>
+                {% for item in mist.list_contents() %}
+                    <li> {{ item.content }} </li>
+                {% end for %}
+                </ol>
+            <button>Edit</button>
+            <!-- Image for each mist may be added in mvp+1-->
+          </article>
+          {% include templates/like.html %}
+        </section>
+        {% end for %}
+        </div>
+    </div>
   </body>
 </html>
 

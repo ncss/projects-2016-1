@@ -2,7 +2,6 @@ from .db import DatabaseObject
 from .list_content import ListContent
 
 class List(DatabaseObject):
-
   def __init__(self, name, author, id = None):
     self.name = name
     self.author = author
@@ -13,9 +12,15 @@ class List(DatabaseObject):
 
   def table_name(self):
     return 'lists'
-	
+
   def list_contents(self):
     return ListContent.find_by_list_id(self.id)
+
+  def get_likes(self):
+    cur = self.conn.cursor()
+    cur.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', (self.id,))
+    result = cur.fetchone()
+    return result[0]
 
   @classmethod
   def find(cls, id):
