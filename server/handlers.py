@@ -10,7 +10,7 @@ def index_handler(response):
         response.redirect('/dashboard')
     else:
         response.write(templater.render("templates/index.html", page_title="Login", site_title="M'lists"))
-    
+
 def post_login_handler(response):
     print("Mems")
     username = response.get_field("username", "")
@@ -19,7 +19,7 @@ def post_login_handler(response):
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
-        
+
     response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def get_login_handler(response):
@@ -73,14 +73,40 @@ def mini_list_handler(response):
     mist = ListContent.findByListId(0)
     response.write(templater.render("mini_list.html", mist = mist))
 
-# NEED MIST ID BEFORE THIS WILL WORK
-#def view_handler(reponse):
-    #response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
-    
+def view_list_handler(response, list_id):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id))
+    likes = c.fetchone()
+
+    list = {
+            "title": "Top 10 Adventure Movies",
+            "description": "A list about adventure movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+
+    response.write(templater.render('templates/view_list.html', likes=likes, list=list))
+
 # NEED MIST ID BEFORE THIS WILL WORK
 #def edit_handler(response):
     #response.write("<h1> ( ͡° ͜ʖ ͡°) EDIT DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
 
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
-                     
+
+def post_like_handler(response):
+    user_id = response.get_field('user_id')
+    list_id = response.get_field('list_id')
+
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    c.execute("SELECT COUNT(*) FROM likes WHERE user_id=?, list_id=?;", (user_id, list_id))
+    if c.fetchone() == 0:
+        c.execute('INSERT INTO likes VALUES(NULL, ?,?);', (user_id, list_id))
+        conn.commit()
+
+    conn.close()
+
+    response.write('')
