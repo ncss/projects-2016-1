@@ -117,6 +117,7 @@ def view_handler(response, list_id):
 def edit_handler(response, list_id):
     list = List.find(list_id)
     response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    
 
 def edit_post_handler(response, list_id):
 	list = List.find(list_id)
@@ -125,11 +126,8 @@ def edit_post_handler(response, list_id):
 		item.remove()
 	
 	list.name = response.get_field("title", "")
-	list_items = []
-	index = 1
-	while response.get_field("list_item_{}".format(index), "") != "":
-		list_items.append(response.get_field("list_item_{}".format(index)))
-		index += 1
+	list_items = response.get_arguments("list_item")
+	list_items = filter(None, list_items)
 
 	list.save()
 	for i, item in enumerate(list_items):

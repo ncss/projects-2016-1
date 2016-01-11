@@ -9,14 +9,47 @@
 	<p>
 		<label>Items</label>
 	</p>
-	
-	{% for item in mist.list_contents() %}
-	<p>
-		<input type="text" name="list_item_{{item.item_order + 1}}" placeholder="List Item {{item.item_order + 1}}" value="{{item.content}}">
+	<p id="item_holder">
+		<input type="text" class="animate spacing-below" name="list_item" placeholder="List" hidden id="list_item">
+		{% for item in mist.list_contents() %}
+		<input type="text" class="animate spacing-below" name="list_item" placeholder="List Item" value="{{item.content}}">
+		{% end for %}
 	</p>
 	
-	{% end for %}
 
 	<input type="submit" name="Submit">
 </form>
+<script>
+		
+		var list_item = document.getElementById("list_item");
+		var handler = function(event){
+			if (this.value && event.keyCode === 13) {
+
+				// Add the normal input.
+				var next_item = list_item.cloneNode();
+				next_item.value = "";
+				next_item.hidden = false;
+				next_item.classList.add("appear");
+				list_item.parentNode.appendChild(next_item);
+				next_item.addEventListener("keydown", handler);
+				next_item.focus();
+				next_item.classList.remove("appear");
+			}
+			if (event.keyCode === 13) {
+				event.preventDefault()
+			}
+			if (event.keyCode === 8 && this.value === "") {
+				event.preventDefault();
+				if (this != list_item) {
+					this.previousElementSibling.focus();
+					this.parentNode.removeChild(this);
+					}
+			}
+		};
+		var inputs = document.querySelectorAll("#item_holder input")
+		for (var i = 0; i < inputs.length; ++i) {
+			inputs[i].addEventListener("keydown", handler)
+		}
+			
+	</script>
 {% include templates/footer.html %}
