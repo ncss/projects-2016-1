@@ -9,17 +9,17 @@ def index_handler(response):
     if response.get_secure_cookie("user_id") is not None:
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Login", site_title="M'lists"))
-
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists"))
+    
 def post_login_handler(response):
-    print("Mems")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
     user = User.authenticate(username, password)
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
-
+    else:
+        response.redirect("/")
     response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def get_login_handler(response):
@@ -28,8 +28,22 @@ def get_login_handler(response):
     else:
         response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
-def signup_handler(response):
-    response.write(templater.render("templates/signup_page.html", page_title="Sign Up", site_title = "M'lists"))
+def get_signup_handler(response):
+    if response.get_secure_cookie('user_id') is not None:
+        response.redirect('/dashboard')
+    else:
+        response.write(templater.render("templates/signup_page.html", page_title="Sign Up", site_title = "M'lists"))
+
+def post_signup_handler(response):
+    email = response.get_field("email", "")
+    username = response.get_field("username", "")
+    password = response.get_field("password", "")
+    print("email: ", email, "username: ", username, "password: ", password)
+
+    #TODO hit the database, create a new user, and set the cookie with the new user's id
+    response.redirect("/")
+    # give those things to the data base
+    
 
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):

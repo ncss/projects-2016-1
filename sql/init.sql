@@ -5,9 +5,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE lists (
-  id	INTEGER	PRIMARY KEY	NOT NULL,
+  id	INTEGER	AUTOINCREMENT,
   name TEXT NOT NULL,
-  author INT NOT NULL
+  author INT NOT NULL, 
+  PRIMARY KEY (id), 
+  FOREIGN KEY (author) REFERENCES users (id)
 );
 
 CREATE TABLE list_contents (
