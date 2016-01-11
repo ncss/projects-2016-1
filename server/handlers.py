@@ -200,7 +200,7 @@ def post_like_handler(response):
 
 @util.requires_login
 def post_unlike_handler(response):
-    user_id = response.get_field('user_id')
+    user_id = response.get_secure_cookie('user_id')
     list_id = response.get_field('list_id')
 
     l = Likes(user_id, list_id)

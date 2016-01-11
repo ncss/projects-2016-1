@@ -4,17 +4,21 @@
 	<section>
 		<h2 class="center">Popular Mists</h1>
 		
-		{% for mist in popular[:5] %}
-			{% include templates/preview_mist.html %}
-		{% end for %}
+		{% for type in ['popular'] %}
+		  {% for mist in popular[:5] %}
+			  {% include templates/preview_mist.html %}
+		  {% end for %}
+	  {% end for %}
 	</section>
 
 	<section>
 		<h2 class="center">New Mists</h1>
 		
-		{% for mist in mists[:5] %}
-			{% include templates/preview_mist.html %}
-		{% end for %}
+		{% for type in ['new'] %}
+		  {% for mist in mists[:5] %}
+			  {% include templates/preview_mist.html %}
+ 		  {% end for %}
+	  {% end for %}
 	</section>
 
 </div>
