@@ -201,6 +201,7 @@ def is_logged_in(response):
 
 def page_not_found_handler(response, path):
     #insert a html page for 404
+    response.set_status(404, 'Page not found')
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
 
