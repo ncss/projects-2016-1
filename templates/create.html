@@ -1,6 +1,6 @@
 {% include templates/header.html %}
 <form action="/create" method="post">
-	<h3>Create A List</h3>
+	<h3>Create a list</h3>
 	<p>
 		<label for="mist_title">Title</label><br>
 		<input type="text" name="title" placeholder="Title" id="mist_title">	
@@ -8,14 +8,38 @@
 	
 	<p>
 		<label>Items</label><br>
-		<input type="text" name="list_item_1" placeholder="List Item 1">
+		<input class="animate" type="text" name="list_item" placeholder="List item" id="list_item">
 	</p>
 	
-	{% for i in range(2, 11) %}
-	<p><input type="text" name="list_item_{{i}}" placeholder="List Item {{i}}"></p>
+	<script>
+		
+		var list_item = document.getElementById("list_item");
+		var handler = function(event){
+			if (this.value && event.keyCode === 13) {
+				var next_item = list_item.cloneNode();
+				next_item.value = "";
+				next_item.classList.add("appear");
+				list_item.parentNode.appendChild(next_item);
+				next_item.addEventListener("keydown", handler);
+				next_item.focus();
+				next_item.classList.remove("appear");
+				
+			}
+			if (event.keyCode === 13) {
+				event.preventDefault()
+			}
+			if (event.keyCode === 8 && this.value === "") {
+				event.preventDefault();
+				if (this != list_item) {
+					this.previousElementSibling.focus();
+					this.parentNode.removeChild(this);
+					}
+			}
+		};
+		list_item.addEventListener("keydown", handler)
+			
+	</script>
 	
-	{% end for %}
-
 	<input type="submit" name="Submit">
 </form>
 {% include templates/footer.html %}

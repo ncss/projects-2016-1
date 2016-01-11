@@ -1,5 +1,10 @@
-header{
+header {
 	background-color: rgb(247, 102, 44);
+}
+
+.logo {
+	width: 10rem;
+	height: 4rem;
 }
 
 	header a {
@@ -17,7 +22,9 @@ header{
 	header nav a {
 		margin-left: 1rem;
 	}
+	
 		
 		header nav a:first-child {
 			margin-left: 0;
 		}
+		

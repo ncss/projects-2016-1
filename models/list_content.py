@@ -1,3 +1,4 @@
+from .db import DatabaseObject
 
 import sqlite3
 
@@ -73,18 +74,18 @@ class ListContent:
 		content = row[2]
 		return cls(list_id, item_order, content)
 
-
+''' 
 if __name__ == '__main__':
-	conn = sqlite3.connect(':memory:')
-	ListContent.connect(conn)
-	conn.executescript(open('../sql/init.sql').read())
-	print("Welcome to the ListContent module.")
-	# create a new content item
-	c = ListContent("test item 1",0,5)
-	print(ListContent.findByListId(0))
-	results = ListContent.search('movie')
-	print(results)
+  conn = sqlite3.connect(':memory:')
+  ListContent.connect(conn)
+  conn.executescript(open('../sql/init.sql').read())
+  print("Welcome to the ListContent module.")
+  # create a new content item
+  c = ListContent("test item 1",0,5)
+  print(ListContent.findByListId(0))
+  results = ListContent.search('movie')
+  print(results)
 
-	for r in results:
-		print("Content: ", r.content)
-
+  for r in results:
+    print("Content: ", r.content)
+'''

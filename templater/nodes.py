@@ -1,3 +1,5 @@
+import html
+
 class Node(object):
     def eval(self, context):
         raise NotImplementedError()
@@ -30,7 +32,7 @@ class PythonNode(Node):
         self.expr = expr
 
     def eval(self, context):
-        return str(eval(self.expr, {}, context))
+        return html.escape(str(eval(self.expr, {}, context)))
 
 class IfNode(Node):
     def __init__(self, predicate=''):

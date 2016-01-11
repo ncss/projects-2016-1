@@ -42,4 +42,6 @@ server.register(r'/settings', handlers.settings_handler)
 server.register(r'/like', handlers.post_like_handler)
 server.register(r'/dashboard/settings', handlers.settings_handler)
 
+server.register(r'/(.*)', handlers.page_not_found_handler)
+
 server.run()
