@@ -15,8 +15,9 @@ TO DO LIST:
     - edit_handler
 '''
 
-server = Server()
+db.create_if_not_exists()
 
+server = Server()
 
 # Handlers
 server.register(r'/', handlers.index_handler)
