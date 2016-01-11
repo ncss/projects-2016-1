@@ -40,6 +40,6 @@ class DatabaseObject:
         UPDATE {}
         SET {}
         WHERE id = ?
-      '''.format(table, ','.join(li)), values);
+      '''.format(self.table_name(), ','.join(li)), values);
     self.__class__.conn.commit()
     cur.close()
