@@ -21,9 +21,9 @@ server = Server()
 
 # Handlers
 server.register(r'/', handlers.index_handler)
-server.register(r'/login', handlers.get_login_handler, post = handlers.post_login_handler)
+server.register(r'/login', handlers.get_login_handler, get = handlers.get_login_handler, post = handlers.post_login_handler)
 server.register(r'/logout', handlers.logout_handler)
-server.register(r'/signup', handlers.signup_handler)
+server.register(r'/signup', handlers.get_signup_handler, get = handlers.get_signup_handler, post = handlers.post_signup_handler)
 server.register(r'/feed', handlers.feed_handler)
 server.register(r'/dashboard', handlers.dashboard_handler)
 server.register(r'/create', handlers.create_handler)
