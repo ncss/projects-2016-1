@@ -1,3 +1,4 @@
+import sqlite3
 import server.util as util
 from db import User
 from models.list import List
@@ -12,7 +13,7 @@ def index_handler(response):
     if is_logged_in(response):
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists"))
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
 
 def post_login_handler(response):
     username = response.get_field("username", "")
@@ -43,12 +44,16 @@ def post_signup_handler(response):
     if username == "" or password == "": response.redirect("/signup")
     print("email: ", email, "username: ", username, "password: ", password)
     user = User(username, password)
-    user.save()
-    response.set_secure_cookie("user_id", str(user.id))
+    try:
+        user.save()
+    except sqlite3.IntegrityError:
+        response.redirect("/index?fail=user_exists")
+    else:
+        response.set_secure_cookie("user_id", str(user.id))
 
-    #TODO hit the database, create a new user, and set the cookie with the new user's id
-    response.redirect("/")
-    # give those things to the data base
+        #TODO hit the database, create a new user, and set the cookie with the new user's id
+        response.redirect("/")
+        # give those things to the data base
 
 
 # messing around with login handler clearing cookie and redirecting to a page
