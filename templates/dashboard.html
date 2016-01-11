@@ -1,33 +1,14 @@
 {% include templates/header.html %}
     <div class="dashboard">
-        <div class = "box">
-        <!-- <section>User Statistics</section> -->
-
         {% if not mists %}
             <form>
                 <h4> Looks like you don't have any mists! <a href="/create">Create Mist</a></h4>
             </form>
         {% else %}
             {% for mist in mists %}
-
-              <article>
-                <h2>{{mist.name}}</h2>
-                    <ol> 
-                    {% for item in mist.list_contents() %}
-                        <li> {{ item.content }} </li>
-                    {% end for %}
-                    </ol>
-                    {% for item in mist.list_contents() %}
-					{% if image_fetcher(item.content) != 'placeholder.png' %}
-						<img src="{{ image_fetcher(item.content) }}" alt = "movie image poster" height = "140" width = "94">
-					{% end if %}
-                    {% end for %}
-                <a class = "link_button" href="/list/{{mist.id}}/edit">Edit</a>
-                {% include templates/like.html %}
-              </article>  
+                {% include templates/preview_mist.html %}
             {% end for %}
         {% end if %}
-        </div>
     </div>
   </body>
 </html>

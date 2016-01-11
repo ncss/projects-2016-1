@@ -1,0 +1,21 @@
+<article class="padded list-preview">
+	<h3><a href="/list/{{mist.id}}/view">{{mist.name}}</a></h3>
+	<ol> 
+	{% for item in mist.list_contents()[:3] %}
+		<li> {{ item.content }} </li>
+	{% end for %}
+	</ol>
+	<a href="/list/{{mist.id}}/view">Read More...</a>
+	
+	<menu class="list-actions">
+		<nav>
+			{% include templates/like.html %}
+		</nav>
+		<nav>
+			<a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
+			<a class = "list-action red" href="/list/{{mist.id}}/delete">Delete</a>
+		</nav>
+	</menu>
+	<!-- Image for each mist may be added in mvp+1-->
+	
+</article>
