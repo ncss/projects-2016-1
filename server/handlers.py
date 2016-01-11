@@ -21,7 +21,6 @@ def login_handler(response):
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
        
-# messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
@@ -51,6 +50,11 @@ def create_handler(response):
         #response.write(templater.render("templates/login_page.html"))
     
 
+#def edit_handler(response):
+    # get list id
+    # look up list
+    # print list items in form sections
+    # submit new list to DB
 
 # NEED MIST ID BEFORE THIS WILL WORK
 #def view_handler(reponse):
