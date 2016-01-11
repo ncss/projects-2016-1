@@ -17,6 +17,9 @@ class DatabaseObject:
   def to_dict(self):
       raise Exception('need to implement to_dict()')
 
+  def table_name(self):
+    raise Exception('need to implement table_name()')
+
   def save(self):  
     raw_data = self.to_dict()
     keys = raw_data.keys()
@@ -26,7 +29,7 @@ class DatabaseObject:
       li = []
       for i in range(len(keys)):
         li.append('?')
-      cur.execute('INSERT INTO users ({}) VALUES ({});'.format(",".join(keys),','.join(li)), values)
+      cur.execute('INSERT INTO {} ({}) VALUES ({});'.format(table, ",".join(keys),','.join(li)), values)
       self.id = cur.lastrowid
     else:
       li = []
@@ -34,9 +37,9 @@ class DatabaseObject:
         li.append(i + ' =?')
       values.append(self.id)
       cur.execute('''
-        UPDATE users
+        UPDATE {}
         SET {}
         WHERE id = ?
-      '''.format(','.join(li)), values);
+      '''.format(table, ','.join(li)), values);
     self.__class__.conn.commit()
     cur.close()
