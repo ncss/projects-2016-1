@@ -35,7 +35,7 @@ class IMDB:
     # Check if the api errors
     res = r.json()
     if res["Response"] == "False":
-      raise requests.exceptions.HTTPError("Movie or film not found")
+      return None
     return cls(
       imdb_id=res["imdbID"],
       title=res["Title"],
@@ -47,8 +47,14 @@ class IMDB:
   
   @classmethod
   def fetch_image(cls,name):
-    return cls.fetch_api_name(name).image
+    obj = cls.fetch_api_name(name)
+    if obj is None:
+      return "placeholder.png"
+    return obj.image
 
   @classmethod
   def fetch_thumbnail(cls,name):
-    return cls.fetch_api_name(name).image
+    obj = cls.fetch_api_name(name)
+    if obj is None:
+      return "placeholder.png"
+    return obj.image

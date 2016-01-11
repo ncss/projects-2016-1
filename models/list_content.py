@@ -17,20 +17,19 @@ class ListContent:
 
 	def remove(self):
 		self.__class__.delete(self.list_id, self.item_order)
-	
+
 	@classmethod
 	def create(cls, list_id, item_order, content):
 		cur = cls.conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_id, item_order, content))
 		cls.conn.commit()
 		cur.close()
 		return cls(list_id, item_order, content)
-		
+
 	@classmethod
 	def delete(cls, list_id, item_order):
 		cur = cls.conn.execute('''DELETE FROM list_contents WHERE list = ? AND item_order = ? ''', (list_id, item_order))
 		cls.conn.commit()
 		cur.close()
-
 
 	@classmethod  
 	def find(cls, content):
@@ -54,7 +53,6 @@ class ListContent:
 
 	@classmethod
 	def search(cls,keyword):
-
 		fuzzy_matcher = '%' + keyword + '%'
 		cur = cls.conn.execute("""SELECT * FROM list_contents WHERE content LIKE ? """, ( fuzzy_matcher,))
 		rows = cur.fetchall()

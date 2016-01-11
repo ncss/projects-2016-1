@@ -1,23 +1,15 @@
-</div>
-
-<script>
-window.addEventListener("load", function(){
-	var button = document.getElementById("profile-button");
-	var nav = document.getElementById("nav");
-	button.addEventListener("click", function(){
-		nav.hidden = false;
-	});
-	document.documentElement.addEventListener("click", function(event){
-		var current_target = event.target;
-		while (current_target) {
-			if (current_target.localName == "header") {
-				return;
-			}
-			current_target = current_target.parentNode;
-		}
-		nav.hidden = true;
-	});
-});
-</script>
-</body>
+		<footer class="padded container">
+			<section class="description">
+				<img src="/static/Logo1.png" class="logo">
+			</section>
+			<p>The new and fancy web7.0 HTML-Agnostic Production-ready way to share lists.</p>
+			<section class="copyright">
+				<p>Copyright &copy; Group 1, NCSS 2016. All rights reserved.
+			</section>
+			<section class="right-align">
+				<a href="/privacy">Privacy</a>
+				<a href="/terms">Terms</a>
+			</section>
+		</footer>
+	</body>
 </html>
