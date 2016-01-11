@@ -299,9 +299,10 @@ text-align: center;
 	font-weight: 700;
 	background-color: rgb(44, 139, 247);
 	color: white;
-	padding: 8px 30px 8px 30px;
+	padding: 9px 30px 9px 30px;
 	position: relative;
 	bottom: -6px;
+	border-radius: 4px;
 }
 
 	.list-action:visited {
@@ -323,6 +324,7 @@ button.like {
 	background-color: rgb(44, 139, 247);
 	color: white;
 	padding: 6px 26px 6px 26px;
+	border-radius: 4px;
 }
 
 	
