@@ -20,7 +20,6 @@ class Likes(DatabaseObject):
     @classmethod
     def remove(cls, user_id, list_id):
         cur = DatabaseObject.conn.cursor()
-        print("remove of Like, got user={}, list={}", user_id, list_id)
         cur = cls.conn.execute('DELETE FROM likes WHERE list_id=? AND user_id=?', (list_id, user_id))
         cur.close()
 

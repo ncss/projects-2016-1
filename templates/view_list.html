@@ -1,10 +1,38 @@
-{% include header.html %}
-    <h1>{{ mist.name }}</h1>
-    <p>{{ mist.description }}</p>
-    <ol>
-    {% for list_item in mist.content %}
-        <li>{{ list_item }}</li>
+{% if user_id %}
+    {% include templates/header.html %}
+{% else %}
+    {% include templates/header_logged_out.html %}
+{% end if %}
+<article class="list-preview">
+	<ol> 
+	{% for item in mist.list_contents() %}
+		<li> {{ item.content }} </li>
+	{% end for %}
+	</ol>
+	
+	{% for item in mist.list_contents() %}
+		{% if image_fetcher(item.content) != 'placeholder.png' and image_fetcher(item.content) != "N/A" %}
+			<img src="{{ image_fetcher(item.content) }}" alt = "movie image poster" height = "140" width = "94">
+		{% end if %}
     {% end for %}
-    </ol>
-    {% include like.html %}
-{% include footer.html %}
+	
+	<menu class="list-actions">
+		<nav>
+			{% if user_id %}
+                {% include templates/like.html %}
+            {% else %}
+                <p id="like-message-{{ mist.id }}"><span>{{ mist.get_likes() }}</span> like this.</p>
+            {% end if %}
+		</nav>
+		<nav>
+			{% if user_id and user_id == mist.author %}
+                <a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
+                <a class = "list-action red" href="/list/{{mist.id}}/delete">Delete</a>
+            {% end if %}
+		</nav>
+	</menu>
+	<!-- Image for each mist may be added in mvp+1-->
+	
+</article>
+<br>
+{% include templates/footer.html %}

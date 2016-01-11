@@ -243,11 +243,67 @@ text-align: center;
 	padding-top: 20px;
 	font-size: 20px;
 }
+
 .dashboard a.link_button {
 	float: right;
 	color: red;
+}
+
+	
+/*
+ * List Preview
+ */
+
+ .list-preview h3 a {
+	text-decoration: none;
+	color: rgb(247, 102, 44);
+ }
+ 
+ 	.list-preview a {
+		text-decoration: none;
+	}
+ 
+.list-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: top;
+	margin-left: 0;
+	padding-left: 0;
+	margin-bottom: 0;
+}
+
+
+
+.list-actions p {
+	margin: 0;
+}
+
+.list-action {
+	text-decoration: none;
+	font-weight: 700;
+	background-color: rgb(44, 139, 247);
+	color: white;
+	padding: 8px 30px 8px 30px;
+	position: relative;
+	bottom: -6px;
+}
+
+	.list-action.red {
+		background-color: rgb(247, 102, 44);
+	}
+	
+	.list-action.green {
+		background-color: rgb(23, 202, 147);
 	}
 
+button.like {
+	border: none;
+	text-decoration: none;
+	font-weight: 700;
+	background-color: rgb(44, 139, 247);
+	color: white;
+	padding: 6px 26px 6px 26px;
+}
 
 	
 
