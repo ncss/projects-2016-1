@@ -55,8 +55,3 @@ class Likes:
     else:
       return [cls.from_row(i) for i in results]
 '''
-	#  return [cls.from_row(i) for i in results]
-'''
-=======
->>>>>>> origin/master
-'''
