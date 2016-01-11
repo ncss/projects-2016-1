@@ -6,7 +6,14 @@ body {
 	font-size: 16px;
 	line-height: 1.5em;
 	color: rgb(51, 55, 68);
-	margin: 0 2rem 3rem 2rem;
+}
+
+.padded {
+	padding: 2rem;
+}
+
+a:visited {
+	color: rgb(247, 102, 44);
 }
 
 h1 {
@@ -36,16 +43,54 @@ p {
 ul, ol {
 	margin-top: -0.5rem;
 }
+footer {
+	background-color: rgb(240, 240, 240);
+	padding: 2rem;
+}
 
 form {
 	background-color: rgb(240, 240, 240);
 	padding: 1px 2rem 2rem 2rem;
+	margin: 2rem 0rem 2rem 0rem;
+	border-radius: 6px;
+	overflow: auto;
 }
+	form h3{
+	color: rgb(51, 55, 68);
+	}
+	
+	form label{
+		font-weight: 700;
+	}
 
 	form input[type="checkbox"], form input[type="radio"]{
 		margin-left: 1rem;
 	}
 	
+	form input[type="submit"] {
+		background-color: rgb(44, 139, 247);
+		color: white;
+		font-weight: 700;
+		padding: 8px 30px 8px 30px;
+		float: right;
+	}
+	
+	form input[type="text"], form textarea, form input[type="password"] {
+		width: 100%;
+	}
+	
+	form input, form textarea {
+		border: 1px solid white;
+		border-radius: 4px;
+		padding: 6px 8px 6px 8px;
+	}
+	
+		form input:focus, form textarea:focus {
+			border-color: rgb(247, 102, 44);
+			outline: none;
+		}
+		
+		
 	
 /*
 Login page
@@ -63,6 +108,42 @@ Login page
 	align-items: center;
 	height: 100%;
 }
+
+/*
+ * Feed
+ */
+.feed section {
+	border: 1px solid black;
+	min-width: 280px;
+	margin: 8px;
+}
+
+.feed article {
+	margin:16px;
+	box-shadow: 0 2px 5px black;
+	padding-bottom: 2px;
+	cursor: pointer;
+}
+
+.feed h1 {
+	text-align: center;
+	padding-left:3px;
+}
+
+.feed h2 {
+	padding-left:5px;
+}
+
+.feed.box {
+	display:flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
+.feed.box section {
+	flex-grow: 1;
+}
+
 /*
 Dashboard!
 */
