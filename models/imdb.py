@@ -47,18 +47,10 @@ class IMDB:
   
   @classmethod
   def fetch_image(cls,name):
-<<<<<<< HEAD
-    try:
-       return cls.fetch_api_name(name).image
-    except:
-     
-      return ""
-=======
     obj = cls.fetch_api_name(name)
     if obj is None:
       return "placeholder.png"
     return obj.image
->>>>>>> cd5575f3af01517acdd26922e6588f4d7faf0a2c
 
   @classmethod
   def fetch_thumbnail(cls,name):
