@@ -6,6 +6,7 @@ from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
 import sqlite3
+from models.imdb import IMDB
 
 from templater import templater
 
@@ -80,7 +81,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 
 @util.requires_login

@@ -18,6 +18,9 @@
                         <li> {{ item.content }} </li>
                     {% end for %}
                     </ol>
+					{% for item in mist.list_contents() %}
+						{{ image_fetcher(item.content) }}
+					{% end for %}
                 <a class = "link_button" href="/edit">Edit</a>
                 <!-- Image for each mist may be added in mvp+1-->
                 {% include templates/like.html %}
