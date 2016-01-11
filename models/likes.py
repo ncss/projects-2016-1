@@ -1,21 +1,30 @@
 class Likes:
 
 # Both init and create defs mirrored on list_content methods - need checking
-
-    def __init__(self, like_user, like_listnum, like_id):
+    def __init__(self, like_user, like_listnum):
         self.like_user = like_user
         self.like_listnum = like_listnum
-        self.like_id = like_id
 
     @classmethod
     def connect(cls, db):
         cls.conn = db
 
     @classmethod
-    def create(cls, like_user, like_listnum, like_id):
-    #like_id is an autonumber field, how does inserting work? insert a null?
-        cur = conn.execute('''INSERT INTO likes VALUES (NULL,?, ?, ?)''', (like_id, like_user, like_listnum))
-        return cls('Created: like_id ?, like_user ?, like_listnum ?', like_id, like_user, like_listnum)
+    def create(cls, user_id, list_id):
+        cur = cls.conn.execute('INSERT INTO likes VALUES (NULL, ?, ?)', (user_id, list_id))
+
+    @classmethod
+    def list_likes(cls, list_id):
+        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', list_id)
+        return cur.fetchone()
+
+    @classmethod
+    def has_user_liked_list(cls, user_id, list_id):
+        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?, user_id=?', list_id, user_id)
+        if cur.fetchone() == 1:
+            return True
+        else:
+            return False
 
 ''' WORKS IN PROGRESS
   @classmethod
@@ -45,9 +54,4 @@ class Likes:
       return None
     else:
       return [cls.from_row(i) for i in results]
-'''
-	#  return [cls.from_row(i) for i in results]
-'''
-=======
->>>>>>> origin/master
 '''
