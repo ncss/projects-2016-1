@@ -41,12 +41,17 @@ def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
-    if username == "" or password == "": response.redirect("/signup")
-    print("email: ", email, "username: ", username, "password: ", password)
+
+    if username == "" or password == "":
+        response.redirect("/signup")
+        return
+
     user = User(username, password)
+
     try:
         user.save()
     except sqlite3.IntegrityError:
+        # TODO: Use cookies instead for errors instead of GET arguments
         response.redirect("/index?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
