@@ -12,7 +12,7 @@ from templater import templater
 
 def index_handler(response):
     print(response.get_secure_cookie("user_id"))
-    if is_logged_in(response):
+    if util.is_logged_in(response):
         response.redirect('/dashboard')
     else:
         response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
@@ -73,9 +73,9 @@ def feed_handler(response):
 # dashboard integrates profile
 @util.requires_login
 def dashboard_handler(response):
-    uid = get_current_user_id(response)
+    uid = util.get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
-    user_id = get_current_user_id(response)
+    user_id = util.get_current_user_id(response)
     response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 @util.requires_login
@@ -93,7 +93,7 @@ def create_post_handler(response):
     title = response.get_field("title", "")
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
-    a_list = List(title, get_current_user_id(response))
+    a_list = List(title, util.get_current_user_id(response))
     a_list.save()
     for i, item in enumerate(list_items):
         list_content = ListContent.create(a_list.id, i, item)
@@ -116,7 +116,7 @@ def mini_list_handler(response):
 def view_handler(response, list_id):
     list = List.find(list_id)
     try:
-        user_id = get_current_user_id(response)
+        user_id = util.get_current_user_id(response)
     except Exception as e:
         user_id = None
 
@@ -189,15 +189,6 @@ def post_unlike_handler(response):
 
     response.set_header('Content-Type', 'application/json')
     response.write(json.dumps({'likes':likes}))
-
-def get_current_user_id(response):
-    uid = response.get_secure_cookie("user_id")
-    if uid is None:
-        raise Exception("No user is currently logged in")
-    return uid
-
-def is_logged_in(response):
-    return response.get_secure_cookie("user_id") is not None
 
 def page_not_found_handler(response, path):
     #insert a html page for 404
