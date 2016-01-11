@@ -34,7 +34,7 @@ server.register(r'/settings', handlers.settings_handler)
 #server.register(r'/dashboard/settings', handlers.settings_handler)
 server.register(r'/memes', handlers.meme_handler)
 server.register(r'/privacy', handlers.privacy_handler)
-server.register(r'/terms', handlers.privacy_handler)
+server.register(r'/terms', handlers.terms_handler)
 #server.register(r'/create/post', handlers.create_post_handler)
 server.register(r'/view/(0-9)+', handlers.view_list_handler)
 
