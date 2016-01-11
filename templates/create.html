@@ -13,7 +13,19 @@
 	
 	<script>
 		
+		var mist_title = document.getElementById("mist_title");
 		var list_item = document.getElementById("list_item");
+		var emoji_handler = function(event){
+			if (this.value){
+				this.value = this.value.replace(
+					">:)","😈").replace(
+					":)","😀").replace(
+					":*","😘").replace(
+					"<3","❤️").replace(
+					":')","😂");
+			}
+
+		};
 		var handler = function(event){
 			if (this.value && event.keyCode === 13) {
 				// Add an awesome explosion.
@@ -33,9 +45,11 @@
 				next_item.classList.add("appear");
 				list_item.parentNode.appendChild(next_item);
 				next_item.addEventListener("keydown", handler);
+				next_item.addEventListener("keydown", emoji_handler);
 				next_item.focus();
 				next_item.classList.remove("appear");
 			}
+
 			if (event.keyCode === 13) {
 				event.preventDefault()
 			}
@@ -48,7 +62,8 @@
 			}
 		};
 		list_item.addEventListener("keydown", handler)
-			
+		list_item.addEventListener("keydown", emoji_handler)
+		mist_title.addEventListener("keydown", emoji_handler)
 	</script>
 	
 	<input type="submit" name="Submit" value="Create">

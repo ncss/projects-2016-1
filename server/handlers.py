@@ -159,6 +159,7 @@ def view_list_handler(response, list_id):
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
+@util.requires_login
 def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
@@ -171,6 +172,7 @@ def post_like_handler(response):
     response.set_header('Content-Type', 'application/json')
     response.write(json.dumps({'likes':likes}))
 
+@util.requires_login
 def post_unlike_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
@@ -191,8 +193,6 @@ def get_current_user_id(response):
 
 def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
-
-
 
 def page_not_found_handler(response, path):
     #insert a html page for 404
