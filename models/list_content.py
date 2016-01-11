@@ -2,66 +2,75 @@ from .db import DatabaseObject
 
 import sqlite3
 
-class ListContent(DatabaseObject):
-  def __init__(self, list_id, item_order, content):
-    self.content = content
-    self.list_id = list_id
-    self.item_order = item_order
+class ListContent:
+	@classmethod
+	def connect(cls,db):
+		cls.conn = db
 
-  def __str__(self):
-    return  '(' + self.content + ') Content, (' + str(self.list_id) + ') List, (' + str(self.item_order) + ') List position'
+	def __init__(self, list_id, item_order, content):
+		self.content = content
+		self.list_id = list_id
+		self.item_order = item_order
 
-  def remove(self):
-    self.__class__.delete(self.list_id, self.item_order)
+	def __str__(self):
+		return  '(' + self.content + ') Content, (' + str(self.list_id) + ') List, (' + str(self.item_order) + ') List position'
 
-  def to_dict(self):
-    return {'list':list, 'item_order':item_order, 'content':content}
+	def remove(self):
+		self.__class__.delete(self.list_id, self.item_order)
 
-  def table_name(self):
-    return 'list_content'
+	@classmethod
+	def create(cls, list_id, item_order, content):
+		cur = cls.conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_id, item_order, content))
+		cls.conn.commit()
+		cur.close()
+		return cls(list_id, item_order, content)
 
+	@classmethod
+	def delete(cls, list_id, item_order):
+		cur = cls.conn.execute('''DELETE FROM list_contents WHERE list = ? AND item_order = ? ''', (list_id, item_order))
+		cls.conn.commit()
+		cur.close()
 
-  @classmethod  
-  def find(cls, content):
-    cur = cls.conn.execute('''SELECT * FROM list_contents WHERE content=?''', (content,))
-    row = cur.fetchone()
-    if row is None:
-      raise UserNotFound('{} does not exist'.format(content))
-    return ListContent.helper(row)
+	@classmethod  
+	def find(cls, content):
+		cur = cls.conn.execute('''SELECT * FROM list_contents WHERE content=?''', (content,))
+		row = cur.fetchone()
+		if row is None:
+			raise UserNotFound('{} does not exist'.format(content))
+		return ListContent.helper(row)
 
-  @classmethod
-  def find_by_list_id(cls, list_id):
-    cur = cls.conn.execute('''SELECT * FROM list_contents WHERE list=?''', (list_id,))
-    rows = cur.fetchall()
+	@classmethod
+	def find_by_list_id(cls, list_id):
+		cur = cls.conn.execute('''SELECT * FROM list_contents WHERE list=?''', (list_id,))
+		rows = cur.fetchall()
 
-    list = []
-    for row in rows:
-      item = ListContent.helper(row)
-      list.append(item)
+		list = []
+		for row in rows:
+			item = ListContent.helper(row)
+			list.append(item)
 
-    return list
+		return list
 
-  @classmethod
-  def search(cls,keyword):
+	@classmethod
+	def search(cls,keyword):
+		fuzzy_matcher = '%' + keyword + '%'
+		cur = cls.conn.execute("""SELECT * FROM list_contents WHERE content LIKE ? """, ( fuzzy_matcher,))
+		rows = cur.fetchall()
 
-    fuzzy_matcher = '%' + keyword + '%'
-    cur = cls.conn.execute("""SELECT * FROM list_contents WHERE content LIKE ? """, ( fuzzy_matcher,))
-    rows = cur.fetchall()
+		list = []
+		for row in rows:
+			item = ListContent.helper(row)
+			list.append(item)
 
-    list = []
-    for row in rows:
-      item = ListContent.helper(row)
-      list.append(item)
+		return list
 
-    return list
-
-  @classmethod
-  def helper(cls, row):
-    # to convert rows into named items
-    list_id = row[0]
-    item_order = row[1]
-    content = row[2]
-    return cls(list_id, item_order, content)
+	@classmethod
+	def helper(cls, row):
+		# to convert rows into named items
+		list_id = row[0]
+		item_order = row[1]
+		content = row[2]
+		return cls(list_id, item_order, content)
 
 ''' 
 if __name__ == '__main__':
