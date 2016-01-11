@@ -1,4 +1,5 @@
 import server.util as util
+import json
 from db import User
 from models.list import List
 from models.likes import Likes
@@ -35,7 +36,7 @@ def get_login_handler(response):
         login_failed = response.get_field('fail', '') == '1'
         response.write(templater.render("templates/login_page.html", login_failed=login_failed,
                                         page_title="Login", site_title="M'lists"))
-        
+
 def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
@@ -58,8 +59,9 @@ def logout_handler(response):
 
 @util.requires_login
 def feed_handler(response):
-	mists = List.find_all()
-	response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists"))
+    mists = List.find_all()
+    user_id = get_current_user_id(response)
+    response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
 @util.requires_login
@@ -100,10 +102,10 @@ def mini_list_handler(response):
 
 def view_handler(response, list_id):
     response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
-    
+
 def edit_handler(response, list_id):
-	list = List.find(list_id)
-	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    list = List.find(list_id)
+    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
 def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
@@ -127,10 +129,13 @@ def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
-    likes = Likes(user_id, list_id)
-    likes.create(user_id, list_id)
+    l = Likes(user_id, list_id)
+    l.create(user_id, list_id)
 
-    response.write('')
+    likes = 100
+
+    response.write(json.dumps({'likes':likes}))
+    response.set_header('Content-Type', 'application/json')
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
@@ -142,13 +147,13 @@ def is_logged_in(response):
     return response.get_secure_cookie("user_id") is not None
 
 
-	
+
 def page_not_found_handler(response, path):
     #insert a html page for 404
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
-	
-	
+
+
 
 def meme_handler(response):
     response.redirect('http://blaker.space')
