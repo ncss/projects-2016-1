@@ -1,11 +1,23 @@
 html {
 	border-top: 5px solid rgb(247, 102, 44);
+	height:100%;
 }
+
 body {
 	font-family: 'Lato', sans-serif;
 	font-size: 16px;
 	line-height: 1.5em;
 	color: rgb(51, 55, 68);
+	height:100%;
+}
+
+#content {
+	min-height:100%;
+	position:relative;
+}
+
+#body {
+	padding-bottom: 240px;
 }
 
 .padded {
@@ -47,6 +59,11 @@ ul, ol {
 footer {
 	background-color: rgb(240, 240, 240);
 	padding: 2rem;
+	position:absolute;
+	bottom: -10px;
+	width: 100%;
+	height: 240px;   /* Height of the footer */
+	box-sizing: border-box;
 }
 
 form {
@@ -156,7 +173,6 @@ Login page
  * Feed
  */
 .feed section {
-	border: 1px solid black;
 	padding: 1px 2rem 2rem 2rem;
 	min-width: 280px;
 	margin: 8px;
@@ -287,6 +303,10 @@ text-align: center;
 	position: relative;
 	bottom: -6px;
 }
+
+	.list-action:visited {
+		color: white;
+	}
 
 	.list-action.red {
 		background-color: rgb(247, 102, 44);

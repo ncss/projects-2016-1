@@ -9,22 +9,22 @@
 		<title>{{ page_title }} - {{ site_title }}</title>
 	</head>
 	<body>
-		<header class="padded">
-			<section>
-				<nav class="header-nav">
-					<a href="/feed">
-						<img src="/static/Logo1.png" class="logo">
-					</a>
-					<a href="/create">Create +</a>
-				</nav>
-			</section>
-			<section>
-				<!--<button type="menu" menu="dropdown-menu" id="profile-button">Menu</button>-->
-				<nav class="header-nav">
-					<a href="/dashboard">Dashboard</a>
-					<a href="/logout">Logout</a>
-				</nav>
-			</section>
-		</header>
-		<div class="padded">
-			<h1>{{ page_title }}</h1>
+		<div id="content">
+			<header class="padded">
+				<section>
+					<nav class="header-nav">
+						<a href="/feed">
+							<img src="/static/Logo1.png" class="logo">
+						</a>
+						<a href="/create">Create +</a>
+					</nav>
+				</section>
+				<section>
+					<nav class="header-nav">
+						<a href="/dashboard">Dashboard</a>
+						<a href="/logout">Logout</a>
+					</nav>
+				</section>
+			</header>
+			<div id="body" class="padded">
+				<h1>{{ page_title }}</h1>
