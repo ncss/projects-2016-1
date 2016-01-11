@@ -1,0 +1,30 @@
+footer {
+	background-color: rgb(247, 102, 44);
+}
+
+.logo {
+	width: 10rem;
+	height: 4rem;
+}
+
+	header a {
+		color: white;
+		font-weight: 700;
+		font-size: 20px;
+		text-decoration: none;
+	}
+	
+		header a:visited {
+			color: white;
+		}
+		
+
+	header nav a {
+		margin-left: 1rem;
+	}
+	
+		
+		header nav a:first-child {
+			margin-left: 0;
+		}
+		
