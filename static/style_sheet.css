@@ -127,6 +127,15 @@ Login page
 	height: 100%;
 }
 
+.alert {
+  background-color: #ED9F9F;
+  color: #E84848;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  border: #F34848 1px solid;
+}
+
 /*
  * Feed
  */
