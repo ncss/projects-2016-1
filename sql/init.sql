@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS likes;
 CREATE TABLE likes (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id    INT    NOT NULL,
-  list_id    INT    NOT NULL
+  list_id    INT    NOT NULL,
   FOREIGN KEY(user_id) REFERENCES users(id),
-  FOREIGN KEY(list_id) REFERENCES lists(id),
+  FOREIGN KEY(list_id) REFERENCES lists(id)
 );
 
 INSERT INTO users VALUES (NULL, 'cool_hax1', 'coolhax1');
