@@ -14,7 +14,6 @@ class List(DatabaseObject):
   def table_name(self):
     return 'lists'
 
-
   @classmethod
   def find(cls, id):
     """Gets a list by ID

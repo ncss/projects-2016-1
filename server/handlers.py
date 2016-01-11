@@ -1,5 +1,5 @@
 import server.util as util
-from db import User
+#from db import User
 from templater import templater
 
 @util.requires_login
@@ -46,7 +46,7 @@ def feed_handler(response):
     
 # dashboard integrates profile
 def dashboard_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
+    response.write(templater.render("templates/dashboard.html"))
 
 def create_handler(response):
     response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
