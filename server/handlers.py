@@ -6,7 +6,7 @@ from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
 import sqlite3
-#from models.imdb import IMDB
+from models.imdb import IMDB
 
 from templater import templater
 
@@ -16,7 +16,7 @@ def index_handler(response):
     if is_logged_in(response):
         response.redirect('/dashboard')
     else:
-        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response, signup_failed=False))
+        response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists", response=response))
 
 def post_login_handler(response):
     username = response.get_field("username", "")
@@ -80,7 +80,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=lambda x: x))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 
 @util.requires_login
