@@ -4,23 +4,29 @@ from templater import templater
 
 @util.requires_login
 def index_handler(response):
-    response.write(templater.render("templates/index.html"))
-    
+    response.write(templater.render("templates/index.html", page_title="Login", site_title="M'lists"))
     #if cookie[user_id] != None:
         #username = database.get_username(cookie["user_id"])
         #response.write(render_template("index.html", username = username))
     #else:
         #response.write(render_template("index.html", username = None)                                  
 
-def login_handler(response):
-    response.write(templater.render("templates/login_page.html"))
+def post_login_handler(response):
     username = response.get_field("username", "")
     password = response.get_field("password", "")
     user = User.authenticate(username, password)
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
-       
+
+def get_login_handler(response):
+    if response.get_secure_cookie('user_id'):
+        response.redirect('/dashboard')
+    else:
+        response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
+
+
+# messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
