@@ -66,7 +66,8 @@ def feed_handler(response):
 def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists"))
+    user_id = get_current_user_id(response)
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id))
 
 
 @util.requires_login
@@ -126,7 +127,8 @@ def post_like_handler(response):
     user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
-    likes = Likes.create(user_id, list_id)
+    likes = Likes(user_id, list_id)
+    likes.create(user_id, list_id)
 
     response.write('')
 
