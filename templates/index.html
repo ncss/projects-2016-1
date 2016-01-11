@@ -1,12 +1,11 @@
-{% include templates/header.html %}
-<article class="padded">
-    <section>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis quis libero eu molestie.</p>
+{% include templates/header_logged_out.html %}
+	<section>
+	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis quis libero eu molestie.</p>
 
 	  <form action="/signup" method="post">
-        <h3>Signup</h3>
+		<h3>Signup</h3>
 		<p>Already have an account? <a href="/login">Login</a>
-        <p>
+		<p>
 			<label for="signup_username">Username</label><br>
 			<input type="text" name="username" id="signup_username">
 		</p>
@@ -15,11 +14,10 @@
 			<input type="password" name="password" id="signup_password">
 		</p>
 		<input type="submit" value="Sign up">
-      </form>
-    </section>
-    
-    <section>
+	  </form>
+	</section>
+
+	<section>
 		<p>The new and fancy web7.0 HTML-Agnostic Production-ready way to share lists.</p>
-    </section>
-</article>
+	</section>
 {% include templates/footer.html %}

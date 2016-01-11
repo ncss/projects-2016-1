@@ -1,26 +1,21 @@
 {% include templates/header.html %}
+<form action="/create" method="post">
+	<h3>Create A List</h3>
+	<p>
+		<label for="mist_title">Title</label><br>
+		<input type="text" name="title" placeholder="Title" id="mist_title">	
+	</p>
+	
+	<p>
+		<label>Items</label><br>
+		<input type="text" name="list_item_1" placeholder="List Item 1">
+	</p>
+	
+	{% for i in range(2, 11) %}
+	<p><input type="text" name="list_item_{{i}}" placeholder="List Item {{i}}"></p>
+	
+	{% end for %}
 
-<article class="padded">
-	<section>
-		<form action="/create" method="post">
-			<h3>Create A List</h3>
-			<p>
-				<label for="mist_title">Title</label><br>
-				<input type="text" name="title" placeholder="Title" id="mist_title">	
-			</p>
-			
-			<p>
-				<label>Items</label><br>
-				<input type="text" name="list_item_1" placeholder="List Item 1">
-			</p>
-			
-			{% for i in range(2, 11) %}
-			<p><input type="text" name="list_item_{{i}}" placeholder="List Item {{i}}"></p>
-			
-			{% end for %}
-		
-			<input type="submit" name="Submit">
-		</form>
-	</section>
-</article>
+	<input type="submit" name="Submit">
+</form>
 {% include templates/footer.html %}

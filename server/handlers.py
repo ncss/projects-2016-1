@@ -8,7 +8,7 @@ from templater import templater
 
 def index_handler(response):
     print(response.get_secure_cookie("user_id"))
-    if response.get_secure_cookie("user_id") is not None:
+    if is_logged_in(response):
         response.redirect('/dashboard')
     else:
         response.write(templater.render("templates/index.html", page_title="Welcome to M'lists", site_title="M'lists"))
@@ -24,7 +24,7 @@ def post_login_handler(response):
         
     else:
         print("Not logged in")
-        response.redirect("/")
+        response.redirect("/login")
         
 
 def get_login_handler(response):
@@ -113,3 +113,6 @@ def get_current_user_id(response):
     if uid is None:
         raise Exception("No user is currently logged in")
     return uid
+	
+def is_logged_in(response):
+	return response.get_secure_cookie("user_id") is not None
