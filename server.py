@@ -2,6 +2,7 @@ from tornado.ncss import Server
 
 import server.handlers as handlers
 import templater
+import db
 
 '''
 TO DO LIST:
