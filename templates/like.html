@@ -1,14 +1,15 @@
 <button class="like">Like!</button>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-{{ likes }} like this.
+{{ mist.get_likes() }} like this.
 <script>
 $('button.like').click(function() {
     $.ajax({
         url:'/like',
-        data:{'user_id': 3, 'list_id': 3},
+        data:{'user_id': {{ int(user_id) }}, 'list_id': {{ mist.id }}},
         method:"POST"
     }).done(function(data) {
-        //$('button.like').prop('disabled', true);
+        $('button.like').prop('disabled', true);
+        $('button.like').html('You liked this');
     });
 });
 </script>
