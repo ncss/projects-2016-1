@@ -47,3 +47,5 @@ INSERT INTO likes VALUES (2, 1, 0);
 INSERT INTO likes VALUES (3, 2, 2);
 INSERT INTO likes VALUES (4, 2, 3);
 INSERT INTO likes VALUES (5, 2, 4);
+
+INSERT INTO users VALUES (0, 'test', 'test');

@@ -1,7 +1,6 @@
 from tornado.ncss import Server
 
 import server.handlers as handlers
-import server.mist_handlers as mist_handlers
 import templater
 import db
 
