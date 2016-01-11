@@ -29,8 +29,18 @@ def logout_handler(response):
     response.redirect('/')
 
 def feed_handler(response):
-    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "Mists"))
-
+    new_mists = [
+        {
+            "title": "Top 10 Action Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        },
+        {
+            "title": "Top 10 Adventure Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+    ]
+    response.write(templater.render("templates/feed.html", new_mists=new_mists, page_title = "Feed", site_title = "Mists"))
+    
 # dashboard integrates profile
 def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
