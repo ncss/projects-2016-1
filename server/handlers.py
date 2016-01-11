@@ -8,7 +8,6 @@ from templater import templater
 @util.requires_login
 def index_handler(response):
     response.write(templater.render("templates/index.html"))
-    
     #if cookie[user_id] != None:
         #username = database.get_username(cookie["user_id"])
         #response.write(render_template("index.html", username = username))
@@ -23,21 +22,31 @@ def login_handler(response):
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
-       
+
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
 
 def feed_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) FEED ( ͡° ͜ʖ ͡°) </h1>")
-
+    new_mists = [
+        {
+            "title": "Top 10 Action Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        },
+        {
+            "title": "Top 10 Adventure Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+    ]
+    response.write(templater.render("templates/feed.html", new_mists=new_mists, page_title = "Feed", site_title = "Mists"))
+    
 # dashboard integrates profile
 def dashboard_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
 
 def create_handler(response):
-    response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))
+    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "Mists"))
 
 def create_post_handler(response):
     print(response.get_field("title"))
