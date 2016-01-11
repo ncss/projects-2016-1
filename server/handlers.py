@@ -46,7 +46,18 @@ def feed_handler(response):
     
 # dashboard integrates profile
 def dashboard_handler(response):
-    response.write(templater.render("templates/dashboard.html"))
+    new_mists = [
+        {
+            "title": "Top 10 Action Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        },
+        {
+            "title": "Top 10 Adventure Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+    ]
+    response.write(templater.render("templates/dashboard.html",mists=new_mists, page_title = "Dashboard", site_title = "Mists"))
+    
 
 def create_handler(response):
     response.write(templater.render("templates/create.html",page_title = "Create", site_title = "Mists"))

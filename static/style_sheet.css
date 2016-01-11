@@ -167,17 +167,20 @@ text-align: center;
 	display:flex;
 	justify-content: space-around;
 	flex-wrap: wrap;
-}
-
-.dashboard .box section{
-	flex-grow: 1;
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 600px;
 }
 
+.dashboard .box section{
+	flex-grow: 1;
+	
+}
+
 .dashboard .box button{
 	float: right;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 .dashboard h2{
 	padding-left: 5px;
