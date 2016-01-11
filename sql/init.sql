@@ -24,6 +24,7 @@ CREATE TABLE likes (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id    INT    NOT NULL,
   list_id    INT    NOT NULL,
+  UNIQUE(user_id, list_id) ON CONFLICT REPLACE,
   FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(list_id) REFERENCES lists(id)
 );

@@ -1,5 +1,4 @@
 {% include templates/header.html %}
-
     <div class="dashboard">
         <div class = "box">
         <!-- <section>User Statistics</section> -->
@@ -17,12 +16,10 @@
                     {% for item in mist.list_contents() %}
                         <li> {{ item.content }} </li>
                     {% end for %}
-                    </ol>
 					{% for item in mist.list_contents() %}
 						<img src="{{ image_fetcher(item.content) }}" alt = "movie image poster" height = "140" width = "94">
 					{% end for %}
                 <a class = "link_button" href="/edit">Edit</a>
-                <!-- Image for each mist may be added in mvp+1-->
                 {% include templates/like.html %}
               </article>  
             {% end for %}
