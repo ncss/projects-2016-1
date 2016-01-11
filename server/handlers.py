@@ -87,7 +87,7 @@ def create_post_handler(response):
     list = List(title, get_current_user_id(response))
     list.save()
     for i, item in enumerate(list_items):
-        list_content = ListContent.create(list.id, i, item)
+        list_content = ListContent.create(list.id, i, tornado.escape.xhtml_escape(item))
 
     print("Creating post: {}, {}".format(title, list_items))
 
