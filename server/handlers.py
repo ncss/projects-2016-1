@@ -129,10 +129,17 @@ def view_handler(response, list_id):
 
     response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
+@util.requires_login
 def edit_handler(response, list_id):
+    user_id = util.get_current_user_id(response)
     list = List.find(list_id)
+
+    if not list.author == user_id:
+        raise Exception
+
     response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists", fail=response.get_field('fail', '')))
 
+@util.requires_login
 def edit_post_handler(response, list_id):
     # Put this early otherwise all the items are removed!
     if response.get_field("title", "") == "":
@@ -140,6 +147,10 @@ def edit_post_handler(response, list_id):
         return
 
     a_list = List.find(list_id)
+
+    user_id = util.get_current_user_id(response)
+    if not a_list.author == user_id:
+        raise Exception
 
     a_list.name = response.get_field("title", "")
     list_items = []
