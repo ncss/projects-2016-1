@@ -1,10 +1,11 @@
-{% include templates/header.html %}
-<article class="list-preview">
+<article class="padded list-preview">
+	<h3><a href="/list/{{mist.id}}/view">{{mist.name}}</a></h3>
 	<ol> 
-	{% for item in mist.list_contents() %}
+	{% for item in mist.list_contents()[:3] %}
 		<li> {{ item.content }} </li>
 	{% end for %}
 	</ol>
+	<a href="/list/{{mist.id}}/view">Read More...</a>
 	
 	<menu class="list-actions">
 		<nav>
@@ -18,5 +19,3 @@
 	<!-- Image for each mist may be added in mvp+1-->
 	
 </article>
-<br>
-{% include templates/footer.html %}

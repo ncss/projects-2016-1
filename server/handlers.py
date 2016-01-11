@@ -112,7 +112,8 @@ def mini_list_handler(response):
     response.write(templater.render("mini_list.html", mist = mist))
 
 def view_handler(response, list_id):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) VIEW DEM MISTS ( ͡° ͜ʖ ͡°) </h1>")
+    list = List.find(list_id)
+    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id = get_current_user_id(response)))
 
 def edit_handler(response, list_id):
     list = List.find(list_id)
