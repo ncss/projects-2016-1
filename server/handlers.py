@@ -3,6 +3,7 @@ from db import User
 from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
+import sqlite3
 
 from templater import templater
 
@@ -43,11 +44,17 @@ def post_signup_handler(response):
     if username == "" or password == "": response.redirect("/signup")
     print("email: ", email, "username: ", username, "password: ", password)
     user = User(username, password)
-    user.save()
-    response.set_secure_cookie("user_id", str(user.id))
-
+    try:
+      user.save()
+      response.set_secure_cookie("user_id", str(user.id))
+    except sqlite3.IntegrityError:
+      # user already exists
+      signup_failed = response.get_field('fail', '') == '1'
+      response.write(templater.render("template/index.html",  signup_failed=signup_failed,
+                                      page_title="Signup", site_title="Welcome to M'lists - M'lists")
     #TODO hit the database, create a new user, and set the cookie with the new user's id
-    response.redirect("/")
+    else: 
+        response.redirect("/")
     # give those things to the data base
 
 
