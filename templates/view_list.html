@@ -1,4 +1,8 @@
-{% include templates/header.html %}
+{% if user_id %}
+    {% include templates/header.html %}
+{% else %}
+    {% include templates/header_logged_out.html %}
+{% end if %}
 <article class="list-preview">
 	<ol> 
 	{% for item in mist.list_contents() %}
@@ -14,7 +18,9 @@
 	
 	<menu class="list-actions">
 		<nav>
-			{% include templates/like.html %}
+			{% if user_id %}
+                {% include templates/like.html %}
+            {% end if %}
 		</nav>
 		<nav>
 			<a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
