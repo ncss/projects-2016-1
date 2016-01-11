@@ -1,4 +1,5 @@
 import hashlib
+from list import List
 
 import db
 
@@ -13,8 +14,6 @@ class User(db.DatabaseObject):
 
   def to_dict(self):
     return {'username': self.username, 'password': self.password}
-    
-
 
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
@@ -23,8 +22,7 @@ class User(db.DatabaseObject):
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
   def get_lists(self):
-    pass
-
+    return List.find_by_userid(self.id)
 
   @classmethod
   def find_username(cls,username):
@@ -50,4 +48,3 @@ if __name__ == '__main__':
   User.connect(cn)
   cn.row_factory = sqlite3.Row
   user = User.find_username('cool_hax4')
-  
