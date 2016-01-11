@@ -20,11 +20,15 @@
 		<nav>
 			{% if user_id %}
                 {% include templates/like.html %}
+            {% else %}
+                <p id="like-message-{{ mist.id }}"><span>{{ mist.get_likes() }}</span> like this.</p>
             {% end if %}
 		</nav>
 		<nav>
-			<a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
-			<a class = "list-action red" href="/list/{{mist.id}}/delete">Delete</a>
+			{% if user_id %}
+                <a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
+                <a class = "list-action red" href="/list/{{mist.id}}/delete">Delete</a>
+            {% end if %}
 		</nav>
 	</menu>
 	<!-- Image for each mist may be added in mvp+1-->
