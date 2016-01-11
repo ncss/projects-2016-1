@@ -20,7 +20,8 @@ server = Server()
 
 # Handlers
 server.register(r'/', handlers.index_handler)
-server.register(r'/login', handlers.login_handler)
+server.register(r'/login', handlers.get_login_handler, get = handlers.get_login_handler)
+server.register(r'/login', handlers.get_login_handler, post = handlers.post_login_handler)
 server.register(r'/logout', handlers.logout_handler)
 server.register(r'/feed', handlers.feed_handler)
 server.register(r'/dashboard', handlers.dashboard_handler)
