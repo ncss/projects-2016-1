@@ -64,13 +64,13 @@ def logout_handler(response):
 @util.requires_login
 def feed_handler(response):
     mists = List.find_all()
-	
+
     popular = sorted(mists, key = lambda list: list.get_likes())
     popular.reverse()
-	
+
     recent = sorted(mists, key = lambda list: list.id)
     recent.reverse()
-	
+
     user_id = util.get_current_user_id(response)
     response.write(templater.render("templates/feed.html", mists=recent, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
@@ -120,7 +120,7 @@ def mini_list_handler(response):
     response.write(templater.render("mini_list.html", mist = mist))
 
 # Make lists public to everyone
-def view_list_handler(response, list_id):
+def view_handler(response, list_id):
     list = List.find(list_id)
     try:
         user_id = util.get_current_user_id(response)
@@ -155,24 +155,6 @@ def edit_post_handler(response, list_id):
     print("Editing post: {}, {}".format(a_list.name, list_items))
 
     response.redirect('/dashboard')
-
-def view_list_handler(response, list_id):
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-
-    c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id))
-    likes = c.fetchone()
-
-    list = {
-            "title": "Top 10 Adventure Movies",
-            "description": "A list about adventure movies",
-            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
-        }
-
-    response.write(templater.render('templates/view_list.html', likes=likes, list=list))
-
-def settings_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
 @util.requires_login
 def post_like_handler(response):
