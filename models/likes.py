@@ -1,9 +1,8 @@
 class Likes:
   # Definitely needed to connect to database
-  @staticmethod
-  def connect(db):
-    global conn
-    conn = db
+  @classmethod
+  def connect(cls, db):
+    cls.conn = db
 
 # Both init and create defs mirrored on list_content methods - need checking
 	

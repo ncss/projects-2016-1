@@ -1,0 +1,13 @@
+<button class="like">Like!</button>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script>
+$('button.like').click(function() {
+    $.ajax({
+        url:'/like',
+        data:{'user': 123, 'list': 1234},
+        method:"POST"
+    }).done(function(data) {
+        console.log(data);
+    });
+});
+</script>

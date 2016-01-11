@@ -1,20 +1,18 @@
-{{ include templates/header.html }}
+{% include templates/header.html %}
     <section>
-      <h1>Welcome to %WEBSITE_NAME%.</h1>
+      <h1>Welcome to {{ site_title }}.</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse convallis quis libero eu molestie.</p>
-      <form action="getform.php" method="get">
+      <form action="/signup" method="post">
          <label>Email<input type="email" name="user_email" /></label><br />
          <label>Username<input type="text" name="first_name" /></label><br />
          <label>Password<input type="password" name="last_name" /></label><br />
-      <input type="submit" value="Sign up" />
+      <input type="submit" value="Sign up">
+		<button type="submit">Sign up</button>
+	  </input>
       </form>
     </section>
     
     <section>
-      <p>List</p>
-      <p>List</p>
-      <p>List</p>
-      <p>List</p>
-      <p>List</p>
+		<p>The new and fancy web7.0 HTML-Agnostic Production-ready way to share lists.</p>
     </section>
-{{ include templates/footer.html }}
+{% include templates/footer.html %}

@@ -41,4 +41,7 @@ class IMDB:
       actors=res["Actors"],
       image=res["Poster"]
     )
-
+  
+  @classmethod
+  def fetch_image(cls,name):
+    return cls.fetch_api_name(name).image
