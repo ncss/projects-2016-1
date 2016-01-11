@@ -4,7 +4,7 @@ from templater import templater
 
 @util.requires_login
 def index_handler(response):
-    response.write("<h1>Hello, World! </h1> <p>user_id = {}</p>".format(response.get_secure_cookie('user_id')))
+    response.write(templater.render("templates/index.html"))
     #if cookie[user_id] != None:
         #username = database.get_username(cookie["user_id"])
         #response.write(render_template("index.html", username = username))
@@ -18,9 +18,7 @@ def login_handler(response):
     user = User.authenticate(username, password)
     if user:
         response.set_secure_cookie('user_id', '-1')
-        response.redirect('/')
-       
-    
+        response.redirect('/')       
 
 # messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
