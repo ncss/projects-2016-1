@@ -27,7 +27,7 @@ class Likes(DatabaseObject):
     @classmethod
     def list_likes(cls, list_id):
         cur = DatabaseObject.conn.cursor()
-        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', list_id)
+        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', (list_id,))
         res = cur.fetchone()
         cur.close()
         return res[0]
