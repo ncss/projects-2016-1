@@ -30,7 +30,6 @@ class Likes(DatabaseObject):
         cur.execute('SELECT COUNT(*) FROM likes WHERE user_id=? AND list_id=?', (self.id, int(user_id)))
         res = cur.fetchone()
         cur.close()
-
         return res[0] == 1
 
 ''' WORKS IN PROGRESS
