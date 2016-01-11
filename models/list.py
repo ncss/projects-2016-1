@@ -2,15 +2,18 @@ from .db import DatabaseObject
 
 class List(DatabaseObject):
 
-  def __init__(self, list, author):
-    self.list = list
+  def __init__(self, name, author, id = None):
+    self.name = name
     self.author = author
+    self.id = id
 
   def to_dict(self):
       return {'name':self.name, 'author':self.author}
 
+
   def table_name(self):
     return 'lists'
+
 
   @classmethod
   def find(cls, id):

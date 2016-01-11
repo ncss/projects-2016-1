@@ -8,14 +8,17 @@ class ListContent:
     cls.conn = db
   
 
-  def __init__(self, content, list_num, item_order):
+  def __init__(self, list_num, item_order, content):
     self.content = content
     self.list_num = list_num
     self.item_order = item_order
     
-
+  def __str__(self):
+    return 'Content: ' + self.content + ', list:  ' + self.list_num + ', item order: ' + self.item_order
+  
+	
   @classmethod
-  def create(cls, content, list_num, item_order):
+  def create(cls, list_num, item_order, content):
     cur = conn.execute('''INSERT INTO list_contents VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
     return cls(content, list_num, item_order)
 
@@ -63,7 +66,7 @@ if __name__ == '__main__':
   # create a new content item
   c = ListContent("test item 1",0,5)
   print(ListContent.findByListId(0))
-  results= ListContent.search('movie')
+  results = ListContent.search('movie')
   print(results)
 
   for r in results:

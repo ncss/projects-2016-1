@@ -8,6 +8,8 @@ class User(DatabaseObject):
     self.id = id
     self.username =username
     self.password = password
+    
+
 
   def to_dict(self):
     return {'username': self.username, 'password': self.password}
@@ -23,6 +25,28 @@ class User(DatabaseObject):
 
   def get_lists(self):
     return List.find_by_userid(self.id)
+
+  def save(self):
+    cur = self.__class__.conn.cursor()
+    if not self.id:
+      cur.execute('INSERT INTO users (username,password) VALUES (?,?);', (self.username,self.password))
+      self.id = cur.lastrowid
+    else:
+      
+      cur.execute('''
+        UPDATE users
+        SET username=?,
+            password=?
+        WHERE id = ?
+      ''',(self.username,self.password, self.id));
+    self.__class__.conn.commit()
+    cur.close()
+
+  @classmethod
+  def from_row(cls,row):
+    if row is None: return None
+    row = convert_row(row)
+    return cls(**row)
 
   @classmethod
   def find_username(cls,username):
