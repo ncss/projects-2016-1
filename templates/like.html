@@ -1,4 +1,4 @@
-<button class="like" id="like-{{ mist.id }}">Like!</button>
+<button class="like" id="like-{{ mist.id }}"{% if mist.user_has_liked(user_id) %}disabled="">You have liked this{% else %}>Like!{% end if %}</button>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <p id="like-message-{{ mist.id }}"><span>{{ mist.get_likes() }}</span> like this.</p>
 <script>

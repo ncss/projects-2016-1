@@ -22,6 +22,12 @@ class List(DatabaseObject):
     result = cur.fetchone()
     return result[0]
 
+  def user_has_liked(self, user_id):
+    cur = self.conn.cursor()
+    cur.execute('SELECT COUNT(*) FROM likes WHERE list_id=? AND user_id=?', (self.id, user_id))
+    result = cur.fetchone()
+    return result[0]==1
+
   @classmethod
   def find(cls, id):
     """Gets a list by ID
