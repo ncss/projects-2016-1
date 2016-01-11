@@ -1,18 +1,21 @@
 {% include templates/header.html %}
 <section>
-	<form>
-		<p><label for="username">Username: </label><br>
-		<input type="text" name="username" id="username"></p>
-		<p><label for="password">Password: </label><br>
-		<input type="password" name="password" id="password"></p>
-		<p><label for="confirmpassword">Confirm Password: </label><br>
-		<input type="password" name="confirmpassword" id="confirmpassword"></p>
-		<p><label for="email">E-mail: </label><br>
-		<input type="email" name="email" id="email"></p>
-		<p><label for="confirmemail">Confirm E-mail: </label><br>
-		<input type="email" name="confirmemail" id="confirmemail"></p>
-		<input type="submit" name="signup" value="Signup">
-	</form>
+	<form action="/signup" method="post">
+        <h3>Signup</h3>
+		<p>
+			<label for="signup_email">Email</label><br>
+			<input type="email" name="email" id="signup_email">
+		</p>
+        <p>
+			<label for="signup_username">Username</label><br>
+			<input type="text" name="username" id="signup_username">
+		</p>
+		<p>
+			<label for="signup_password">Password</label><br>
+			<input type="password" name="password" id="signup_password">
+		</p>
+		<input type="submit" value="Sign up">
+      </form>
 </section>
 
 {% include templates/footer.html %}

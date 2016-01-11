@@ -10,10 +10,4 @@ def requires_login(fn):
             return fn(response)
         else:
             response.write(templater.render("templates/login_page.html", page_title="Login", site_title="M'lists"))
-            username = response.get_field("username", "")
-            password = response.get_field("password", "")
-            user = User.authenticate(username, password)
-            if user:
-                response.set_secure_cookie('user_id', '-1')
-                response.redirect('/dashboard')
     return result

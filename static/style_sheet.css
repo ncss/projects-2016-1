@@ -43,6 +43,7 @@ p {
 ul, ol {
 	margin-top: -0.5rem;
 }
+
 footer {
 	background-color: rgb(240, 240, 240);
 	padding: 2rem;
@@ -75,7 +76,7 @@ form {
 		float: right;
 	}
 	
-	form input[type="text"], form textarea, form input[type="password"] {
+	form input[type="text"], form textarea, form input[type="password"], form input[type="email"]	{
 		width: 100%;
 		box-sizing: border-box;
 	}
@@ -90,6 +91,22 @@ form {
 			border-color: rgb(247, 102, 44);
 			outline: none;
 		}
+		
+/*
+Helpers
+*/
+
+.container {
+	overflow: auto;
+}
+
+.left-align {
+	float: left;
+}
+
+.right-align {
+	float: right;
+}
 		
 		
 	

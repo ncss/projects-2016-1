@@ -1,27 +1,23 @@
 
 import sqlite3
 
-
 class ListContent:
   @classmethod
   def connect(cls,db):
     cls.conn = db
   
-
-  def __init__(self, list_num, item_order, content):
+  def __init__(self, list_id, item_order, content):
     self.content = content
-    self.list_num = list_num
+    self.list_id = list_id
     self.item_order = item_order
-    
-  def __str__(self):
-    return  '(' + self.content + ') Content, (' + str(self.list_num) + ') List, (' + str(self.item_order) + ') List position'
 	
-  @classmethod
-  def create(cls, list_num, item_order, content):
-    cur = conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_num, item_order, content))
-    return cls(list_num, item_order, content)
+  def __str__(self):
+    return  '(' + self.content + ') Content, (' + str(self.list_id) + ') List, (' + str(self.item_order) + ') List position'
 
-    
+  @classmethod
+  def create(cls, list_id, item_order, content):
+    cur = cls.conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_id, item_order, content))
+    return cls(list_id, item_order, content)
 
   @classmethod  
   def find(cls, content):
@@ -32,7 +28,7 @@ class ListContent:
     return ListContent.helper(row)
 
   @classmethod
-  def findByListId(cls, list_id):
+  def find_by_list_id(cls, list_id):
     cur = cls.conn.execute('''SELECT * FROM list_contents WHERE list=?''', (list_id,))
     rows = cur.fetchall()
       
@@ -60,10 +56,10 @@ class ListContent:
   @classmethod
   def helper(cls, row):
     # to convert rows into named items
-	list_num = row[0]
-	item_order = row[1]
-	content = row[2]
-	return cls(list_num, item_order, content)
+    list_id = row[0]
+    item_order = row[1]
+    content = row[2]
+    return cls(list_id, item_order, content)
   
   
 if __name__ == '__main__':

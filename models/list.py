@@ -1,4 +1,5 @@
 from .db import DatabaseObject
+from .list_content import ListContent
 
 class List(DatabaseObject):
 
@@ -8,11 +9,13 @@ class List(DatabaseObject):
     self.id = id
 
   def to_dict(self):
-      return {'name':self.name, 'author':self.author}
-
+      return {'name': self.name, 'author': self.author}
 
   def table_name(self):
     return 'lists'
+	
+  def list_contents(self):
+    return ListContent.find_by_list_id(self.id)
 
   @classmethod
   def find(cls, id):
@@ -29,7 +32,7 @@ class List(DatabaseObject):
     cur.execute('SELECT * FROM lists where author=?', (uid,))
     results = cur.fetchall()
     cur.close()
-    if not results: return None
+    if not results: return []
     return [cls.from_row(i) for i in results]
 
 

@@ -44,6 +44,11 @@ class Likes:
     if not results:
       eeturn None
     else:
+<<<<<<< HEAD
       return [cls.from_row(i) for i in results]
 '''
 >>>>>>> a095eccfe5be6f630915c0e13d4b5a7026ca4fe1
+=======
+	  return [cls.from_row(i) for i in results]
+'''
+>>>>>>> f0bbe979c37191efe7904708fc3692ef5175ab0f
