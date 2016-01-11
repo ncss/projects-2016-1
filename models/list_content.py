@@ -2,10 +2,8 @@ from .db import DatabaseObject
 
 import sqlite3
 
-class ListContent:
-	@classmethod
-	def connect(cls,db):
-		cls.conn = db
+class ListContent(DatabaseObject):
+
 
 	def __init__(self, list_id, item_order, content):
 		self.content = content
@@ -17,19 +15,12 @@ class ListContent:
 
 	def remove(self):
 		self.__class__.delete(self.list_id, self.item_order)
-	
-	@classmethod
-	def create(cls, list_id, item_order, content):
-		cur = cls.conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_id, item_order, content))
-		cls.conn.commit()
-		cur.close()
-		return cls(list_id, item_order, content)
-		
-	@classmethod
-	def delete(cls, list_id, item_order):
-		cur = cls.conn.execute('''DELETE FROM list_contents WHERE list = ? AND item_order = ? ''', (list_id, item_order))
-		cls.conn.commit()
-		cur.close()
+
+        def to_dict(self):
+                return {'list':list, 'item_order':item_order, 'content':content}
+
+        def table_name(self):
+                return 'list_content'
 
 
 	@classmethod  
