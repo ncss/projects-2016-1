@@ -3,20 +3,26 @@
     <div class="dashboard">
 		<div class = "box">
 		<!-- <section>User Statistics</section> -->
-		{% for mist in mists %}
-		<section>
-		  <article>
-			<h2>{{mist.name}}</h2>
-				<ol> 
-				{% for item in mist.list_contents() %}
-					<li> {{ item.content }} </li>
-				{% end for %}
-				</ol>
-			<button>Edit</button>
-			<!-- Image for each mist may be added in mvp+1-->
-		  </article>  
-		</section>
-		{% end for %}
+		{% if not mists %}
+			<form>
+				<h4> Looks like you don't have any mists! <a href="/create">Create Mist</a></h4>
+			</form>
+		{% else %}
+			{% for mist in mists %}
+			<section>
+			  <article>
+				<h2>{{mist.name}}</h2>
+					<ol> 
+					{% for item in mist.list_contents() %}
+						<li> {{ item.content }} </li>
+					{% end for %}
+					</ol>
+				<a class = "link_button" href="/edit">Edit</a>
+				<!-- Image for each mist may be added in mvp+1-->
+			  </article>  
+			</section>
+			{% end for %}
+		{% end if %}
 	</div>
   </body>
 </html>

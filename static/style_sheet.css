@@ -200,3 +200,18 @@ text-align: center;
 	margin: 0px;
 	margin-bottom: 15px;
 }
+.dashboard h4{
+	margin-left: auto;
+	margin-right: auto;
+	margin: 0px;
+	padding-top: 20px;
+	font-size: 20px;
+}
+.dashboard a.link_button {
+	float: right;
+	color: red;
+	}
+
+
+	
+ 
