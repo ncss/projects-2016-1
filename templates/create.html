@@ -1,0 +1,25 @@
+{% include templates/header.html %}
+
+
+	
+    <form action="/create" method="get" id="list">
+		<h3>Create A List</h3>
+		<p>
+			<label for="mist_title">Title</label><br>
+			<input type="text" name="title" placeholder="Title" id="mist_title">	
+		</p>
+		  
+		
+		<p>
+			<label for="mist_description">Description</label><br>
+			<textarea id="mist_description" name="description" placeholder="Write a description..."></textarea>
+		</p>
+		  
+		<label for="listitem1">Items</label>
+		<p><label>1 </label><input type="text" name="listitem1" placeholder="List Item 1"></p>
+		<p><label>2 </label><input type="text" name="listitem2" placeholder="List Item 2"></p>
+		<p><label>3 </label><input type="text" name="listitem3" placeholder="List Item 3"></p>
+	
+		<input type="submit" name="Submit">
+    </form>
+{% include templates/footer.html %}

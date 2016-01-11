@@ -1,0 +1,34 @@
+{% include templates/header.html %}
+	<body class="login">
+	<div class="middle">
+	<div class="loginbox">
+	<header>
+		<h2>Login:</h2>
+	</header>
+			<section>
+				
+					<form action="/login" method="post">
+					<p><label for="username">Username:</label>&thinsp;
+					<input type="text" name="username" id="username" style="
+						float:  right;
+						margin: left;
+					">
+					<br>
+					</p>
+					<p><label for="password">Password:</label>&thinsp;
+					<input type="password" name="password" id="password" style="
+						float:  right;
+						margin: left;
+					">
+					</p>
+					<p>
+						<input type="submit">
+						<a href="https://www.google.com.au/">Signup?</a>
+					</p>
+					</form>
+				
+		</section>
+	</div>
+	</div><!-- .middle -->
+	</body>
+{% include templates/footer.html %}
