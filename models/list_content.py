@@ -14,13 +14,12 @@ class ListContent:
     self.item_order = item_order
     
   def __str__(self):
-    return 'Content: ' + self.content + ', list:  ' + self.list_num + ', item order: ' + self.item_order
-  
+    return  '(' + self.content + ') Content, (' + str(self.list_num) + ') List, (' + str(self.item_order) + ') List position'
 	
   @classmethod
   def create(cls, list_num, item_order, content):
-    cur = conn.execute('''INSERT INTO list_contents VALUES (NULL,?, ?, ?)''', (content, list_num, item_order))
-    return cls(content, list_num, item_order)
+    cur = conn.execute('''INSERT INTO list_contents VALUES (?, ?, ?)''', (list_num, item_order, content))
+    return cls(list_num, item_order, content)
 
     
 
@@ -30,7 +29,7 @@ class ListContent:
     row = cur.fetchone()
     if row is None:
       raise UserNotFound('{} does not exist'.format(content))
-    return cls(row[0], row[1], row[2])
+    return ListContent.helper(row)
 
   @classmethod
   def findByListId(cls, list_id):
@@ -39,7 +38,7 @@ class ListContent:
       
     list = []
     for row in rows:
-      item = ListContent(row[1],row[2],row[3])
+      item = ListContent.helper(row)
       list.append(item)
 
     return list
@@ -53,10 +52,19 @@ class ListContent:
 
     list = []
     for row in rows:
-      item = cls(row[1],row[2],row[3])
+      item = ListContent.helper(row)
       list.append(item)
 
     return list
+  
+  @classmethod
+  def helper(cls, row):
+    # to convert rows into named items
+	list_num = row[0]
+	item_order = row[1]
+	content = row[2]
+	return cls(list_num, item_order, content)
+  
   
 if __name__ == '__main__':
   conn = sqlite3.connect(':memory:')
