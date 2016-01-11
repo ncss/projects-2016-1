@@ -1,16 +1,24 @@
-<button class="like" id="like-{{ mist.id }}"{% if mist.user_has_liked(user_id) %}disabled="">You have liked this{% else %}>Like!{% end if %}</button>
+<button class="like" id="like-{{ mist.id }}"{% if mist.user_has_liked(user_id) %}>You have liked this{% else %}>Like!{% end if %}</button>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <p id="like-message-{{ mist.id }}"><span>{{ mist.get_likes() }}</span> like this.</p>
 <script>
+(function () {
+var is_liked = {{ str(mist.user_has_liked(user_id)).lower() }};
+
 $('#like-{{ mist.id }}').click(function() {
     $.ajax({
-        url:'/like',
+        url: is_liked ? '/unlike' : '/like',
         data:{'user_id': {{ int(user_id) }}, 'list_id': {{ mist.id }}},
         method:"POST"
     }).done(function(data) {
-        $('#like-{{ mist.id }}').prop('disabled', true);
-        $('#like-{{ mist.id }}').html('You liked this');
+        is_liked = !is_liked;
+        if (is_liked) {
+            $('#like-{{ mist.id }}').html('You liked this');
+        } else {
+            $('#like-{{ mist.id }}').html('Like this!');
+        }
         $('#like-message-{{ mist.id }} span').text(data['likes']);
     });
 });
+}());
 </script>

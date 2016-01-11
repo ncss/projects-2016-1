@@ -178,6 +178,18 @@ def post_like_handler(response):
     response.write(json.dumps({'likes':likes}))
 
 @util.requires_login
+def post_unlike_handler(response):
+    user_id = response.get_secure_cookie('user_id')
+    list_id = response.get_field('list_id')
+
+    l = Likes(user_id, list_id)
+    l.remove(user_id, list_id)
+
+    likes = Likes.list_likes(list_id)
+
+    response.set_header('Content-Type', 'application/json')
+    response.write(json.dumps({'likes':likes}))
+
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
     if uid is None:
