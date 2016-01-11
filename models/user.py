@@ -1,21 +1,20 @@
 import hashlib
 from .list import List
+import db
 
-def convert_row(row):
-  keys = row.keys()
-  return {key:row[idx] for idx,key in enumerate(keys)}
+class User(db.DatabaseObject):
 
 
-class User:
-
-  @classmethod
-  def connect(cls,db):
-    cls.conn = db
 
   def __init__(self, username, password, id=None):
     self.id = id
     self.username =username
     self.password = password
+    
+
+
+  def to_dict(self):
+    return {'username': self.username, 'password': self.password}
 
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
@@ -24,7 +23,7 @@ class User:
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
   def get_lists(self):
-    return List.find_by_userid(cls, self.id)
+    return List.find_by_userid(self.id)
 
   def save(self):
     cur = self.__class__.conn.cursor()
@@ -32,7 +31,7 @@ class User:
       cur.execute('INSERT INTO users (username,password) VALUES (?,?);', (self.username,self.password))
       self.id = cur.lastrowid
     else:
-
+      
       cur.execute('''
         UPDATE users
         SET username=?,
@@ -72,3 +71,4 @@ if __name__ == '__main__':
   User.connect(cn)
   cn.row_factory = sqlite3.Row
   user = User.find_username('cool_hax4')
+  
