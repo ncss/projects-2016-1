@@ -5,9 +5,11 @@ CREATE TABLE users (
 );
 
 CREATE TABLE lists (
-  id	INTEGER	PRIMARY KEY	NOT NULL,
+  id	INTEGER	AUTOINCREMENT,
   name TEXT NOT NULL,
-  author INT NOT NULL
+  author INT NOT NULL, 
+  PRIMARY KEY (id), 
+  FOREIGN KEY (author) REFERENCES users (id)
 );
 
 CREATE TABLE list_contents (
@@ -22,19 +24,21 @@ CREATE TABLE likes (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   person    INT    NOT NULL,
   list    INT    NOT NULL
+  FOREIGN KEY (person) REFERENCES users(id),
+  FOREIGN KEY (list) REFERENCES lists(id)
 );
 
-INSERT INTO users VALUES (0, 'cool_hax1', 'coolhax1');
-INSERT INTO users VALUES (1, 'cool_hax2', 'coolhax2');
-INSERT INTO users VALUES (2, 'cool_hax3', 'coolhax3');
-INSERT INTO users VALUES (3, 'cool_hax4', 'coolhax4');
-INSERT INTO users VALUES (4, 'cool_hax5', 'coolhax5');
+INSERT INTO users VALUES (NULL, 'cool_hax1', 'coolhax1');
+INSERT INTO users VALUES (NULL, 'cool_hax2', 'coolhax2');
+INSERT INTO users VALUES (NULL, 'cool_hax3', 'coolhax3');
+INSERT INTO users VALUES (NULL, 'cool_hax4', 'coolhax4');
+INSERT INTO users VALUES (NULL, 'cool_hax5', 'coolhax5');
 
-INSERT INTO lists VALUES (0, 'top ten movies1', 0);
-INSERT INTO lists VALUES (1, 'top ten movies2', 1);
-INSERT INTO lists VALUES (2, 'top ten movies3', 2);
-INSERT INTO lists VALUES (3, 'top ten movies4', 3);
-INSERT INTO lists VALUES (4, 'top ten movies5', 4);
+INSERT INTO lists VALUES (NULL, 'top ten movies1', 0);
+INSERT INTO lists VALUES (NULL, 'top ten movies2', 1);
+INSERT INTO lists VALUES (NULL, 'top ten movies3', 2);
+INSERT INTO lists VALUES (NULL, 'top ten movies4', 3);
+INSERT INTO lists VALUES (NULL, 'top ten movies5', 2);
 
 
 INSERT INTO list_contents VALUES (0, 1, 'Hackers: this movie is really cool');
@@ -43,13 +47,10 @@ INSERT INTO list_contents VALUES (0, 2, 'Specter: this movie is really cool');
 INSERT INTO list_contents VALUES (1, 2, 'The Arrow: this show is awesome');
 INSERT INTO list_contents VALUES (2, 1, 'Pokemon Indigo league: this show is awesome');
 
-/*
-HOW DO YOU INSERT A VALUE INTO AN AUTOINCREMENT FIELD?
-(THE FIRST COLUMN BELOW)
-*/ 
-INSERT INTO likes VALUES (0, 0, 0);
-INSERT INTO likes VALUES (1, 0, 1);
-INSERT INTO likes VALUES (2, 1, 0);
-INSERT INTO likes VALUES (3, 2, 2);
-INSERT INTO likes VALUES (4, 2, 3);
-INSERT INTO likes VALUES (5, 2, 4);
+
+INSERT INTO likes VALUES (NULL, 0, 0);
+INSERT INTO likes VALUES (NULL, 0, 1);
+INSERT INTO likes VALUES (NULL, 1, 0);
+INSERT INTO likes VALUES (NULL, 2, 2);
+INSERT INTO likes VALUES (NULL, 2, 3);
+INSERT INTO likes VALUES (NULL, 2, 4);
