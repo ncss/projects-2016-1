@@ -88,7 +88,7 @@ def create_post_handler(response):
     print("Creating post: {}, {}".format(title, list_items))
 
     response.redirect('/dashboard')
-
+	
 def mini_list_handler(response):
     import sqlite3
     conn = sqlite3.connect("database.db")
@@ -106,6 +106,27 @@ def edit_handler(response, list_id):
 	list = List.find(list_id)
 	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
+def edit_post_handler(response, list_id):
+	list = List.find(list_id)
+	
+	for item in list.list_contents():
+		item.remove()
+	
+	list.name = response.get_field("title", "")
+	list_items = []
+	index = 1
+	while response.get_field("list_item_{}".format(index), "") != "":
+		list_items.append(response.get_field("list_item_{}".format(index)))
+		index += 1
+
+	list.save()
+	for i, item in enumerate(list_items):
+		list_content = ListContent.create(list.id, i, item)
+
+	print("Editing post: {}, {}".format(list.name, list_items))
+
+	response.redirect('/dashboard')
+	
 def view_list_handler(response, list_id):
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
