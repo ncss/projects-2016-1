@@ -1,10 +1,6 @@
+from .db import DatabaseObject
 
-import sqlite3
-
-class ListContent:
-  @classmethod
-  def connect(cls,db):
-    cls.conn = db
+class ListContent(DatabaseObject):
   
   def __init__(self, list_id, item_order, content):
     self.content = content
@@ -61,7 +57,7 @@ class ListContent:
     content = row[2]
     return cls(list_id, item_order, content)
   
-  
+''' 
 if __name__ == '__main__':
   conn = sqlite3.connect(':memory:')
   ListContent.connect(conn)
@@ -75,4 +71,4 @@ if __name__ == '__main__':
 
   for r in results:
     print("Content: ", r.content)
- 
+'''
