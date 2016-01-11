@@ -25,7 +25,7 @@
             {% end if %}
 		</nav>
 		<nav>
-			{% if user_id %}
+			{% if user_id and user_id == mist.author %}
                 <a class = "list-action green" href="/list/{{mist.id}}/edit">Edit</a>
                 <a class = "list-action red" href="/list/{{mist.id}}/delete">Delete</a>
             {% end if %}
