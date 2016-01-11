@@ -64,11 +64,15 @@ def logout_handler(response):
 @util.requires_login
 def feed_handler(response):
     mists = List.find_all()
+	
     popular = sorted(mists, key = lambda list: list.get_likes())
     popular.reverse()
 	
+    recent = sorted(mists, key = lambda list: list.id)
+    recent.reverse()
+	
     user_id = util.get_current_user_id(response)
-    response.write(templater.render("templates/feed.html", mists=mists, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
+    response.write(templater.render("templates/feed.html", mists=recent, popular=popular, page_title = "Feed", site_title = "M'lists", user_id=user_id))
 
 # dashboard integrates profile
 @util.requires_login
@@ -104,11 +108,7 @@ def create_post_handler(response):
     print("Creating post: {}, {}".format(title, list_items))
 
     response.redirect('/dashboard')
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> Prevent creating / editing lists to title name of 0 length
 def mini_list_handler(response):
     import sqlite3
     conn = sqlite3.connect("database.db")
@@ -207,9 +207,6 @@ def page_not_found_handler(response, path):
 
 def meme_handler(response):
     response.redirect('http://blaker.space')
-<<<<<<< HEAD
-=======
-
 
 def is_user_logged_in_test_handler(response):
     try:
@@ -218,5 +215,3 @@ def is_user_logged_in_test_handler(response):
         user_id = None
     response.write(repr(user_id))
 
-
->>>>>>> Prevent creating / editing lists to title name of 0 length
