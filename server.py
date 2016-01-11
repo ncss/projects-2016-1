@@ -43,6 +43,7 @@ server.register(r'/settings', handlers.settings_handler)
 server.register(r'/like', handlers.post_like_handler)
 server.register(r'/unlike', handlers.post_unlike_handler)
 server.register(r'/dashboard/settings', handlers.settings_handler)
+server.register(r'/is_user_logged_in_test_handler', handlers.is_user_logged_in_test_handler)
 
 server.register(r'/(.*)', handlers.page_not_found_handler)
 

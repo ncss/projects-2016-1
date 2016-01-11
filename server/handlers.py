@@ -77,7 +77,7 @@ def dashboard_handler(response):
 
 @util.requires_login
 def create_handler(response):
-    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
+    response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists", fail=response.get_field('fail', '')))
 
 def privacy_handler(response):
     response.write(templater.render("templates/privacy.html", page_title = "Privacy", site_title = "M'lists"))
@@ -88,6 +88,9 @@ def terms_handler(response):
 @util.requires_login
 def create_post_handler(response):
     title = response.get_field("title", "")
+    if title.strip() == "":
+        response.redirect("/create?fail=list_title_empty")
+        return
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
     a_list = List(title, get_current_user_id(response))
@@ -98,7 +101,11 @@ def create_post_handler(response):
     print("Creating post: {}, {}".format(title, list_items))
 
     response.redirect('/dashboard')
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> Prevent creating / editing lists to title name of 0 length
 def mini_list_handler(response):
     import sqlite3
     conn = sqlite3.connect("database.db")
@@ -121,13 +128,15 @@ def view_handler(response, list_id):
 
 def edit_handler(response, list_id):
     list = List.find(list_id)
-    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists", fail=response.get_field('fail', '')))
 
 def edit_post_handler(response, list_id):
-    a_list = List.find(list_id)
+    # Put this early otherwise all the items are removed!
+    if response.get_field("title", "") == "":
+        response.redirect("/list/{}/edit?fail=list_title_empty".format(list_id))
+        return
 
-    for item in a_list.list_contents():
-        item.remove()
+    a_list = List.find(list_id)
 
     a_list.name = response.get_field("title", "")
     list_items = []
@@ -141,6 +150,7 @@ def edit_post_handler(response, list_id):
         list_content = ListContent.create(a_list.id, i, item)
 
     print("Editing post: {}, {}".format(a_list.name, list_items))
+
     response.redirect('/dashboard')
 
 def view_list_handler(response, list_id):
@@ -203,3 +213,16 @@ def page_not_found_handler(response, path):
 
 def meme_handler(response):
     response.redirect('http://blaker.space')
+<<<<<<< HEAD
+=======
+
+
+def is_user_logged_in_test_handler(response):
+    try:
+        user_id = get_current_user_id(response)
+    except Exception as e:
+        user_id = None
+    response.write(repr(user_id))
+
+
+>>>>>>> Prevent creating / editing lists to title name of 0 length
