@@ -1,9 +1,12 @@
 {% include templates/header_logged_out.html %}
-<form action="/login" method="post">
+<form action="/login" method="post" class="login">
 	<h3>Login</h3>
 	<p>
 		Don't have an account? <a href="/signup">Sign up</a>
 	</p>
+	{% if login_failed %}
+	<p class="error">No matching Username and Password found.</p>
+	{% end if %}
 	<p>
 		<label for="login_username">Username</label><br>
 		<input type="text" name="username" id="login_username">
