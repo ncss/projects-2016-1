@@ -113,6 +113,7 @@ Helpers
 /*
 Login page
 */
+/* Is loginbox and middle even used?? */
 .login .loginbox{
 	background-color:rgb(240, 240, 240);
 	padding: 20px 20px 20px 20px;
@@ -126,8 +127,7 @@ Login page
 	align-items: center;
 	height: 100%;
 }
-
-.alert {
+.login .alert {
   background-color: #ED9F9F;
   color: #E84848;
   text-align: center;

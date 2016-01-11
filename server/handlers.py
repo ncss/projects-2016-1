@@ -32,9 +32,9 @@ def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
         response.redirect('/dashboard')
     else:
-        fail = response.get_arguments('fail')
-        login_fail = True if len(fail) == 1 and fail[0] == '1' else False
-        response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists", fail = login_fail))
+        login_failed = response.get_field('fail', '') == '1'
+        response.write(templater.render("templates/login_page.html", login_failed=login_failed,
+                                        page_title="Login", site_title="M'lists"))
         
 def post_signup_handler(response):
     email = response.get_field("email", "")
