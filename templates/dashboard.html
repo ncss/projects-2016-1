@@ -19,7 +19,7 @@
                     {% end for %}
                     </ol>
 					{% for item in mist.list_contents() %}
-						{{ image_fetcher(item.content) }}
+						<img src="{{ image_fetcher(item.content) }}" alt = "movie image poster" height = "140" width = "94">
 					{% end for %}
                 <a class = "link_button" href="/edit">Edit</a>
                 <!-- Image for each mist may be added in mvp+1-->
