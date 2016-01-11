@@ -1,13 +1,14 @@
 <button class="like">Like!</button>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+{{ likes }} like this.
 <script>
 $('button.like').click(function() {
     $.ajax({
         url:'/like',
-        data:{'user': 123, 'list': 1234},
+        data:{'user_id': 3, 'list_id': 3},
         method:"POST"
     }).done(function(data) {
-        console.log(data);
+        //$('button.like').prop('disabled', true);
     });
 });
 </script>
