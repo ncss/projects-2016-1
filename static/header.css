@@ -1,30 +1,38 @@
 header {
 	background-color: rgb(247, 102, 44);
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
 }
 
-.logo {
-	width: 10rem;
-	height: 4rem;
-}
 
 	header a {
-		color: white;
-		font-weight: 700;
+		color: rgb(51, 55, 68);
+		font-weight: 800;
 		font-size: 20px;
 		text-decoration: none;
 	}
-	
+
 		header a:visited {
-			color: white;
+			color: rgb(51, 55, 68);
 		}
 		
 
 	header nav a {
 		margin-left: 1rem;
 	}
-	
+
 		
 		header nav a:first-child {
 			margin-left: 0;
 		}
 		
+	header section {
+		
+	}
+		
+
+.logo {
+	width: 10rem;
+	height: 4rem;
+}

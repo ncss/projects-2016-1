@@ -5,6 +5,16 @@
 	  <form action="/signup" method="post">
 		<h3>Signup</h3>
 		<p>Already have an account? <a href="/login">Login</a>
+
+			</p>
+	{% if signup_failed %}
+	<p class="alert">Incorrect Username or Password. Please try again.</p>
+	{% end if %}
+
+		  {% if response.get_field("fail", "") == "user_exists" %}
+			<p class="alert">Duplicate username. Please try again.</p>
+		  {% end if %}
+
 		<p>
 			<label for="signup_username">Username</label><br>
 			<input type="text" name="username" id="signup_username">

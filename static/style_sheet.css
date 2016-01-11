@@ -101,8 +101,12 @@ Helpers
 	transform: translate(0, -32px);
 }
 
+.spacing-below {
+	margin-bottom: 12px;
+}
+
 .animate {
-	transition: all 0.5s;
+	transition: all 0.3s;
 }
 
 .container {
@@ -116,7 +120,10 @@ Helpers
 .right-align {
 	float: right;
 }
-		
+
+.overflow-hidden {
+	overflow: hidden;
+}	
 		
 	
 /*
@@ -183,7 +190,6 @@ Dashboard!
 
 .dashboard section{
 	border: 1px solid black;
-	min-width: 280px;
 	margin: 8px;
 }
 
@@ -192,7 +198,8 @@ Dashboard!
 	padding: 1px 2rem 2rem 2rem;
 	margin: 2rem 0rem 2rem 0rem;
 	border-radius: 6px;
-	overflow: auto
+	overflow: auto;
+	min-width: 280px;
 }
 .dashboard h1{
 text-align: center;
