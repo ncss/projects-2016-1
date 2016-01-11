@@ -1,5 +1,5 @@
 import hashlib
-
+from .list import List
 import db
 
 class User(db.DatabaseObject):
