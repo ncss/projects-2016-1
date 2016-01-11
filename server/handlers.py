@@ -52,7 +52,7 @@ def post_signup_handler(response):
         user.save()
     except sqlite3.IntegrityError:
         # TODO: Use cookies instead for errors instead of GET arguments
-        response.redirect("/index?fail=user_exists")
+        response.redirect("/signup?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
 

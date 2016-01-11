@@ -6,7 +6,7 @@
 		<h3>Signup</h3>
 		<p>Already have an account? <a href="/login">Login</a>
 		  {% if response.get_field("fail", "") == "user_exists" %}
-		    ERROR
+			<p class="alert">Duplicate username. Please try again.</p>
 		  {% end if %}
 		<p>
 			<label for="signup_username">Username</label><br>
