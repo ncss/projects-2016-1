@@ -38,6 +38,7 @@ def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
+    if username == "" or password == "": response.redirect("/signup")
     print("email: ", email, "username: ", username, "password: ", password)
     user = User(username, password)
     user.save()
@@ -55,7 +56,8 @@ def logout_handler(response):
 
 @util.requires_login
 def feed_handler(response):
-    response.write(templater.render("templates/feed.html", page_title = "Feed", site_title = "M'lists"))
+	mists = List.find_all()
+	response.write(templater.render("templates/feed.html", mists=mists, page_title = "Feed", site_title = "M'lists"))
 
 # dashboard integrates profile
 @util.requires_login

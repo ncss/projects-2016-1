@@ -35,6 +35,15 @@ class List(DatabaseObject):
     if not results: return []
     return [cls.from_row(i) for i in results]
 
+  @classmethod
+  def find_all(cls):
+    cur = cls.conn.cursor()
+    cur.execute('SELECT * FROM lists')
+    results = cur.fetchall()
+    cur.close()
+    if not results: return []
+    return [cls.from_row(i) for i in results]
+
 
   '''def  (self, ):
     cur = conn.cursor()
