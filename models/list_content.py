@@ -14,8 +14,8 @@ class ListContent:
     self.item_order = item_order
     
   def __str__(self):
-    return 'Content: ' + self.content + ', list:  ' + self.list_num + ', item order: ' + self.item_order
-  
+    #BAD return 'Content: ' + self.content + ', list:  ' + self.list_num + ', item order: ' + self.item_order
+    return cls('Content: ?, list: ?, item order: ?', self.content, self.list_num, self.item_order)
 	
   @classmethod
   def create(cls, list_num, item_order, content):
