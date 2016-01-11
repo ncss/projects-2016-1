@@ -101,6 +101,10 @@ Helpers
 	transform: translate(0, -32px);
 }
 
+.spacing-below {
+	margin-bottom: 12px;
+}
+
 .animate {
 	transition: all 0.5s;
 }
