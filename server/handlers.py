@@ -20,6 +20,7 @@ def post_login_handler(response):
         response.redirect('/dashboard')
     else:
         response.redirect("/")
+    response.write(templater.render("templates/login_page.html", page_title="Login", site_title = "M'lists"))
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id') is not None:
@@ -56,7 +57,17 @@ def feed_handler(response):
 # dashboard integrates profile
 @util.requires_login
 def dashboard_handler(response):
-    response.write("<h1> ( ͡° ͜ʖ ͡°) DASHBOARD ( ͡° ͜ʖ ͡°) </h1>")
+    new_mists = [
+        {
+            "title": "Top 10 Action Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        },
+        {
+            "title": "Top 10 Adventure Movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+    ]
+    response.write(templater.render("templates/dashboard.html",mists=new_mists, page_title = "Dashboard", site_title = "Mists"))
 
 @util.requires_login
 def create_handler(response):
