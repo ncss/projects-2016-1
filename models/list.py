@@ -1,20 +1,16 @@
-import sqlite3
-conn = sqlite3.connect('database.db')
-cur = conn.cursor()
+from .db import DatabaseObject
 
+class List(DatabaseObject):
 
-def convert_row(row):
-  keys = row.keys()
-  return {key:row[idx] for idx,key in enumerate(keys)}
-
-class List:
-  @classmethod
-  def connect(cls,db):
-    cls.conn = db
-
-  def __init__(self, list, item_order):
+  def __init__(self, list, author):
     self.list = list
-    self.item_order = item_order
+    self.author = author
+
+  def to_dict(self):
+      return {'name':self.name, 'author':self.author}
+
+  def table_name(self):
+    return 'lists'
 
   @classmethod
   def find(cls, id):
@@ -28,17 +24,11 @@ class List:
   @classmethod
   def find_by_userid(cls, uid):
     cur = cls.conn.cursor()
-    cur.execute('SELECT * FROM list where author=?', (uid,))
+    cur.execute('SELECT * FROM lists where author=?', (uid,))
     results = cur.fetchall()
     cur.close()
     if not results: return None
     return [cls.from_row(i) for i in results]
-
-  @classmethod
-  def from_row(cls,row):
-    if row is None: return None
-    row = convert_row(result)
-    return cls(saved=True,**row)
 
 
   '''def  (self, ):

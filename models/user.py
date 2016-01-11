@@ -1,12 +1,9 @@
 import hashlib
-from list import List
 
-import db
+from .list import List
+from .db import DatabaseObject
 
-class User(db.DatabaseObject):
-
-
-
+class User(DatabaseObject):
   def __init__(self, username, password, id=None):
     self.id = id
     self.username =username
@@ -14,6 +11,9 @@ class User(db.DatabaseObject):
 
   def to_dict(self):
     return {'username': self.username, 'password': self.password}
+
+  def table_name(self):
+    return 'users'
 
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
@@ -42,9 +42,11 @@ class User(db.DatabaseObject):
     cur.close()
     return cls.from_row(result)
 
+'''
 if __name__ == '__main__':
   import sqlite3
   cn = sqlite3.connect('database.db')
   User.connect(cn)
   cn.row_factory = sqlite3.Row
   user = User.find_username('cool_hax4')
+'''
