@@ -1,5 +1,5 @@
 from templater import templater
-from db import User
+#from db import User
 
 
 def requires_login(fn):
