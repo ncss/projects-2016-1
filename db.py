@@ -8,12 +8,7 @@ from models import ListContent
 from models import db
 
 DATABASE_FILENAME = "database.db"
-conn = sqlite3.connect(DATABASE_FILENAME)
-conn.row_factory = sqlite3.Row
-
-# Connect models
-db.DatabaseObject.connect(conn)
-ListContent.connect(conn)
+conn = None
 
 def reset_db():
 	with open("sql/init.sql") as f:
@@ -22,8 +17,16 @@ def reset_db():
 	print(data)
 	curr.executescript(data)
 
-def create_if_not_exists():
-	if not os.path.exists(DATABASE_FILENAME):
+def connect_or_create():
+	needs_reset = not os.path.exists(DATABASE_FILENAME)
+	global conn
+	conn = sqlite3.connect(DATABASE_FILENAME)
+	conn.row_factory = sqlite3.Row
+
+	# Connect models
+	db.DatabaseObject.connect(conn)
+	ListContent.connect(conn)
+	if needs_reset:
 		reset_db()
 
 if __name__ == '__main__':

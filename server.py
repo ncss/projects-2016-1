@@ -15,8 +15,7 @@ TO DO LIST:
     - edit_handler
 '''
 
-db.create_if_not_exists()
-
+db.connect_or_create()
 server = Server()
 
 # Handlers
