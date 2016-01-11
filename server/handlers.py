@@ -83,6 +83,12 @@ def dashboard_handler(response):
 def create_handler(response):
     response.write(templater.render("templates/create.html", page_title = "Create", site_title = "M'lists"))
 
+def privacy_handler(response):
+    response.write(templater.render("templates/privacy.html", page_title = "Privacy", site_title = "M'lists"))
+
+def terms_handler(response):
+    response.write(templater.render("templates/terms.html", page_title = "Terms", site_title = "M'lists"))
+
 @util.requires_login
 def create_post_handler(response):
     title = response.get_field("title", "")
