@@ -12,7 +12,7 @@ class List:
   def connect(cls,db):
     cls.conn = db
 
-  def __init__(self, list, item_order):
+  def __init__(self, list_name, list_author, list_id = none):
     self.list = list
     self.item_order = item_order
 
