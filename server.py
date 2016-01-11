@@ -13,7 +13,6 @@ TO DO LIST:
     - create_handler
     - view_handler
     - edit_handler
-    - settings_handler
 '''
 
 server = Server()
@@ -29,20 +28,13 @@ server.register(r'/dashboard', handlers.dashboard_handler)
 server.register(r'/create', handlers.create_handler, post = handlers.create_post_handler)
 server.register(r'/list/(\d+)/view', handlers.view_handler)
 server.register(r'/list/(\d+)/edit', handlers.edit_handler, post = handlers.edit_post_handler)
-server.register(r'/settings', handlers.settings_handler)
-#server.register(r'/mist', handlers.mini_list_handler)
-#server.register(r'/dashboard/settings', handlers.settings_handler)
 server.register(r'/memes', handlers.meme_handler)
 server.register(r'/privacy', handlers.privacy_handler)
 server.register(r'/terms', handlers.terms_handler)
-#server.register(r'/create/post', handlers.create_post_handler)
-server.register(r'/view/(0-9)+', handlers.view_list_handler)
 
-server.register(r'/settings', handlers.settings_handler)
 #server.register(r'/mist', handlers.mini_list_handler)
 server.register(r'/like', handlers.post_like_handler)
 server.register(r'/unlike', handlers.post_unlike_handler)
-server.register(r'/dashboard/settings', handlers.settings_handler)
 server.register(r'/is_user_logged_in_test_handler', handlers.is_user_logged_in_test_handler)
 
 server.register(r'/(.*)', handlers.page_not_found_handler)
