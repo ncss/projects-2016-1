@@ -6,10 +6,9 @@ CREATE TABLE users (
 );
 DROP TABLE IF EXISTS lists;
 CREATE TABLE lists (
-  id	INTEGER	AUTOINCREMENT,
+  id	INTEGER	PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   author INT NOT NULL, 
-  PRIMARY KEY (id), 
   FOREIGN KEY (author) REFERENCES users (id)
 );
 DROP TABLE IF EXISTS list_contents;
@@ -24,7 +23,7 @@ DROP TABLE IF EXISTS likes;
 CREATE TABLE likes (
   id    INTEGER PRIMARY KEY AUTOINCREMENT,
   person    INT    NOT NULL,
-  list    INT    NOT NULL
+  list    INT    NOT NULL,
   FOREIGN KEY (person) REFERENCES users(id),
   FOREIGN KEY (list) REFERENCES lists(id)
 );

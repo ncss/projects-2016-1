@@ -14,7 +14,7 @@ class Likes:
   @classmethod
   def create(cls, like_user, like_listnum, like_id):
     #like_id is an autonumber field, how does inserting work? insert a null?
-	cur = conn.execute('''INSERT INTO likes VALUES (NULL,?, ?, ?)''', (like_id, like_user, like_listnum))
+    cur = conn.execute('''INSERT INTO likes VALUES (NULL,?, ?, ?)''', (like_id, like_user, like_listnum))
     return cls('Created: like_id ?, like_user ?, like_listnum ?', like_id, like_user, like_listnum)
 
 '''	WORKS IN PROGRESS

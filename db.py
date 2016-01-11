@@ -11,8 +11,9 @@ db.DatabaseObject.connect(conn)
 
 if __name__ == "__main__":
 	with open("sql/init.sql") as f:
-		data = f.read()
+		data = f.read().strip()
 	curr = conn.cursor()
+	print(data)
 	curr.executescript(data)
 
 	

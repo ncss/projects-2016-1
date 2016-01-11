@@ -75,7 +75,7 @@ form {
 		float: right;
 	}
 	
-	form input[type="text"], form textarea, form input[type="password"] {
+	form input[type="text"], form textarea, form input[type="password"], form input[type="email"]	{
 		width: 100%;
 		box-sizing: border-box;
 	}

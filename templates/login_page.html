@@ -1,31 +1,20 @@
 {% include templates/header.html %}
 
-	<div class="middle">
-	<div class="loginbox">
-	
-			<section>
-				
-					<form action="/login" method="post">
-					<p><label for="username">Username:</label>&thinsp;
-					<input type="text" name="username" id="username" style="
-						float:  right;
-						margin: left;
-					">
-					<br>
-					</p>
-					<p><label for="password">Password:</label>&thinsp;
-					<input type="password" name="password" id="password" style="
-						float:  right;
-						margin: left;
-					">
-					</p>
-					<p>
-						<input type="submit">
-						<a href="/signup">Sign up?</a>
-					</p>
-					</form>
-				
-		</section>
-	</div>
-	</div><!-- .middle -->
+<section class="padded">
+	<form action="/login" method="post">
+        <h3>Login</h3>
+		<p>
+			Don't have an account? <a href="/signup">Sign up</a>
+		</p>
+        <p>
+			<label for="login_username">Username</label><br>
+			<input type="text" name="username" id="login_username">
+		</p>
+		<p>
+			<label for="login_password">Password</label><br>
+			<input type="password" name="password" id="login_password">
+		</p>
+		<input type="submit" value="Login">
+	</form>
+</section>
 {% include templates/footer.html %}
