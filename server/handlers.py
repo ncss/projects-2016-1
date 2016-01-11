@@ -76,12 +76,8 @@ def create_handler(response):
 @util.requires_login
 def create_post_handler(response):
     title = response.get_field("title", "")
-    list_items = []
-    index = 1
-    while response.get_field("list_item_{}".format(index), "") != "":
-        list_items.append(response.get_field("list_item_{}".format(index)))
-        index += 1
-
+    list_items = response.get_arguments("list_item")
+    list_items = filter(None, list_items)
     list = List(title, get_current_user_id(response))
     list.save()
     for i, item in enumerate(list_items):
