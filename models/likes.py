@@ -18,9 +18,16 @@ class Likes(DatabaseObject):
         cur.close()
 
     @classmethod
+    def remove(cls, user_id, list_id):
+        cur = DatabaseObject.conn.cursor()
+        print("remove of Like, got user={}, list={}", user_id, list_id)
+        cur = cls.conn.execute('DELETE FROM likes WHERE list_id=? AND user_id=?', (list_id, user_id))
+        cur.close()
+
+    @classmethod
     def list_likes(cls, list_id):
         cur = DatabaseObject.conn.cursor()
-        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', list_id)
+        cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', (list_id,))
         res = cur.fetchone()
         cur.close()
         return res[0]

@@ -117,6 +117,9 @@ def view_handler(response, list_id):
 
 @util.requires_login
 def edit_handler(response, list_id):
+    list = List.find(list_id)
+    response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
+    
     mist = List.find(list_id)
     response.write(templater.render("templates/edit.html", mist = mist, page_title = "Edit", site_title = "M'lists"))
 
@@ -125,6 +128,12 @@ def edit_post_handler(response, list_id):
 	mist = List.find(list_id)
 	for item in mist.list_contents():
 		item.remove()
+	
+	list.name = response.get_field("title", "")
+	list_items = response.get_arguments("list_item")
+	list_items = filter(None, list_items)
+
+	list.save()
 	mist.name = response.get_field("title", "")
 	list_items = []
 	index = 1
@@ -169,6 +178,18 @@ def post_like_handler(response):
     response.write(json.dumps({'likes':likes}))
 
 @util.requires_login
+def post_unlike_handler(response):
+    user_id = response.get_secure_cookie('user_id')
+    list_id = response.get_field('list_id')
+
+    l = Likes(user_id, list_id)
+    l.remove(user_id, list_id)
+
+    likes = Likes.list_likes(list_id)
+
+    response.set_header('Content-Type', 'application/json')
+    response.write(json.dumps({'likes':likes}))
+
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
     if uid is None:
@@ -180,6 +201,7 @@ def is_logged_in(response):
 
 def page_not_found_handler(response, path):
     #insert a html page for 404
+    response.set_status(404, 'Page not found')
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
 
