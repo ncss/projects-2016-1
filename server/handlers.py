@@ -4,6 +4,7 @@ from db import User
 from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
+import tornado
 
 from templater import templater
 
@@ -84,7 +85,7 @@ def create_post_handler(response):
     title = response.get_field("title", "")
     list_items = response.get_arguments("list_item")
     list_items = filter(None, list_items)
-    list = List(title, get_current_user_id(response))
+    list = List(tornado.escape.xhtml_escape(title), get_current_user_id(response))
     list.save()
     for i, item in enumerate(list_items):
         list_content = ListContent.create(list.id, i, tornado.escape.xhtml_escape(item))
