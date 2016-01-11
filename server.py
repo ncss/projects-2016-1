@@ -33,4 +33,7 @@ server.register(r'/settings', handlers.settings_handler)
 #server.register(r'/mist', handlers.mini_list_handler)
 #server.register(r'/like', handlers.get_like_handler, post=handlers.post_like_handler)
 #server.register(r'/dashboard/settings', handlers.settings_handler)
+server.register(r'/memes', handlers.meme_handler)
+
+
 server.run()

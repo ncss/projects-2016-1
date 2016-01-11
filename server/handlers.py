@@ -116,3 +116,6 @@ def get_current_user_id(response):
 	
 def is_logged_in(response):
 	return response.get_secure_cookie("user_id") is not None
+
+def meme_handler(response):
+    response.redirect('http://blaker.space')
