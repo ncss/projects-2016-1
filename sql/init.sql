@@ -29,23 +29,17 @@ CREATE TABLE likes (
   FOREIGN KEY(list_id) REFERENCES lists(id)
 );
 
-INSERT INTO users VALUES (NULL, 'cool_hax1', 'coolhax1');
-INSERT INTO users VALUES (NULL, 'cool_hax2', 'coolhax2');
-INSERT INTO users VALUES (NULL, 'cool_hax3', 'coolhax3');
-INSERT INTO users VALUES (NULL, 'cool_hax4', 'coolhax4');
-INSERT INTO users VALUES (NULL, 'cool_hax5', 'coolhax5');
-
 INSERT INTO lists VALUES (0, 'top ten movies1', 0);
 INSERT INTO lists VALUES (1, 'top ten movies2', 1);
 INSERT INTO lists VALUES (2, 'top ten movies3', 2);
 INSERT INTO lists VALUES (3, 'top ten movies4', 3);
 INSERT INTO lists VALUES (4, 'top ten movies5', 4);
 
-INSERT INTO list_contents VALUES (0, 1, 'Hackers: this movie is really cool');
-INSERT INTO list_contents VALUES (0, 3, 'Star Wars: this movie is really cool');
-INSERT INTO list_contents VALUES (0, 2, 'Specter: this movie is really cool');
-INSERT INTO list_contents VALUES (1, 2, 'The Arrow: this show is awesome');
-INSERT INTO list_contents VALUES (2, 1, 'Pokemon Indigo league: this show is awesome');
+INSERT INTO list_contents VALUES (5, 1, 'Hackers');
+INSERT INTO list_contents VALUES (5, 3, 'Star Wars: the force awakens');
+INSERT INTO list_contents VALUES (5, 2, 'Spectre James Bond');
+INSERT INTO list_contents VALUES (5, 4, 'The Arrow');
+INSERT INTO list_contents VALUES (5, 5, 'Pokemon Indigo league');
 
 INSERT INTO likes VALUES (NULL, 0, 0);
 INSERT INTO likes VALUES (NULL, 0, 1);

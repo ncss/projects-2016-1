@@ -6,7 +6,7 @@ from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
 import sqlite3
-#from models.imdb import IMDB
+from models.imdb import IMDB
 
 from templater import templater
 
@@ -54,16 +54,12 @@ def post_signup_handler(response):
     try:
         user.save()
     except sqlite3.IntegrityError:
-        response.redirect("/signup?fail=user_exists")
+        # TODO: Use cookies instead for errors instead of GET arguments
+        response.redirect("/index?fail=user_exists")
     else:
         response.set_secure_cookie("user_id", str(user.id))
-
-        #TODO hit the database, create a new user, and set the cookie with the new user's id
         response.redirect("/")
-        # give those things to the data base
 
-
-# messing around with login handler clearing cookie and redirecting to a page
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
@@ -80,7 +76,7 @@ def dashboard_handler(response):
     uid = get_current_user_id(response)
     user_mists = List.find_by_userid(uid)
     user_id = get_current_user_id(response)
-    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=lambda x: x))
+    response.write(templater.render("templates/dashboard.html", mists=user_mists, page_title = "Dashboard", site_title = "M'lists", user_id=user_id, image_fetcher=IMDB.fetch_image))
 
 
 @util.requires_login
@@ -113,7 +109,7 @@ def mini_list_handler(response):
 
 def view_handler(response, list_id):
     list = List.find(list_id)
-    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id = get_current_user_id(response)))
+    response.write(templater.render("templates/view_list.html", mist = list, page_title = list.name, site_title = "M'lists", user_id = get_current_user_id(response), image_fetcher=IMDB.fetch_image))
 
 def edit_handler(response, list_id):
     list = List.find(list_id)
@@ -159,16 +155,19 @@ def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
 
 def post_like_handler(response):
-    user_id = response.get_secure_cookie('user_id')
+    user_id = response.get_field('user_id')
     list_id = response.get_field('list_id')
 
     l = Likes(user_id, list_id)
     l.create(user_id, list_id)
 
-    likes = Likes.list_likes(list_id)
+    likes = 100
 
-    response.set_header('Content-Type', 'application/json')
     response.write(json.dumps({'likes':likes}))
+    response.set_header('Content-Type', 'application/json')
+	
+def post_unlike_handler(response):
+	response.write("<h1> ( ͡° ͜ʖ ͡°) UNLIKE YA LIST ( ͡° ͜ʖ ͡°) </h1>")
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")

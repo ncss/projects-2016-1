@@ -36,10 +36,11 @@ server.register(r'/memes', handlers.meme_handler)
 
 #server.register(r'/create/post', handlers.create_post_handler)
 server.register(r'/view/(0-9)+', handlers.view_list_handler)
-#server.register(r'/{}/edit'.format(), handlers.edit_handler)
+server.register(r'/edit/(0-9)+', handlers.edit_handler)
 server.register(r'/settings', handlers.settings_handler)
 #server.register(r'/mist', handlers.mini_list_handler)
 server.register(r'/like', handlers.post_like_handler)
+server.register(r'/unlike', handlers.post_unlike_handler)
 server.register(r'/dashboard/settings', handlers.settings_handler)
 
 server.register(r'/(.*)', handlers.page_not_found_handler)

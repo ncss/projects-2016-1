@@ -6,6 +6,12 @@
 	{% end for %}
 	</ol>
 	
+	{% for item in mist.list_contents() %}
+		{% if image_fetcher(item.content) != 'placeholder.png' and image_fetcher(item.content) != "N/A" %}
+			<img src="{{ image_fetcher(item.content) }}" alt = "movie image poster" height = "140" width = "94">
+		{% end if %}
+    {% end for %}
+	
 	<menu class="list-actions">
 		<nav>
 			{% include templates/like.html %}
