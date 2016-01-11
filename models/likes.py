@@ -23,7 +23,7 @@ class Likes(DatabaseObject):
         cur = cls.conn.execute('SELECT COUNT(*) FROM likes WHERE list_id=?', list_id)
         res = cur.fetchone()
         cur.close()
-        return res
+        return res[0]
 
     @classmethod
     def has_user_liked_list(cls, user_id, list_id):
@@ -33,10 +33,7 @@ class Likes(DatabaseObject):
         res = cur.fetchone()
         cur.close()
 
-        if res == 1:
-            return True
-        else:
-            return False
+        return res[0] == 1
 
 ''' WORKS IN PROGRESS
   @classmethod

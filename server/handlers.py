@@ -164,10 +164,10 @@ def post_like_handler(response):
     l = Likes(user_id, list_id)
     l.create(user_id, list_id)
 
-    likes = 100
+    likes = Likes.list_likes(list_id)
 
-    response.write(json.dumps({'likes':likes}))
     response.set_header('Content-Type', 'application/json')
+    response.write(json.dumps({'likes':likes}))
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")

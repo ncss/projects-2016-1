@@ -1,6 +1,6 @@
 <button class="like" id="like-{{ mist.id }}">Like!</button>
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-<p class="#like-message-{{ mist.id }}">{{ mist.get_likes() }} like this.</p>
+<p id="like-message-{{ mist.id }}"><span>{{ mist.get_likes() }}</span> like this.</p>
 <script>
 $('#like-{{ mist.id }}').click(function() {
     $.ajax({
@@ -10,8 +10,7 @@ $('#like-{{ mist.id }}').click(function() {
     }).done(function(data) {
         $('#like-{{ mist.id }}').prop('disabled', true);
         $('#like-{{ mist.id }}').html('You liked this');
-        console.log(data['likes']);
-        $('#like-message-{{ mist.id }}').html(data['likes']);
+        $('#like-message-{{ mist.id }} span').text(data['likes']);
     });
 });
 </script>
