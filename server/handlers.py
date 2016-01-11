@@ -18,6 +18,8 @@ def post_login_handler(response):
     if user:
         response.set_secure_cookie('user_id', '-1')
         response.redirect('/dashboard')
+    if not user:
+        response.redirect('/login')
 
 def get_login_handler(response):
     if response.get_secure_cookie('user_id'):

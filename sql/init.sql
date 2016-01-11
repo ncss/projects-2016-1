@@ -24,12 +24,6 @@ CREATE TABLE likes (
   list    INT    NOT NULL
 );
 
-INSERT INTO users VALUES (0, 'cool_hax1', 'coolhax1');
-INSERT INTO users VALUES (1, 'cool_hax2', 'coolhax2');
-INSERT INTO users VALUES (2, 'cool_hax3', 'coolhax3');
-INSERT INTO users VALUES (3, 'cool_hax4', 'coolhax4');
-INSERT INTO users VALUES (4, 'cool_hax5', 'coolhax5');
-
 INSERT INTO lists VALUES (0, 'top ten movies1', 0);
 INSERT INTO lists VALUES (1, 'top ten movies2', 1);
 INSERT INTO lists VALUES (2, 'top ten movies3', 2);
