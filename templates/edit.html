@@ -13,10 +13,10 @@
 		<label>Items</label>
 	</p>
 	<p id="item_holder">
-		<input type="text" class="animate spacing-below" name="list_item" placeholder="List" hidden id="list_item">
 		{% for item in mist.list_contents() %}
-		<input type="text" class="animate spacing-below" name="list_item" placeholder="List Item" value="{{item.content}}">
+		<input type="text" class="animate spacing-below" name="list_item" placeholder="List item" value="{{item.content}}">
 		{% end for %}
+		<input type="text" class="animate spacing-below" name="list_item" placeholder="List item" id="list_item">
 	</p>
 	
 
