@@ -30,7 +30,7 @@ server.register(r'/create', handlers.create_handler)
 #server.register(r'/{}/view'.format(), handlers.view_handler)
 #server.register(r'/{}/edit'.format(), handlers.edit_handler)
 server.register(r'/settings', handlers.settings_handler)
-server.register(r'/mist', handlers.mini_list_handler)
+#server.register(r'/mist', handlers.mini_list_handler)
 server.register(r'/like', handlers.get_like_handler, post=handlers.post_like_handler)
 server.register(r'/dashboard/settings', handlers.settings_handler)
 
