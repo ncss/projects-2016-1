@@ -37,6 +37,7 @@ def post_signup_handler(response):
     email = response.get_field("email", "")
     username = response.get_field("username", "")
     password = response.get_field("password", "")
+    if username == "" or password == "": response.redirect("/signup")
     print("email: ", email, "username: ", username, "password: ", password)
     user = User(username, password)
     user.save()
@@ -103,9 +104,39 @@ def edit_handler(response, list_id):
 	list = List.find(list_id)
 	response.write(templater.render("templates/edit.html", mist = list, page_title = "Edit", site_title = "M'lists"))
 
+def view_list_handler(response, list_id):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    c.execute("SELECT COUNT(*) FROM likes WHERE list_id=?;", (list_id))
+    likes = c.fetchone()
+
+    list = {
+            "title": "Top 10 Adventure Movies",
+            "description": "A list about adventure movies",
+            "content": ["James Bond", "The Matrix", "Taken", "The Dark Night", "Star Wars", "The Avengers", "Mad Max", "Aliens", "The Terminator", "Rambo"]
+        }
+
+    response.write(templater.render('templates/view_list.html', likes=likes, list=list))
+
 def settings_handler(response):
     response.write("<h1> ( ͡° ͜ʖ ͡°) CHANGE YA PROFILE SETTINGS ( ͡° ͜ʖ ͡°) </h1>")
-                     
+
+def post_like_handler(response):
+    user_id = response.get_field('user_id')
+    list_id = response.get_field('list_id')
+
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    c.execute("SELECT COUNT(*) FROM likes WHERE user_id=?, list_id=?;", (user_id, list_id))
+    if c.fetchone() == 0:
+        c.execute('INSERT INTO likes VALUES(NULL, ?,?);', (user_id, list_id))
+        conn.commit()
+
+    conn.close()
+
+    response.write('')
 
 def get_current_user_id(response):
     uid = response.get_secure_cookie("user_id")
