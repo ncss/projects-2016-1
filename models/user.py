@@ -1,15 +1,10 @@
 import hashlib
 
-def convert_row(row):
-  keys = row.keys()
-  return {key:row[idx] for idx,key in enumerate(keys)}
+import db
+
+class User(db.DatabaseObject):
 
 
-class User:
-
-  @classmethod
-  def connect(cls,db):
-    cls.conn = db
 
   def __init__(self, username, password, id=None):
     self.id = id
@@ -18,6 +13,9 @@ class User:
     
 
 
+  def to_dict(self):
+    return {'username': self.username, 'password': self.password}
+
   def check_password(self,password):
     return self.password == hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
@@ -25,7 +23,7 @@ class User:
     self.password = hashlib.sha512(str(password).encode('utf-8')).hexdigest()
 
   def get_lists(self):
-    pass
+    return List.find_by_userid(self.id)
 
   def save(self):
     cur = self.__class__.conn.cursor()
