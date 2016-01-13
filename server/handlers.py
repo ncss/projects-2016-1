@@ -1,6 +1,7 @@
 import sqlite3
 import server.util as util
 import json
+import jinja2
 
 from db import User
 from models.list import List
@@ -11,7 +12,6 @@ from models.imdb import IMDB
 from templater import templater
 
 def index_handler(response):
-    print(response.get_secure_cookie("user_id"))
     if util.is_logged_in(response):
         response.redirect('/dashboard')
     else:
@@ -23,11 +23,9 @@ def post_login_handler(response):
     user = User.authenticate(username, password)
     if user:
         response.set_secure_cookie('user_id', str(user.id))
-        print("Authenticated user %s" % user.id)
         response.redirect('/dashboard')
 
     else:
-        print("Not logged in")
         response.redirect("/login?fail=1")
 
 def get_login_handler(response):
@@ -108,19 +106,7 @@ def create_post_handler(response):
     for i, item in enumerate(list_items):
         list_content = ListContent.create(a_list.id, i, item)
 
-    print("Creating post: {}, {}".format(title, list_items))
-
     response.redirect('/dashboard')
-
-def mini_list_handler(response):
-    import sqlite3
-    conn = sqlite3.connect("database.db")
-    import os
-    print("Debugging: ", os.getcwd())
-##    conn.executescript(open('sql\init.sql').read())
-    ListContent.connect(conn)
-    mist = ListContent.findByListId(0)
-    response.write(templater.render("mini_list.html", mist = mist))
 
 # Make lists public to everyone
 def view_handler(response, list_id):
@@ -166,8 +152,6 @@ def edit_post_handler(response, list_id):
     list_items = filter(None, list_items)
     for i, item in enumerate(list_items):
         list_content = ListContent.create(a_list.id, i, item)
-
-    print("Editing post: {}, {}".format(a_list.name, list_items))
 
     response.redirect('/dashboard')
 
