@@ -1,76 +1,76 @@
 {% include templates/header.html %}
 <form action="/create" method="post" class="overflow-hidden">
-	<h3>Create a list</h3>
+    <h3>Create a list</h3>
     {% if fail == "list_title_empty" %}
-	    <p class="alert">List title may not be empty!</p>
-	{% end if %}
-	<p>
-		<label for="mist_title">Title</label><br>
-		<input type="text" name="title" placeholder="Title" id="mist_title">	
-	</p>
-	
-	<p>
-		<label>Items</label><br>
-		<input class="animate spacing-below" type="text" name="list_item" placeholder="List item" id="list_item">
-	</p>
-	<p>Press enter to enter a new list item
-	</p>
-	
-	<script>
-		
-		var mist_title = document.getElementById("mist_title");
-		var list_item = document.getElementById("list_item");
-		var emoji_handler = function(event){
-			if (this.value){
-				this.value = this.value.replace(
-					">:)","😈").replace(
-					":)","😀").replace(
-					":*","😘").replace(
-					"<3","❤️").replace(
-					":')","😂");
-			}
+        <p class="alert">List title may not be empty!</p>
+    {% end if %}
+    <p>
+        <label for="mist_title">Title</label><br>
+        <input type="text" name="title" placeholder="Title" id="mist_title">
+    </p>
 
-		};
-		var handler = function(event){
-			if (this.value && event.keyCode === 13) {
-				// Add an awesome explosion.
-				var explodeEl = document.createElement('div');
-				explodeEl.className = 'animate explode appear';
-				list_item.parentNode.appendChild(explodeEl);
-				window.setTimeout(function() {
-					explodeEl.classList.remove("appear");
-				});
-				window.setTimeout(function() {
-					explodeEl.parentNode.removeChild(explodeEl);
-				}, 1500);
+    <p>
+        <label>Items</label><br>
+        <input class="spacing-below spin" type="text" name="list_item" placeholder="List item" id="list_item">
+    </p>
+    <p>Press enter to enter a new list item
+    </p>
 
-				// Add the normal input.
-				var next_item = list_item.cloneNode();
-				next_item.value = "";
-				next_item.classList.add("appear");
-				list_item.parentNode.appendChild(next_item);
-				next_item.addEventListener("keydown", handler);
-				next_item.addEventListener("keydown", emoji_handler);
-				next_item.focus();
-				next_item.classList.remove("appear");
-			}
+    <script>
 
-			if (event.keyCode === 13) {
-				event.preventDefault()
-			}
-			if (event.keyCode === 8 && this.value === "") {
-				event.preventDefault();
-				if (this != list_item) {
-					this.previousElementSibling.focus();
-					this.parentNode.removeChild(this);
-					}
-			}
-		};
-		list_item.addEventListener("keydown", handler)
-		list_item.addEventListener("keydown", emoji_handler)
-		mist_title.addEventListener("keydown", emoji_handler)
-	</script>
-	
-	<input type="submit" name="Submit" value="Create">
+        var mist_title = document.getElementById("mist_title");
+        var list_item = document.getElementById("list_item");
+        var emoji_handler = function(event){
+            if (this.value){
+                this.value = this.value.replace(
+                    ">:)","😈").replace(
+                    ":)","😀").replace(
+                    ":*","😘").replace(
+                    "<3","❤️").replace(
+                    ":')","😂");
+            }
+
+        };
+        var handler = function(event){
+            if (this.value && event.keyCode === 13) {
+                // Add an awesome explosion.
+                var explodeEl = document.createElement('div');
+                explodeEl.className = 'animate explode appear';
+                list_item.parentNode.appendChild(explodeEl);
+                window.setTimeout(function() {
+                    explodeEl.classList.remove("appear");
+                });
+                window.setTimeout(function() {
+                    explodeEl.parentNode.removeChild(explodeEl);
+                }, 1500);
+
+                // Add the normal input.
+                var next_item = list_item.cloneNode();
+                next_item.value = "";
+                next_item.classList.add("appear");
+                list_item.parentNode.appendChild(next_item);
+                next_item.addEventListener("keydown", handler);
+                next_item.addEventListener("keydown", emoji_handler);
+                next_item.focus();
+                next_item.classList.remove("appear");
+            }
+
+            if (event.keyCode === 13) {
+                event.preventDefault()
+            }
+            if (event.keyCode === 8 && this.value === "") {
+                event.preventDefault();
+                if (this != list_item) {
+                    this.previousElementSibling.focus();
+                    this.parentNode.removeChild(this);
+                    }
+            }
+        };
+        list_item.addEventListener("keydown", handler)
+        list_item.addEventListener("keydown", emoji_handler)
+        mist_title.addEventListener("keydown", emoji_handler)
+    </script>
+
+    <input type="submit" name="Submit" value="Create">
 </form>
 {% include templates/footer.html %}

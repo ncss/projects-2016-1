@@ -1,112 +1,112 @@
 html {
-	border-top: 5px solid rgb(247, 102, 44);
-	height:100%;
+    border-top: 5px solid rgb(247, 102, 44);
+    height:100%;
 }
 
 body {
-	font-family: 'Lato', sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: rgb(51, 55, 68);
-	height:100%;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: rgb(51, 55, 68);
+    height:100%;
 }
 
 #content {
-	min-height:100%;
-	position:relative;
+    min-height:100%;
+    position:relative;
 }
 
 #body {
-	padding-bottom: 240px;
+    padding-bottom: 240px;
 }
 
 .padded {
-	padding: 2rem;
+    padding: 2rem;
 }
 
 a:visited {
-	color: rgb(247, 102, 44);
+    color: rgb(247, 102, 44);
 }
 
 h1 {
-	font-size: 46px;
-	font-weight: 300;
-	font-style: italic;
+    font-size: 46px;
+    font-weight: 300;
+    font-style: italic;
 }
 
 h2 {
-	font-size: 27px;
-	font-weight: 700;
+    font-size: 27px;
+    font-weight: 700;
 }
 
 h3 {
-	font-size: 21px;
-	color: rgb(112, 120, 128);
+    font-size: 21px;
+    color: rgb(112, 120, 128);
 }
 
 h1, h2, h3 {
-	line-height: 1.3em;
+    line-height: 1.3em;
 }
 
 p {
-	margin-top: -0.5rem;
+    margin-top: -0.5rem;
 }
 
 ul, ol {
-	margin-top: -0.5rem;
+    margin-top: -0.5rem;
 }
 
 footer {
-	background-color: rgb(240, 240, 240);
-	padding: 2rem;
-	position:absolute;
-	bottom: -10px;
-	width: 100%;
-	height: 240px;   /* Height of the footer */
-	box-sizing: border-box;
+    background-color: rgb(240, 240, 240);
+    padding: 2rem;
+    position:absolute;
+    bottom: -10px;
+    width: 100%;
+    height: 240px;   /* Height of the footer */
+    box-sizing: border-box;
 }
 
 form {
-	background-color: rgb(240, 240, 240);
-	padding: 1px 2rem 2rem 2rem;
-	margin: 2rem 0rem 2rem 0rem;
-	border-radius: 6px;
-	overflow: auto;
+    background-color: rgb(240, 240, 240);
+    padding: 1px 2rem 2rem 2rem;
+    margin: 2rem 0rem 2rem 0rem;
+    border-radius: 6px;
+    overflow: auto;
 }
 form h3{
-	color: rgb(51, 55, 68);
+    color: rgb(51, 55, 68);
 }
 
 form label{
-	font-weight: 700;
+    font-weight: 700;
 }
 
 form input[type="checkbox"], form input[type="radio"]{
-	margin-left: 1rem;
+    margin-left: 1rem;
 }
 
 form input[type="submit"] {
-	background-color: rgb(44, 139, 247);
-	color: white;
-	font-weight: 700;
-	padding: 8px 30px 8px 30px;
-	float: right;
+    background-color: rgb(44, 139, 247);
+    color: white;
+    font-weight: 700;
+    padding: 8px 30px 8px 30px;
+    float: right;
 }
 
-form input[type="text"], form textarea, form input[type="password"], form input[type="email"]	{
-	width: 100%;
-	box-sizing: border-box;
+form input[type="text"], form textarea, form input[type="password"], form input[type="email"]   {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 form input, form textarea {
-	border: 1px solid white;
-	border-radius: 4px;
-	padding: 6px 8px 6px 8px;
+    border: 1px solid white;
+    border-radius: 4px;
+    padding: 6px 8px 6px 8px;
 }
 
 form input:focus, form textarea:focus {
-	border-color: rgb(247, 102, 44);
-	outline: none;
+    border-color: rgb(247, 102, 44);
+    outline: none;
 }
 
 /*
@@ -114,51 +114,67 @@ Helpers
 */
 
 .appear {
-	opacity: 0;
-	transform: translate(0, -32px);
+    opacity: 0;
+    transform: translate(0, -32px);
 }
 
 .spacing-below {
-	margin-bottom: 12px;
+    margin-bottom: 12px;
+}
+
+@keyframes memes {
+    from {
+        transform: rotateZ(720deg);
+        width: 0%;
+    }
+    to {
+        transform: rotateZ(0deg);
+        width: 100%;
+    }
+}
+
+.spin {
+    animation-duration: 1s;
+    animation-name: memes;
 }
 
 .animate {
-	transition: all 0.3s;
+    transition: all 0.3s;
 }
 
 .container {
-	overflow: auto;
+    overflow: auto;
 }
 
 .left-align {
-	float: left;
+    float: left;
 }
 
 .right-align {
-	float: right;
+    float: right;
 }
 
 .overflow-hidden {
-	overflow: hidden;
-}	
-		
-	
+    overflow: hidden;
+}
+
+
 /*
 Login page
 */
 /* Is loginbox and middle even used?? */
 .login .loginbox{
-	background-color:rgb(240, 240, 240);
-	padding: 20px 20px 20px 20px;
-	font-family: Lato;
-	font-size: 14px;
-	border-radius: 6px;
+    background-color:rgb(240, 240, 240);
+    padding: 20px 20px 20px 20px;
+    font-family: Lato;
+    font-size: 14px;
+    border-radius: 6px;
 }
 .login .middle{
-	display: flex;
-	justify-content:center;
-	align-items: center;
-	height: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    height: 100%;
 }
 .alert {
   background-color: #ED9F9F;
@@ -173,31 +189,31 @@ Login page
  * Feed
  */
 .feed section {
-	padding: 1px 2rem 2rem 2rem;
-	min-width: 280px;
-	margin: 8px;
+    padding: 1px 2rem 2rem 2rem;
+    min-width: 280px;
+    margin: 8px;
 }
 
 .feed article {
-	background-color: rgb(240, 240, 240);
-	padding: 1px 2rem 2rem 2rem;
-	margin: 2rem 0rem 2rem 0rem;
-	border-radius: 6px;
-	overflow: auto
+    background-color: rgb(240, 240, 240);
+    padding: 1px 2rem 2rem 2rem;
+    margin: 2rem 0rem 2rem 0rem;
+    border-radius: 6px;
+    overflow: auto
 }
 
 .feed .center {
-	text-align: center;
+    text-align: center;
 }
 
 .feed.box {
-	display: flex;
-	justify-content: space-around;
-	flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .feed.box section {
-	flex-grow: 1;
+    flex-grow: 1;
 }
 
 /*
@@ -205,127 +221,127 @@ Dashboard!
 */
 
 .dashboard section{
-	border: 1px solid black;
-	margin: 8px;
+    border: 1px solid black;
+    margin: 8px;
 }
 
 .dashboard article {
-	background-color: rgb(240, 240, 240);
-	padding: 1px 2rem 2rem 2rem;
-	margin: 2rem 0rem 2rem 0rem;
-	border-radius: 6px;
-	overflow: auto;
-	min-width: 280px;
+    background-color: rgb(240, 240, 240);
+    padding: 1px 2rem 2rem 2rem;
+    margin: 2rem 0rem 2rem 0rem;
+    border-radius: 6px;
+    overflow: auto;
+    min-width: 280px;
 }
 .dashboard h1{
 text-align: center;
 }
 
 .dashboard .box{
-	display:flex;
-	justify-content: space-around;
-	flex-wrap: wrap;
-	margin-left: auto;
-	margin-right: auto;
-	max-width: 600px;
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
 }
 
 .dashboard .box section{
-	flex-grow: 1;
-	
+    flex-grow: 1;
+
 }
 
 .dashboard .box button{
-	float: right;
-	margin-right: 10px;
-	margin-bottom: 10px;
-	background-color: rgb(44, 139, 247);
-	color: white;
-	font-weight: 700;
-	padding: 8px 30px 8px 30px;
-	float: right;
-	border: 0;
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(44, 139, 247);
+    color: white;
+    font-weight: 700;
+    padding: 8px 30px 8px 30px;
+    float: right;
+    border: 0;
 }
 .dashboard h2{
-	padding-left: 5px;
-	margin: 0px;
-	margin-bottom: 15px;
+    padding-left: 5px;
+    margin: 0px;
+    margin-bottom: 15px;
 }
 
 .dashboard h4{
-	margin-left: auto;
-	margin-right: auto;
-	margin: 0px;
-	padding-top: 20px;
-	font-size: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin: 0px;
+    padding-top: 20px;
+    font-size: 20px;
 }
 
 .dashboard a.link_button {
-	float: right;
-	color: red;
+    float: right;
+    color: red;
 }
 
-	
+
 /*
  * List Preview
  */
 
  .list-preview h3 a {
-	text-decoration: none;
-	color: rgb(247, 102, 44);
+    text-decoration: none;
+    color: rgb(247, 102, 44);
  }
- 
- 	.list-preview a {
-		text-decoration: none;
-	}
- 
+
+    .list-preview a {
+        text-decoration: none;
+    }
+
 .list-actions {
-	display: flex;
-	justify-content: space-between;
-	align-items: top;
-	margin-left: 0;
-	padding-left: 0;
-	margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    margin-left: 0;
+    padding-left: 0;
+    margin-bottom: 0;
 }
 
 
 
 .list-actions p {
-	margin: 0;
+    margin: 0;
 }
 
 .list-action {
-	text-decoration: none;
-	font-weight: 700;
-	background-color: rgb(44, 139, 247);
-	color: white;
-	padding: 9px 30px 9px 30px;
-	position: relative;
-	bottom: -6px;
-	border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    background-color: rgb(44, 139, 247);
+    color: white;
+    padding: 9px 30px 9px 30px;
+    position: relative;
+    bottom: -6px;
+    border-radius: 4px;
 }
 
-	.list-action:visited {
-		color: white;
-	}
+    .list-action:visited {
+        color: white;
+    }
 
-	.list-action.red {
-		background-color: rgb(247, 102, 44);
-	}
-	
-	.list-action.green {
-		background-color: rgb(23, 202, 147);
-	}
+    .list-action.red {
+        background-color: rgb(247, 102, 44);
+    }
+
+    .list-action.green {
+        background-color: rgb(23, 202, 147);
+    }
 
 button.like {
-	border: none;
-	text-decoration: none;
-	font-weight: 700;
-	background-color: rgb(44, 139, 247);
-	color: white;
-	padding: 6px 26px 6px 26px;
-	border-radius: 4px;
+    border: none;
+    text-decoration: none;
+    font-weight: 700;
+    background-color: rgb(44, 139, 247);
+    color: white;
+    padding: 6px 26px 6px 26px;
+    border-radius: 4px;
 }
 
-	
+
 
