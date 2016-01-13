@@ -1,7 +1,6 @@
 import sqlite3
 import server.util as util
 import json
-import jinja2
 
 from db import User
 from models.list import List
