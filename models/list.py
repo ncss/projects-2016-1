@@ -54,15 +54,3 @@ class List(DatabaseObject):
     cur.close()
     if not results: return []
     return [cls.from_row(i) for i in results]
-
-
-  '''def  (self, ):
-    cur = conn.cursor()
-    con.execute(
-
-
-
-  @staticmethod
-  def find(self, limit):
-    pass
-'''

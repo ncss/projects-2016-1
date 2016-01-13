@@ -1,11 +1,11 @@
 import sqlite3
 import server.util as util
 import json
+
 from db import User
 from models.list import List
 from models.likes import Likes
 from models.list_content import ListContent
-import sqlite3
 from models.imdb import IMDB
 
 from templater import templater
@@ -57,6 +57,7 @@ def post_signup_handler(response):
         response.set_secure_cookie("user_id", str(user.id))
         response.redirect("/")
 
+@util.requires_login
 def logout_handler(response):
     response.clear_cookie('user_id')
     response.redirect('/')
@@ -181,9 +182,9 @@ def delete_handler(response, list_id):
     # delete the old list items before adding the new ones
     for old_item in ListContent.find_by_list_id(list_id):
         ListContent.delete(list_id, old_item.item_order)
-    
+
     a_list.delete()
-    response.redirect('/')  # TODO: where should the user be sent after a delete?
+    response.redirect('/dashboard')
 
 @util.requires_login
 def post_like_handler(response):
@@ -212,16 +213,8 @@ def post_unlike_handler(response):
     response.write(json.dumps({'likes':likes}))
 
 def page_not_found_handler(response, path):
-    #insert a html page for 404
     response.set_status(404, 'Page not found')
     response.write(templater.render("templates/404.html", page_title="Page not found", site_title="M'lists"))
 
 def meme_handler(response):
     response.redirect('http://blaker.space')
-
-def is_user_logged_in_test_handler(response):
-    try:
-        user_id = get_current_user_id(response)
-    except Exception as e:
-        user_id = None
-    response.write(repr(user_id))
