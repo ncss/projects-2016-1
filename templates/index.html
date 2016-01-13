@@ -1,26 +1,29 @@
 {% include templates/header_logged_out.html %}
-	<section>
-	  <p>Forming lists made simple, quick and easy. Create your own Top 10 Lists, and see what others are posting. It's like Twitter, but for lists!.</p>
+    <section>
+      <p>Forming lists made simple, quick and easy. Create your own Top 10 Lists, and see what others are posting. It's like Twitter, but for lists!.</p>
 
-	  <form action="/signup" method="post">
-		<h3>Sign Up Now</h3>
-		<p>Already have an account? <a href="/login">Login</a>
+      <form action="/signup" method="post">
+        <h3>Sign Up Now</h3>
+        <p>Already have an account? <a href="/login">Login</a>
 
-			</p>
-		  {% if response.get_field("fail", "") == "user_exists" %}
-			<p class="alert">Duplicate username. Please try again.</p>
-		  {% end if %}
+            </p>
+          {% if response.get_field("fail", "") == "user_exists" %}
+            <p class="alert">Duplicate username. Please try again.</p>
+          {% end if %}
+          {% if response.get_field("fail", "") == "password_short" %}
+            <p class="alert">That password is too short. Try using at least 8 characters.</p>
+          {% end if %}
 
-		<p>
-			<label for="signup_username">Username</label><br>
-			<input type="text" name="username" id="signup_username">
-		</p>
-		<p>
-			<label for="signup_password">Password</label><br>
-			<input type="password" name="password" id="signup_password">
-		</p>
-		<input type="submit" value="Sign up">
-	  </form>
-	</section>
+        <p>
+            <label for="signup_username">Username</label><br>
+            <input type="text" name="username" id="signup_username">
+        </p>
+        <p>
+            <label for="signup_password">Password</label><br>
+            <input type="password" name="password" id="signup_password">
+        </p>
+        <input type="submit" value="Sign up">
+      </form>
+    </section>
 
 {% include templates/footer.html %}

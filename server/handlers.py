@@ -44,6 +44,9 @@ def post_signup_handler(response):
         response.redirect("/signup")
         return
 
+    if len(password) < 8:
+        response.redirect("/signup?fail=password_short")
+
     user = User(username, password)
 
     try:
