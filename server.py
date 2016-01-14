@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from tornado.ncss import Server
 
 import server.handlers as handlers
