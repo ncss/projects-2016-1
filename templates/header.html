@@ -29,3 +29,20 @@
 			</header>
 			<div id="body" class="padded">
 				<h1>{{ page_title }}</h1>
+				
+<script>
+if (window.addEventListener) {
+    var keys = [],
+        konami = "38,38,40,40,37,39,37,39,66,65";
+    
+    window.addEventListener("keydown", function(e){
+	keys.push(e.keyCode);
+        
+        if (keys.toString().indexOf(konami) >= 0) {
+            alert("( ͡° ͜ʖ ͡°)");
+            
+            keys = [];
+        };
+    }, true);
+};
+</script>
